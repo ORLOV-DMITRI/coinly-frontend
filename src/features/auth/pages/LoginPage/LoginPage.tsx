@@ -10,6 +10,7 @@ import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import cn from "classnames";
 import GoogleIcon from '/public/assets/svg/google.svg'
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState<LoginCredentials>({
@@ -58,7 +59,7 @@ export default function LoginPage() {
       login(response.token, response.user);
       router.push('/');
     } catch (error: any) {
-      setErrors({ email: error?.response?.data?.message || 'Ошибка входа' });
+      toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
     }

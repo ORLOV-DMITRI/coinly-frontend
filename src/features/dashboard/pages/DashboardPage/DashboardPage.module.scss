@@ -1,1 +1,32 @@
 @use "@/styles/variables" as *;
+
+.currentDate {
+  text-align: left;
+}
+.text{
+  margin-top: var(--space-sm);
+  @include xs {
+    margin-top: var(--space-xs);
+  }
+}
+.actionBtn {
+  margin-top: var(--space-lg);
+
+  @include sm {
+    margin-top: var(--space-md);
+  }
+
+}
+
+
+.infoBlock {
+  margin-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+
+  @include xs {
+    margin-top: var(--space-lg);
+    gap: var(--space-lg);
+  }
+}

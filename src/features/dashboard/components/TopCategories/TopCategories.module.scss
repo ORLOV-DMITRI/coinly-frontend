@@ -1,0 +1,71 @@
+@use "@/styles/variables" as *;
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.categories {
+  display: block;
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: var(--muted-foreground);
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border);
+
+  @include xs {
+    padding: var(--space-xs) 0 ;
+  }
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.emoji {
+  font-size: 24px;
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.amount {
+  font-size: 16px;
+  font-weight: 600;
+  flex: none;
+}
+
+.barInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 200px;
+
+  @include xs {
+    justify-content: flex-end;
+    width: auto;
+  }
+}
+.bar {
+  @include xs {
+    display: none;
+  }
+}

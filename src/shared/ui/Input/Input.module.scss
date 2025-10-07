@@ -20,7 +20,7 @@
   border: 2px solid var(--border);
   border-radius: 8px;
   padding: 16px 20px;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--secondary-foreground);
   transition: border-color 0.2s ease;
 
@@ -39,7 +39,6 @@
 }
 
 .errorText {
-  display: none;
   position: absolute;
   bottom: -20px;
   color: var(--destructive);

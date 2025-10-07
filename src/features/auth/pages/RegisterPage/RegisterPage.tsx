@@ -8,6 +8,7 @@ import {useRouter} from "next/navigation";
 import Input from "@/shared/ui/Input/Input";
 import Button from "@/shared/ui/Button/Button";
 import cn from "classnames";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState<RegisterCredentials>({
@@ -63,7 +64,7 @@ export default function RegisterPage() {
       login(response.token, response.user);
       router.push('/');
     } catch (error: any) {
-      setErrors({ email: error?.response?.data?.message || 'Ошибка регистрации' });
+      toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +84,6 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   error={errors.name}
                   placeholder="Введите ваше имя"
-                  required={true}
               />
 
               <Input
@@ -93,7 +93,6 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   error={errors.email}
                   placeholder="Введите email"
-                  required={true}
               />
 
               <Input
@@ -103,7 +102,6 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   error={errors.password}
                   placeholder="Введите пароль"
-                  required={true}
               />
 
               <Button

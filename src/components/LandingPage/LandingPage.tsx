@@ -12,9 +12,11 @@ export default function LandingPage() {
 
                     <h1>Отслеживай расходы легко и быстро</h1>
                     <p className={styles.subtitle}>Контролируй свою жизнь</p>
-                    <Button variant={'primary'} size={'default'}>
-                        <Link href={'/login'}>Начать</Link>
-                    </Button>
+
+                        <Link href={'/login'}>
+                            <Button variant={'primary'} size={'default'}>Начать</Button>
+                        </Link>
+
                 </div>
                 <div className={styles.decorBlocks}>
                     <div className={styles.decorBlock}></div>

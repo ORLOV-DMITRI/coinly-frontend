@@ -6,6 +6,8 @@ import cn from "classnames";
 import Button from "@/shared/ui/Button/Button";
 import ThemeSwitcher from "@/components/ThemeSwitcher/ThemeSwitcher";
 import Logo from '/public/assets/svg/logo.svg'
+import {useAuth} from "@/lib/auth/authContext";
+import {useEffect, useState} from "react";
 
 const navLinks = [
     {
@@ -30,9 +32,16 @@ type HeaderProps = {
     isAuthenticated: boolean;
 }
 
-export default function Header({ isAuthenticated }: HeaderProps) {
+export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
     const path = usePathname();
+    const { isAuthenticated: clientAuth } = useAuth();
+    const [mounted, setMounted] = useState(false);
 
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const isAuthenticated = mounted ? clientAuth : serverAuth;
     return (
         <header className={styles.header}>
             <div className="container">
@@ -54,9 +63,13 @@ export default function Header({ isAuthenticated }: HeaderProps) {
 
                     {!isAuthenticated && (
                         <div className={styles.userBlock}>
-                            <Button variant={'primary'} size={'default'} className={styles.headerBtn}>
-                                <Link href={'/login'}>Войти</Link>
-                            </Button>
+
+                                <Link href={'/login'}>
+                                    <Button variant={'primary'} size={'default'} className={styles.headerBtn}>
+                                        Войти
+                                    </Button>
+                                    </Link>
+
                         </div>
                     )}
 
