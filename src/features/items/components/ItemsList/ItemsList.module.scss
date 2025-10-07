@@ -1,10 +1,16 @@
 @use "@/styles/variables" as *;
 
-
 .itemsList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-sm);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--muted-foreground);
+  font-size: 16px;
 }
 
 .card {

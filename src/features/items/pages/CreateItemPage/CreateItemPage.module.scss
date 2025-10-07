@@ -81,7 +81,7 @@
   position: relative;
 
   &:checked {
-    background: var(--primary);
+    background: var(--foreground);
     border-color: var(--primary);
   }
   &:checked::after {
@@ -90,7 +90,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: var(--background);
     font-size: 14px;
     font-weight: bold;
   }

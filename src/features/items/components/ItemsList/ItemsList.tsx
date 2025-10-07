@@ -1,67 +1,54 @@
-import styles from './ItemsList.module.scss'
-import cn from "classnames";
-import FavoriteIcon from '/public/assets/svg/favorite.svg'
+import styles from './ItemsList.module.scss';
+import cn from 'classnames';
+import FavoriteIcon from '/public/assets/svg/favorite.svg';
+import ItemCardSkeleton from '@/features/items/components/ItemCardSkeleton/ItemCardSkeleton';
+import type { Item } from '@/lib/types/api.types';
+import { useMemo } from 'react';
 
+type Props = {
+    items: Item[];
+    isLoading: boolean;
+    search: string;
+};
 
-const items = [
-    {
-        name: 'Молоко',
-        category: '🍞 Продукты',
-        isFavorite: true,
-        prices: [50, 100, 200]
-    },
-    {
-        name: 'Молоко',
-        category: '🍞 Продукты',
-        isFavorite: true,
-        prices: [50]
-    },
-    {
-        name: 'Молоко',
-        category: '🍞 Продукты',
-        isFavorite: false,
-        prices: [50, 70, 100, 200]
-    },
-    {
-        name: 'Молоко',
-        category: '🍞 Продукты',
-        isFavorite: true,
-        prices: [50, 70, 200]
-    },
-    {
-        name: 'Молоко',
-        category: '🍞 Продукты',
-        isFavorite: false,
-        prices: [50, 70, 100]
-    },
-    {
-        name: 'Молоко',
-        category: '🍞 Продукты',
-        isFavorite: true,
-        prices: [ 70, 100, 200]
-    },
-    {
-        name: 'Молоко',
-        category: '🍞 Продукты',
-        isFavorite: false,
-        prices: [50, 100, 200]
-    },
+export default function ItemsList({ items, isLoading, search }: Props) {
+    const filteredItems = useMemo(() => {
+        if (!search) return items;
 
-]
+        const lowerSearch = search.toLowerCase();
+        return items.filter(item =>
+            item.name.toLowerCase().includes(lowerSearch)
+        );
+    }, [items, search]);
 
-export default function ItemsList() {
+    if (isLoading) {
+        return (
+            <div className={styles.itemsList}>
+                {Array.from({ length: 4 }).map((_, index) => (
+                    <ItemCardSkeleton key={index} />
+                ))}
+            </div>
+        );
+    }
+
+    if (filteredItems.length === 0) {
+        return (
+            <div className={styles.empty}>
+                {search ? 'Товары не найдены' : 'Нет товаров'}
+            </div>
+        );
+    }
+
     return (
         <div className={styles.itemsList}>
-
-            {items.map((item, index) => (
-                <div className={cn(styles.card, 'card')} key={index}>
+            {filteredItems.map((item) => (
+                <div className={cn(styles.card, 'card')} key={item.id}>
                     <div className={styles.header}>
                         <div>
                             <div className={styles.name}>{item.name}</div>
-                            <div className={styles.category}>{item.category}</div>
                         </div>
                         <div className={cn(styles.favorite, item.isFavorite && styles.active)}>
-                            <FavoriteIcon/>
+                            <FavoriteIcon />
                         </div>
                     </div>
                     <div className={styles.prices}>
@@ -71,9 +58,6 @@ export default function ItemsList() {
                     </div>
                 </div>
             ))}
-
-
-
         </div>
     );
 }
