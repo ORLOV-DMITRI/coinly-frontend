@@ -16,7 +16,7 @@
     height: 100px;
     position: absolute;
     left: -1px;
-    background-color: #fff;
+    background-color: var(--primary);
     animation: borderLight infinite 15s ease;
     top: 0;
   }

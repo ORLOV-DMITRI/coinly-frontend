@@ -1,5 +1,6 @@
 import api from '@/lib/settings/axios';
 import {AuthResponse, User} from "@/lib/types/api.types";
+import Cookies from 'js-cookie';
 
 export type LoginCredentials = {
   email: string;
@@ -30,6 +31,18 @@ export const authService = {
   },
 
   logout(): void {
-    localStorage.removeItem('token');
+    Cookies.remove('auth_token');
+  },
+
+  setToken(token: string): void {
+    Cookies.set('auth_token', token, {
+      expires: 30,
+      sameSite: 'Lax',
+      secure: process.env.NODE_ENV === 'production'
+    });
+  },
+
+  getToken(): string | undefined {
+    return Cookies.get('auth_token');
   }
 };

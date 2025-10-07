@@ -49,6 +49,8 @@
   display: flex;
   gap: var(--space-md);
   list-style: none;
+  margin-right: var(--space-md);
+
   & a {
     color: var(--muted-foreground);
     text-decoration: none;
@@ -61,7 +63,7 @@
 
   }
 
-  @include xs {
+  @include sm {
     display: none;
   }
 }

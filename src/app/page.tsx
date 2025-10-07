@@ -1,7 +1,7 @@
-import NoAuthPage from "@/features/auth/pages/NoAuthPage/NoAuthPage";
+import LandingPage from "@/components/LandingPage/LandingPage";
 
 export default function Home() {
   return (
-    <NoAuthPage/>
+    <LandingPage/>
   );
 }

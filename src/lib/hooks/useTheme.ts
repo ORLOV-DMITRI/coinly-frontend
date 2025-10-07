@@ -12,8 +12,10 @@ const THEME_CLASS_MAP: Record<Exclude<Theme, 'system'>, string> = {
 
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>(() => {
+
     if (typeof window === 'undefined') return 'system';
     return (localStorage.getItem(THEME_KEY) as Theme) || 'system';
+
   });
 
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(() => {

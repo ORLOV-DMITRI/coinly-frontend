@@ -4,31 +4,34 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import cn from "classnames";
 import Button from "@/shared/ui/Button/Button";
-import {useAuth} from "@/lib/auth/authContext";
+import ThemeSwitcher from "@/components/ThemeSwitcher/ThemeSwitcher";
 import Logo from '/public/assets/svg/logo.svg'
 
 const navLinks = [
     {
         name: 'Главная',
-        link: '/'
+        link: '/dashboard'
     },
     {
         name: 'Расходы',
-        link: '#'
+        link: '/expenses'
     },
     {
         name: 'Категории',
-        link: '#'
+        link: '/categories'
     },
     {
         name: 'Товары',
-        link: '#'
+        link: '/items'
     },
 ]
 
-export default function Header() {
-    const path = usePathname()
-    const {isAuthenticated} = useAuth();
+type HeaderProps = {
+    isAuthenticated: boolean;
+}
+
+export default function Header({ isAuthenticated }: HeaderProps) {
+    const path = usePathname();
 
     return (
         <header className={styles.header}>
@@ -57,6 +60,7 @@ export default function Header() {
                         </div>
                     )}
 
+                    <ThemeSwitcher />
 
                 </nav>
             </div>

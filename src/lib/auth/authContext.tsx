@@ -1,7 +1,8 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, authService } from './authService';
+import { authService } from './authService';
+import {User} from "@/lib/types/api.types";
 
 type AuthContextType = {
   user: User | null;
@@ -26,7 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!token && !!user;
 
   const login = (newToken: string, newUser: User) => {
-    localStorage.setItem('token', newToken);
+    authService.setToken(newToken);
     setToken(newToken);
     setUser(newUser);
   };
@@ -43,25 +44,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const urlToken = urlParams.get('token');
 
       if (urlToken) {
-        localStorage.setItem('token', urlToken);
+        authService.setToken(urlToken);
         setToken(urlToken);
         try {
           const userData = await authService.getProfile();
           setUser(userData);
           window.history.replaceState({}, '', window.location.pathname);
         } catch (error) {
-          localStorage.removeItem('token');
+          authService.logout();
           setToken(null);
         }
       } else {
-        const savedToken = localStorage.getItem('token');
+        const savedToken = authService.getToken();
         if (savedToken) {
           setToken(savedToken);
           try {
             const userData = await authService.getProfile();
             setUser(userData);
           } catch (error) {
-            localStorage.removeItem('token');
+            authService.logout();
             setToken(null);
           }
         }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 if (!baseURL) {
@@ -14,7 +15,7 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('auth_token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }

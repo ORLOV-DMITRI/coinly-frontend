@@ -1,9 +1,9 @@
-import styles from './NoAuthPage.module.scss'
+import styles from './LandingPage.module.scss'
 import cn from "classnames";
 import Button from "@/shared/ui/Button/Button";
 import Link from "next/link";
 
-export default function NoAuthPage() {
+export default function LandingPage() {
     return (
         <section className={cn(styles.page, 'page')}>
             <div className="container">
