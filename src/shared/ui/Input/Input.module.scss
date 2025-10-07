@@ -1,0 +1,52 @@
+@use '@/styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+}
+
+.label {
+  color: var(--foreground);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+
+.input {
+  font-family: var(--font-onest), sans-serif;
+  background-color: var(--secondary);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--secondary-foreground);
+  transition: border-color 0.2s ease;
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-foreground);
+  }
+
+/*  &.error {
+    border-color: var(--destructive);
+  }*/
+}
+
+.errorText {
+  display: none;
+  position: absolute;
+  bottom: -20px;
+  color: var(--destructive);
+  font-size: 12px;
+
+  @include xs {
+    bottom: -18px;
+    font-size: 10px;
+  }
+}

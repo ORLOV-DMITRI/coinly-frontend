@@ -1,0 +1,111 @@
+@use "@/styles/variables" as *;
+
+
+.content {
+  display: flex;
+  justify-content: center;
+}
+.form {
+  width: 100%;
+  max-width: 550px;
+  background-color: var(--card);
+  border-radius: 8px;
+  padding: 70px 32px;
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+
+  @include sm {
+    gap: 20px;
+    justify-content: center;
+  }
+  @include xs {
+    background-color: transparent;
+    padding: 10px;
+  }
+}
+
+.title {
+  color: var(--primary);
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+
+  @include sm {
+    font-size: 28px;
+  }
+}
+
+.formFields {
+  align-self: center;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.divider {
+  text-align: center;
+  color: var(--card-foreground);
+  font-size: 16px;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 35%;
+    height: 1px;
+    background-color: var(--muted-foreground);
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+}
+
+.oauthButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  & svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  button {
+    min-width: 200px;
+    gap: 10px;
+  }
+}
+
+.linkToRegister {
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: 16px;
+}
+
+.link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

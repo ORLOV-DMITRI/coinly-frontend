@@ -1,15 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Geist, Geist_Mono, Unbounded, Space_Grotesk, Onest } from "next/font/google";
+import '@/styles/globals.scss'
+import Script from "next/script";
+import ReactQueryProvider from "@/app/ReactQueryProvider";
+import {AuthProvider} from "@/lib/auth/authContext";
+import Header from "@/components/Header/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const numberFont = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const titleFont = Unbounded({
+    variable: "--font-unbounded",
+    subsets: ["cyrillic"],
+});
+
+const logoFont = Space_Grotesk({
+    variable: "--font-logo",
+    subsets: ["latin"],
+});
+
+const textFont = Onest({
+    variable: "--font-onest",
+    subsets: ["cyrillic"],
 });
 
 export const metadata: Metadata = {
@@ -23,9 +42,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <head>
+          <Script id="theme-noflash" strategy="beforeInteractive">
+              {`(function(){try{
+        var v = localStorage.getItem('theme');
+        // Если 'system' или null - не добавляем класс, сработает @media
+        if (v === 'light' || v === 'dark') {
+          var map = {light: 'light-theme', dark: 'dark-theme'};
+          document.documentElement.classList.add(map[v]);
+        }
+      }catch(_){}})();`}
+          </Script>
+
+      </head>
+
+
+      <body className={`${geistSans.variable} ${numberFont.variable} ${titleFont.variable} ${logoFont.variable} ${textFont.variable}`}>
+      <ReactQueryProvider>
+          <AuthProvider>
+              <Header/>
+              {children}
+          </AuthProvider>
+      </ReactQueryProvider>
       </body>
     </html>
   );
