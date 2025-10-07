@@ -1,0 +1,73 @@
+@use "@/styles/variables" as *;
+
+
+.itemsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-sm);
+}
+
+.card {
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-xs);
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.favorite {
+  width: 25px;
+  height: 25px;
+  color: var(--primary);
+
+
+  &.active {
+    & svg {
+      fill: var(--primary);
+    }
+  }
+
+}
+
+.category {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+  background: var(--muted);
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: var(--space-sm);
+}
+
+.prices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.price {
+  background: var(--muted);
+  color: var(--foreground);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: --font-geist-mono, monospace;
+}

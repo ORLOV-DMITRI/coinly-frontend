@@ -1,0 +1,33 @@
+@use "@/styles/variables" as *;
+
+.searchSection {
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.filters {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.favoriteFilter {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.favoriteIcon {
+  width: 20px;
+  line-height: 1;
+  height: 20px;
+  color: var(--primary);
+  position: relative;
+  top: -1px;
+
+  & svg {
+    fill: var(--primary);
+  }
+}

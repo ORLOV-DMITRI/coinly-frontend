@@ -8,9 +8,10 @@ type Props = {
   loading?: boolean;
   children: React.ReactNode;
   className?: string;
+  isActive?: boolean
 } & ComponentProps<'button'>
 
-export default function Button({variant = 'primary', size = 'default', loading = false, disabled, children, className, ...props}: Props) {
+export default function Button({variant = 'primary', size = 'default', loading = false, disabled, children, className, isActive =false,...props}: Props) {
   return (
     <button
       className={cn(
@@ -19,6 +20,7 @@ export default function Button({variant = 'primary', size = 'default', loading =
         styles[size],
         loading && styles.loading,
         disabled && styles.disabled,
+        isActive && styles.active,
         className
       )}
       disabled={disabled || loading}

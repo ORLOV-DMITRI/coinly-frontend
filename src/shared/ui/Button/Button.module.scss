@@ -29,6 +29,11 @@
   background: transparent;
   color: var(--foreground);
   border: 1px solid var(--border);
+
+  &.active {
+    background-color: var(--muted);
+    pointer-events: none;
+  }
   &:hover {
     background: var(--muted);
   }
