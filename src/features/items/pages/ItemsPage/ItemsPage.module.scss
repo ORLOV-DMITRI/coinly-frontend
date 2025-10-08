@@ -18,7 +18,7 @@
 
 .addBtn {
 
-  @include sm {
+/*  @include sm {
     position: fixed;
     bottom: 96px;
     right: 20px;
@@ -32,6 +32,6 @@
     &:active {
       transform: scale(0.95);
     }
-  }
+  }*/
 
 }

@@ -57,7 +57,10 @@
     font-size: 16px;
     transition: color 0.2s;
 
-    &:hover, &.active {
+    @include hover {
+      color: var(--foreground);
+    }
+    &.active {
       color: var(--foreground);
     }
 

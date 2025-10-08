@@ -17,7 +17,7 @@
   cursor: pointer;
   transition: border-color 0.2s, transform 0.2s;
 
-  &:hover {
+  @include hover {
     border-color: var(--primary);
   }
 }

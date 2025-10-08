@@ -20,7 +20,7 @@
   color: var(--primary-foreground);
   border: none;
 
-  &:hover {
+  @include hover {
     opacity: 0.9;
   }
 }
@@ -34,7 +34,8 @@
     background-color: var(--muted);
     pointer-events: none;
   }
-  &:hover {
+
+  @include hover {
     background: var(--muted);
   }
 }

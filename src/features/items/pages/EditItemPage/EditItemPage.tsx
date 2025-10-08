@@ -298,7 +298,7 @@ export default function EditItemPage({itemId}: Props) {
                                 size={'large'}
                                 loading={isUpdating}
                             >
-                                Обновить товар
+                                Обновить
                             </Button>
                         </div>
                     </div>

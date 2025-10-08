@@ -38,4 +38,7 @@
 .tips {
   font-size: 14px;
   color: var(--muted-foreground);
+  @include sm {
+    display: none;
+  }
 }

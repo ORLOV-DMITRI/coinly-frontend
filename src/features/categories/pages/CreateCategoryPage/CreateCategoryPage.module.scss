@@ -49,7 +49,7 @@
   gap: var(--space-sm);
   font-family: inherit;
 
-  &:hover {
+  @include hover {
     border-color: var(--primary);
   }
 }
@@ -80,6 +80,11 @@
 
   @include sm {
     bottom: 70px;
+  }
+  @include xs {
+    padding: var(--space-sm) var(--space-sm);
+    width: 100%;
+    left: 10px;
   }
 }
 

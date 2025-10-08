@@ -143,7 +143,7 @@ export default function CreateCategoryPage() {
                                 size={'large'}
                                 loading={isCreating}
                             >
-                                Создать категорию
+                                Создать
                             </Button>
                         </div>
                     </div>
