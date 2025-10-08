@@ -12,19 +12,23 @@ import {useEffect, useState} from "react";
 const navLinks = [
     {
         name: 'Главная',
-        link: '/dashboard'
+        link: '/dashboard',
+        activePages: ['/dashboard']
     },
     {
         name: 'Расходы',
-        link: '/expenses'
+        link: '/expenses',
+        activePages: ['/expenses']
     },
     {
         name: 'Категории',
-        link: '/categories'
+        link: '/categories',
+        activePages: ['/categories']
     },
     {
         name: 'Товары',
-        link: '/items'
+        link: '/items',
+        activePages: ['/item', '/item/create', '/item/edit']
     },
 ]
 
@@ -55,7 +59,7 @@ export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
                         <ul className={styles.navLinks}>
                             {navLinks.map(item => (
                                 <li key={item.name}>
-                                    <Link href={item.link} className={cn(path === item.link && styles.active)}>{item.name}</Link>
+                                    <Link href={item.link} className={cn(path.startsWith(item.link) && styles.active)}>{item.name}</Link>
                                 </li>
                             ))}
                         </ul>

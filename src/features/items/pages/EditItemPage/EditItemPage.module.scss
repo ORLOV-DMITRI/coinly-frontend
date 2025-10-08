@@ -1,0 +1,300 @@
+@use "@/styles/variables" as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.createPage {
+  margin-top: var(--space-md);
+  @include sm {
+    padding-bottom: var(--space-xl);
+  }
+}
+.formSection {
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.formGroup {
+  margin-bottom: var(--space-md);
+}
+
+.label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: var(--space-xs);
+  color: var(--foreground);
+}
+
+.required {
+  color: var(--primary);
+}
+
+
+.priceInputWrapper {
+  position: relative;
+}
+
+.priceInput {
+  padding-right: 40px;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 500;
+}
+
+.currency {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  font-size: 16px;
+  font-family: 'Geist Mono', monospace;
+  pointer-events: none;
+}
+
+
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--input);
+  border-radius: 6px;
+  cursor: pointer;
+  appearance: none;
+  transition: all 0.2s;
+  position: relative;
+
+  &:checked {
+    background: var(--foreground);
+    border-color: var(--primary);
+  }
+  &:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--background);
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.checkboxLabel {
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  & svg {
+    fill: var(--primary);
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 2px;
+  }
+}
+
+.pricesSection {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--space-md);
+}
+
+.pricesTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.pricesDescription {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-md);
+}
+
+.pricesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.priceItem {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.priceItemInput {
+  flex: 1;
+}
+
+.removeButton {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+
+  &:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+}
+
+
+.addPriceButton {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--muted-foreground);
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+}
+
+
+.actions {
+  position: sticky;
+  bottom: 0;
+  background: var(--background);
+  border-top: 1px solid var(--border);
+  padding: var(--space-md) var(--space-sm);
+  margin: 0 calc(var(--space-sm) * -1);
+  margin-top: var(--space-lg);
+
+  @include sm {
+    bottom: 70px;
+  }
+}
+
+.actionsContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.button {
+  flex: 1;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-family: inherit;
+}
+
+
+.hint {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  margin-top: var(--space-xs);
+}
+
+.emptyPrices {
+  text-align: center;
+  padding: var(--space-md) 0;
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+
+.deleteBtn {
+  width: 40px;
+  height: 40px;
+
+  & svg {
+    transition: 0.2s;
+  }
+  @include hover {
+    color: var(--destructive);
+  }
+}
+
+.skeleton {
+  background: var(--muted);
+  border-radius: 8px;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(
+    90deg,
+    var(--muted) 0%,
+    var(--muted-foreground) 50%,
+    var(--muted) 100%
+  );
+  background-size: 200% 100%;
+  opacity: 0.3;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeletonInput {
+  @extend .skeleton;
+  height: 48px;
+  width: 100%;
+}
+
+.skeletonSelect {
+  @extend .skeleton;
+  height: 48px;
+  width: 100%;
+}
+
+.skeletonCheckbox {
+  @extend .skeleton;
+  height: 60px;
+  width: 100%;
+}
+
+.skeletonPriceSection {
+  @extend .skeleton;
+  height: 200px;
+  width: 100%;
+}

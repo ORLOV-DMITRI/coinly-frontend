@@ -8,7 +8,7 @@ body {
   line-height: 1.6;
   background: var(--background);
   color: var(--foreground);
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 
 
   -webkit-touch-callout: none;
@@ -129,7 +129,7 @@ h3 {
   transform: rotate(180deg);
   cursor: pointer;
   svg {
-    transition: 0.3s;
+    transition: 0.2s;
   }
   &:hover {
     color: var(--muted-foreground);

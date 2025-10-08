@@ -4,6 +4,7 @@ import FavoriteIcon from '/public/assets/svg/favorite.svg';
 import ItemCardSkeleton from '@/features/items/components/ItemCardSkeleton/ItemCardSkeleton';
 import type { Item } from '@/lib/types/api.types';
 import { useMemo } from 'react';
+import {useRouter} from "next/navigation";
 
 type Props = {
     items: Item[];
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export default function ItemsList({ items, isLoading, search }: Props) {
+    const router = useRouter()
     const filteredItems = useMemo(() => {
         if (!search) return items;
 
@@ -20,6 +22,10 @@ export default function ItemsList({ items, isLoading, search }: Props) {
             item.name.toLowerCase().includes(lowerSearch)
         );
     }, [items, search]);
+
+    const handleLinkEdit = (itemId: string) => {
+        router.push(`/items/edit/${itemId}`);
+    }
 
     if (isLoading) {
         return (
@@ -42,7 +48,7 @@ export default function ItemsList({ items, isLoading, search }: Props) {
     return (
         <div className={styles.itemsList}>
             {filteredItems.map((item) => (
-                <div className={cn(styles.card, 'card')} key={item.id}>
+                <div className={cn(styles.card, 'card')} key={item.id} onClick={() => handleLinkEdit(item.id)}>
                     <div className={styles.header}>
                         <div>
                             <div className={styles.name}>{item.name}</div>
