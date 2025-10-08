@@ -1,0 +1,91 @@
+@use "@/styles/variables" as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createPage {
+  margin-top: var(--space-md);
+  @include sm {
+    padding-bottom: var(--space-xl);
+  }
+}
+
+.formSection {
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.formGroup {
+  margin-bottom: var(--space-md);
+}
+
+.label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: var(--space-xs);
+  color: var(--foreground);
+}
+
+.required {
+  color: var(--primary);
+}
+
+.selectButton {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--input);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: inherit;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+
+.emoji {
+  font-size: 24px;
+}
+
+.selectText {
+  flex: 1;
+  text-align: left;
+  color: var(--foreground);
+}
+
+.arrow {
+  font-size: 24px;
+  color: var(--muted-foreground);
+}
+
+.actions {
+  position: sticky;
+  bottom: 0;
+  background: var(--background);
+  border-top: 1px solid var(--border);
+  padding: var(--space-md) var(--space-sm);
+  margin: 0 calc(var(--space-sm) * -1);
+  margin-top: var(--space-lg);
+
+  @include sm {
+    bottom: 70px;
+  }
+}
+
+.actionsContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-sm);
+}

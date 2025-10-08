@@ -1,10 +1,13 @@
 import styles from './ItemsList.module.scss';
 import cn from 'classnames';
 import FavoriteIcon from '/public/assets/svg/favorite.svg';
+import DeleteIcon from '/public/assets/svg/delete.svg'
+
 import ItemCardSkeleton from '@/features/items/components/ItemCardSkeleton/ItemCardSkeleton';
 import type { Item } from '@/lib/types/api.types';
 import { useMemo } from 'react';
 import {useRouter} from "next/navigation";
+import { useItems } from '@/features/items/hooks/useItems';
 
 type Props = {
     items: Item[];
@@ -13,7 +16,8 @@ type Props = {
 };
 
 export default function ItemsList({ items, isLoading, search }: Props) {
-    const router = useRouter()
+    const router = useRouter();
+    const { updateItem, deleteItem } = useItems();
     const filteredItems = useMemo(() => {
         if (!search) return items;
 
@@ -25,7 +29,27 @@ export default function ItemsList({ items, isLoading, search }: Props) {
 
     const handleLinkEdit = (itemId: string) => {
         router.push(`/items/edit/${itemId}`);
-    }
+    };
+
+    const handleToggleFavorite = (e: React.MouseEvent, item: Item) => {
+        e.stopPropagation();
+        updateItem({
+            id: item.id,
+            data: {
+                name: item.name,
+                prices: item.prices,
+                categoryId: item.categoryId,
+                isFavorite: !item.isFavorite,
+            },
+        });
+    };
+
+    const handleDelete = (e: React.MouseEvent, itemId: string) => {
+        e.stopPropagation();
+        if (confirm('Удалить товар? Это действие нельзя отменить.')) {
+            deleteItem(itemId);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -48,20 +72,34 @@ export default function ItemsList({ items, isLoading, search }: Props) {
     return (
         <div className={styles.itemsList}>
             {filteredItems.map((item) => (
-                <div className={cn(styles.card, 'card')} key={item.id} onClick={() => handleLinkEdit(item.id)}>
+                <div className={cn(styles.card, 'card')} key={item.id} onClick={() => handleLinkEdit(item.id)} title={'Нажмите для редактирования'}>
                     <div className={styles.header}>
-                        <div>
-                            <div className={styles.name}>{item.name}</div>
+                        <div className={styles.name}>
+                            {item.name}
                         </div>
-                        <div className={cn(styles.favorite, item.isFavorite && styles.active)}>
+                        <button
+                            type="button"
+                            className={cn(styles.favorite, item.isFavorite && styles.active)}
+                            onClick={(e) => handleToggleFavorite(e, item)}
+                        >
                             <FavoriteIcon />
+                        </button>
+                    </div>
+                    <div className={styles.bottom}>
+                        <div className={styles.prices}>
+                            {item.prices.map((price, index) => (
+                                <span className={styles.price} key={index}>{price}₽</span>
+                            ))}
                         </div>
+                        <button
+                            type="button"
+                            className={styles.deleteBtn}
+                            onClick={(e) => handleDelete(e, item.id)}
+                        >
+                            <DeleteIcon/>
+                        </button>
                     </div>
-                    <div className={styles.prices}>
-                        {item.prices.map((price, index) => (
-                            <span className={styles.price} key={index}>{price}₽</span>
-                        ))}
-                    </div>
+
                 </div>
             ))}
         </div>

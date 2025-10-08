@@ -1,0 +1,37 @@
+@use "@/styles/variables" as *;
+
+
+.categoriesPage {
+  padding-bottom: var(--space-xl);
+  @include sm {
+    padding-bottom: var(--space-xl);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-md);
+}
+
+
+.addBtn {
+
+  @include sm {
+    position: fixed;
+    bottom: 96px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+
+    z-index: 50;
+
+    transition: transform 0.2s;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+}

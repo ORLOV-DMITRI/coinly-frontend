@@ -1,0 +1,125 @@
+@use "@/styles/variables" as *;
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  height: 100%;
+}
+
+.searchInput {
+  flex-shrink: 0;
+}
+
+.section {
+  margin-bottom: var(--space-md);
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.favoriteIcon {
+  width: 16px;
+  height: 16px;
+  fill: var(--primary);
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.itemCheckbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--input);
+  border-radius: 6px;
+  cursor: pointer;
+  appearance: none;
+  transition: all 0.2s;
+  position: relative;
+  flex-shrink: 0;
+
+  &:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+
+  &:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--background);
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.itemName {
+  flex: 1;
+  font-size: 15px;
+}
+
+.categoryBadge {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+.loading {
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--muted-foreground);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.selectedCount {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-sm);
+  text-align: center;
+}
+
+.submitBtn {
+  width: 100%;
+}

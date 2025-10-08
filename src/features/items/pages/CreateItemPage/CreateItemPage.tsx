@@ -177,28 +177,6 @@ export default function CreateItemPage() {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label} htmlFor="itemCategory">
-                                Категория
-                            </label>
-                            <select
-                                id="itemCategory"
-                                name="categoryId"
-                                value={formData.categoryId}
-                                onChange={handleChange}
-                                className={styles.select}
-                                disabled={categoriesLoading}
-                            >
-                                <option value="">Без категории</option>
-                                {categories.map(category => (
-                                    <option key={category.id} value={category.id}>
-                                        {category.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-
-                        <div className={styles.formGroup}>
                             <label className={styles.checkboxWrapper}>
                                 <input
                                     type="checkbox"

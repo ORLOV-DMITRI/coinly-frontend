@@ -8,8 +8,8 @@ type Props = {
     search: string;
     onSearchChange: (value: string) => void;
     itemsCount: number;
-    filter: 'all' | 'favorite';
-    onFilterChange: (value: 'all' | 'favorite') => void;
+    filter: 'all' | 'abc' | 'count';
+    onFilterChange: (value: 'all' | 'abc' | 'count') => void;
 };
 
 export default function SearchSection({ search, onSearchChange, itemsCount, filter, onFilterChange }: Props) {
@@ -35,10 +35,18 @@ export default function SearchSection({ search, onSearchChange, itemsCount, filt
                 <Button
                     variant={'secondary'}
                     className={styles.favoriteFilter}
-                    isActive={filter === 'favorite'}
-                    onClick={() => onFilterChange('favorite')}
+                    isActive={filter === 'abc'}
+                    onClick={() => onFilterChange('abc')}
                 >
-                    <span className={styles.favoriteIcon}><FavoriteIcon/></span> Избранное
+                    По алфавиту
+                </Button>
+                <Button
+                    variant={'secondary'}
+                    className={styles.favoriteFilter}
+                    isActive={filter === 'count'}
+                    onClick={() => onFilterChange('count')}
+                >
+                    По количеству товаров
                 </Button>
             </div>
 

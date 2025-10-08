@@ -264,6 +264,10 @@
   );
   background-size: 200% 100%;
   opacity: 0.3;
+
+  & input {
+    opacity: 0;
+  }
 }
 
 @keyframes shimmer {
@@ -295,6 +299,5 @@
 
 .skeletonPriceSection {
   @extend .skeleton;
-  height: 200px;
   width: 100%;
 }

@@ -77,3 +77,21 @@
   font-weight: 600;
   font-family: --font-geist-mono, monospace;
 }
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.deleteBtn {
+  width: 25px;
+  height: 25px;
+  opacity: 0.4;
+
+  & svg {
+    transition: 0.2s;
+  }
+  @include hover {
+    color: var(--destructive);
+    opacity: 0.8;
+  }
+}

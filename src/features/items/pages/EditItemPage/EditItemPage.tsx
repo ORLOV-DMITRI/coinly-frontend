@@ -185,157 +185,101 @@ export default function EditItemPage({itemId}: Props) {
 
 
                 <form onSubmit={handleSubmit}>
-                    {isLoading ? (
-                        <>
-                            <div className={styles.formSection}>
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label}>
-                                        Название товара <span className={styles.required}>*</span>
-                                    </label>
-                                    <div className={styles.skeletonInput}></div>
-                                </div>
+                    <div className={styles.formSection}>
+                        <div className={styles.formGroup}>
+                            <label className={styles.label} htmlFor="itemName">
+                                Название товара <span className={styles.required}>*</span>
+                            </label>
 
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label}>
-                                        Первая цена <span className={styles.required}>*</span>
-                                    </label>
-                                    <div className={styles.skeletonInput}></div>
-                                </div>
+                            <Input type="text" id="itemName" name="name" value={formData.name}
+                                   onChange={handleChange}
+                                   error={errors.name}
+                                   placeholder="Например: Молоко"
+                                   autoFocus
+                                   className={cn(isLoading && styles.skeletonInput)}
+                            />
+                        </div>
 
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label}>Категория</label>
-                                    <div className={styles.skeletonSelect}></div>
-                                </div>
-
-                                <div className={styles.formGroup}>
-                                    <div className={styles.skeletonCheckbox}></div>
-                                </div>
+                        <div className={styles.formGroup}>
+                            <label className={styles.label} htmlFor="itemPrice">
+                                Первая цена <span className={styles.required}>*</span>
+                            </label>
+                            <div className={styles.priceInputWrapper}>
+                                <Input
+                                    type="number"
+                                    id="itemPrice"
+                                    name="firstPrice"
+                                    value={formData.firstPrice}
+                                    onChange={handleChange}
+                                    error={errors.firstPrice}
+                                    placeholder="70"
+                                    step="10"
+                                    className={cn(styles.priceInput, isLoading && styles.skeletonInput)}
+                                />
+                                <span className={styles.currency}>₽</span>
                             </div>
-
-                            <div className={styles.skeletonPriceSection}></div>
-                        </>
-                    ) : (
-                        <>
-                            <div className={styles.formSection}>
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label} htmlFor="itemName">
-                                        Название товара <span className={styles.required}>*</span>
-                                    </label>
-                                    <Input
-                                        type="text"
-                                        id="itemName"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        error={errors.name}
-                                        placeholder="Например: Молоко"
-                                        autoFocus
-                                    />
-                                </div>
-
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label} htmlFor="itemPrice">
-                                        Первая цена <span className={styles.required}>*</span>
-                                    </label>
-                                    <div className={styles.priceInputWrapper}>
-                                        <Input
-                                            type="number"
-                                            id="itemPrice"
-                                            name="firstPrice"
-                                            value={formData.firstPrice}
-                                            onChange={handleChange}
-                                            error={errors.firstPrice}
-                                            className={styles.priceInput}
-                                            placeholder="70"
-                                            step="10"
-                                        />
-                                        <span className={styles.currency}>₽</span>
-                                    </div>
-                                    <div className={styles.hint}>Основная цена товара</div>
-                                </div>
-
-                                <div className={styles.formGroup}>
-                                    <label className={styles.label} htmlFor="itemCategory">
-                                        Категория
-                                    </label>
-                                    <select
-                                        id="itemCategory"
-                                        name="categoryId"
-                                        value={formData.categoryId}
-                                        onChange={handleChange}
-                                        className={styles.select}
-                                        disabled={categoriesLoading}
-                                    >
-                                        <option value="">Без категории</option>
-                                        {categories.map(category => (
-                                            <option key={category.id} value={category.id}>
-                                                {category.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                            <div className={styles.hint}>Основная цена товара</div>
+                        </div>
 
 
-                                <div className={styles.formGroup}>
-                                    <label className={styles.checkboxWrapper}>
-                                        <input
-                                            type="checkbox"
-                                            name="isFavorite"
-                                            checked={formData.isFavorite}
-                                            onChange={handleChange}
-                                            className={styles.checkbox}
-                                        />
-                                        <span className={styles.checkboxLabel}>
+                        <div className={styles.formGroup}>
+                            <label className={cn(styles.checkboxWrapper, isLoading && styles.skeletonCheckbox)}>
+                                <input
+                                    type="checkbox"
+                                    name="isFavorite"
+                                    checked={formData.isFavorite}
+                                    onChange={handleChange}
+                                    className={styles.checkbox}
+                                />
+                                <span className={styles.checkboxLabel}>
                                             <span><FavoriteIcon/></span>
                                             <span>Добавить в избранное</span>
                                         </span>
-                                    </label>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div className={cn(styles.pricesSection, isLoading && styles.skeletonPriceSection)}>
+                        <h3 className={styles.pricesTitle}>Дополнительные цены</h3>
+                        <p className={styles.pricesDescription}>
+                            Добавьте типичные цены для быстрого выбора при создании расхода
+                        </p>
+
+                        <div className={styles.pricesList}>
+                            {formData.additionalPrices.length === 0 ? (
+                                <div className={styles.emptyPrices}>
+                                    Пока нет дополнительных цен
                                 </div>
-                            </div>
-
-                            <div className={styles.pricesSection}>
-                                <h3 className={styles.pricesTitle}>Дополнительные цены</h3>
-                                <p className={styles.pricesDescription}>
-                                    Добавьте типичные цены для быстрого выбора при создании расхода
-                                </p>
-
-                                <div className={styles.pricesList}>
-                                    {formData.additionalPrices.length === 0 ? (
-                                        <div className={styles.emptyPrices}>
-                                            Пока нет дополнительных цен
+                            ) : (
+                                formData.additionalPrices.map((price, index) => (
+                                    <div key={index} className={styles.priceItem}>
+                                        <div className={cn(styles.priceInputWrapper, styles.priceItemInput)}>
+                                            <Input
+                                                type="number"
+                                                value={price}
+                                                onChange={(e) => handlePriceChange(index, e.target.value)}
+                                                className={styles.priceInput}
+                                                placeholder="80"
+                                                step="10"
+                                            />
+                                            <span className={styles.currency}>₽</span>
                                         </div>
-                                    ) : (
-                                        formData.additionalPrices.map((price, index) => (
-                                            <div key={index} className={styles.priceItem}>
-                                                <div className={cn(styles.priceInputWrapper, styles.priceItemInput)}>
-                                                    <Input
-                                                        type="number"
-                                                        value={price}
-                                                        onChange={(e) => handlePriceChange(index, e.target.value)}
-                                                        className={styles.priceInput}
-                                                        placeholder="80"
-                                                        step="10"
-                                                    />
-                                                    <span className={styles.currency}>₽</span>
-                                                </div>
-                                                <button type="button" onClick={() => handleRemovePrice(index)} className={styles.removeButton}>
-                                                    ×
-                                                </button>
-                                            </div>
-                                        ))
-                                    )}
-                                </div>
+                                        <button type="button" onClick={() => handleRemovePrice(index)} className={styles.removeButton}>
+                                            ×
+                                        </button>
+                                    </div>
+                                ))
+                            )}
+                        </div>
 
-                                <button
-                                    type="button"
-                                    onClick={handleAddPrice}
-                                    className={styles.addPriceButton}
-                                >
-                                    <span>Добавить цену</span>
-                                </button>
-                            </div>
-                        </>
-                    )}
+                        <button
+                            type="button"
+                            onClick={handleAddPrice}
+                            className={styles.addPriceButton}
+                        >
+                            <span>Добавить цену</span>
+                        </button>
+                    </div>
 
                     <div className={styles.actions}>
                         <div className={styles.actionsContainer}>

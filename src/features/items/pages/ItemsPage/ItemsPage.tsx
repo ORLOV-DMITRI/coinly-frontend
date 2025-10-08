@@ -10,7 +10,11 @@ import { useItems } from '@/features/items/hooks/useItems';
 
 export default function ItemsPage() {
     const [search, setSearch] = useState('');
-    const { items, isLoading } = useItems();
+    const [filter, setFilter] = useState<'all' | 'favorite'>('all');
+
+    const { items, isLoading } = useItems({
+        isFavorite: filter === 'favorite' ? true : undefined
+    });
 
     return (
         <section className={styles.itemsPage}>
@@ -29,6 +33,8 @@ export default function ItemsPage() {
                         search={search}
                         onSearchChange={setSearch}
                         itemsCount={items.length}
+                        filter={filter}
+                        onFilterChange={setFilter}
                     />
 
                     <ItemsList

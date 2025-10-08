@@ -1,0 +1,55 @@
+@use "@/styles/variables" as *;
+
+
+.categoriesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  &:hover {
+    border-color: var(--primary);
+    background: var(--muted);
+  }
+}
+
+
+.emoji {
+  font-size: 32px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.count {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+
+.arrow {
+  font-size: 20px;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
