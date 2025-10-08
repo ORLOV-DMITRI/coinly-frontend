@@ -5,10 +5,6 @@ export type EmojiCategory = {
 
 export const EMOJI_CATEGORIES: EmojiCategory[] = [
     {
-        label: 'Популярные',
-        emojis: ['🍞', '🚗', '🏠', '💰'],
-    },
-    {
         label: 'Еда и напитки',
         emojis: ['🍞', '🥖', '🍎', '🍕'],
     },

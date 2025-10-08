@@ -1,17 +1,78 @@
 import styles from './CategoriesList.module.scss'
+import CategoryCardSkeleton from '@/features/categories/components/CategoryCardSkeleton/CategoryCardSkeleton';
+import type { CategoryWithCount } from '@/lib/types/api.types';
+import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import { pluralize } from '@/shared/utils/pluralize';
 
-export default function CategoriesList() {
+type Props = {
+    categories: CategoryWithCount[];
+    isLoading: boolean;
+    search: string;
+    filter: 'all' | 'count';
+};
+
+export default function CategoriesList({ categories, isLoading, search, filter }: Props) {
+    const router = useRouter();
+
+    const filteredAndSortedCategories = useMemo(() => {
+        let result = categories;
+
+        if (search) {
+            const lowerSearch = search.toLowerCase();
+            result = result.filter(category =>
+                category.name.toLowerCase().includes(lowerSearch)
+            );
+        }
+
+        if (filter === 'count') {
+            result = [...result].sort((a, b) => b._count.items - a._count.items);
+        }
+
+        return result;
+    }, [categories, search, filter]);
+
+    const handleCategoryClick = (categoryId: string) => {
+        router.push(`/categories/edit/${categoryId}`);
+    };
+
+    if (isLoading) {
+        return (
+            <div className={styles.categoriesList}>
+                {Array.from({ length: 4 }).map((_, index) => (
+                    <CategoryCardSkeleton key={index} />
+                ))}
+            </div>
+        );
+    }
+
+    if (filteredAndSortedCategories.length === 0) {
+        return (
+            <div className={styles.empty}>
+                {search ? 'Категории не найдены' : 'Нет категорий'}
+            </div>
+        );
+    }
+
     return (
         <div className={styles.categoriesList}>
-            <div className={styles.row}>
-                <div className={styles.emoji}>🍞</div>
-                <div className={styles.info}>
-                    <div className={styles.name}>Продукты</div>
-                    <div className={styles.count}>12 товаров</div>
+            {filteredAndSortedCategories.map((category) => (
+                <div
+                    className={styles.row}
+                    key={category.id}
+                    onClick={() => handleCategoryClick(category.id)}
+                    title={'Нажмите для редактирования'}
+                >
+                    <div className={styles.emoji}>{category.emoji || '📁'}</div>
+                    <div className={styles.info}>
+                        <div className={styles.name}>{category.name}</div>
+                        <div className={styles.count}>
+                            {pluralize(category._count.items, ['товар', 'товара', 'товаров'])}
+                        </div>
+                    </div>
+                    <div className={styles.arrow}>→</div>
                 </div>
-                <div className={styles.arrow}>→</div>
-            </div>
-
+            ))}
         </div>
     );
 }

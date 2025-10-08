@@ -3,7 +3,7 @@ import cn from 'classnames';
 import styles from './Button.module.scss';
 
 type Props = {
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'danger';
   size?: 'default' | 'large';
   loading?: boolean;
   children: React.ReactNode;

@@ -9,7 +9,7 @@ import CategoriesList from "@/features/categories/components/CategoriesList/Cate
 
 export default function CategoriesPage() {
     const [search, setSearch] = useState('');
-    const [filter, setFilter] = useState<'all' | 'abc' | 'count'>('all');
+    const [filter, setFilter] = useState<'all' | 'count'>('all');
 
     const { categories, isLoading } = useCategories();
 
@@ -34,7 +34,7 @@ export default function CategoriesPage() {
                     onFilterChange={setFilter}
                 />
 
-                <CategoriesList/>
+                <CategoriesList categories={categories} filter={filter} search={search} isLoading={isLoading}/>
 
             </div>
           </div>

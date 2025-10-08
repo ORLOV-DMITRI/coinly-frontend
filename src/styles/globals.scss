@@ -147,3 +147,9 @@ h3 {
     height: 25px;
   }
 }
+.responsiveToast {
+  min-width: 450px;
+  @include xs {
+    min-width: 350px;
+  }
+}

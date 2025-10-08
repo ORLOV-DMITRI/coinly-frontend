@@ -3,6 +3,7 @@ import Input from '@/shared/ui/Input/Input';
 import Button from '@/shared/ui/Button/Button';
 import cn from 'classnames';
 import FavoriteIcon from '/public/assets/svg/favorite.svg';
+import {pluralize} from "@/shared/utils/pluralize";
 
 type Props = {
     search: string;
@@ -44,7 +45,7 @@ export default function SearchSection({ search, onSearchChange, itemsCount, filt
 
             <div className={styles.info}>
                 <div className={cn(styles.itemsCount, 'mutedText')}>
-                    Показано: {itemsCount} товаров
+                    Найдено:  {pluralize(itemsCount, ['товар', 'товара', 'товаров'])}
                 </div>
                 <div className={styles.tips}>
                    Нажмите на элемент для редактирования

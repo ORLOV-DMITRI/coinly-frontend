@@ -24,11 +24,16 @@ export default function ItemsPage() {
                         <h2>Товары</h2>
                         <Link href={'/items/create'}>
                             <Button variant={'primary'} size={'default'} className={styles.addBtn}>
-                                Создать товар
+                                Создать
                             </Button>
                         </Link>
                     </div>
 
+                    <Link href={'/items/create'} className={styles.mobile}>
+                        <Button variant={'primary'} size={'default'} className={styles.addBtn}>
+                            Создать
+                        </Button>
+                    </Link>
                     <SearchSection
                         search={search}
                         onSearchChange={setSearch}

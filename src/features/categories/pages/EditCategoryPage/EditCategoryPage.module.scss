@@ -1,0 +1,137 @@
+@use "@/styles/variables" as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createPage {
+  margin-top: var(--space-md);
+  @include sm {
+    padding-bottom: var(--space-xl);
+  }
+}
+
+.formSection {
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.formGroup {
+  margin-bottom: var(--space-md);
+}
+
+.label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: var(--space-xs);
+  color: var(--foreground);
+}
+
+.required {
+  color: var(--primary);
+}
+
+.selectButton {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--input);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: inherit;
+
+  @include hover {
+    border-color: var(--primary);
+  }
+}
+
+.emoji {
+  font-size: 24px;
+}
+
+.selectText {
+  flex: 1;
+  text-align: left;
+  color: var(--foreground);
+}
+
+.arrow {
+  font-size: 24px;
+  color: var(--muted-foreground);
+}
+
+.actions {
+  position: sticky;
+  bottom: 0;
+  background: var(--background);
+  border-top: 1px solid var(--border);
+  padding: var(--space-md) var(--space-sm);
+  margin: 0 calc(var(--space-sm) * -1);
+  margin-top: var(--space-lg);
+
+  @include sm {
+    bottom: 70px;
+  }
+  @include xs {
+    padding: var(--space-sm) var(--space-sm);
+    width: 100%;
+    left: 10px;
+  }
+}
+
+.actionsContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.deleteSection {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+}
+
+.skeleton {
+  background: var(--muted);
+  border-radius: 8px;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(
+    90deg,
+    var(--muted) 0%,
+    var(--muted-foreground) 50%,
+    var(--muted) 100%
+  );
+  background-size: 200% 100%;
+  opacity: 0.3;
+}
+
+.skeletonInput {
+  height: 48px;
+  width: 100%;
+}
+
+.skeletonButton {
+  height: 48px;
+  width: 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

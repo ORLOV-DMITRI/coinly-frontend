@@ -18,13 +18,16 @@ type Props = {
 export default function ItemsList({ items, isLoading, search }: Props) {
     const router = useRouter();
     const { updateItem, deleteItem } = useItems();
+
     const filteredItems = useMemo(() => {
         if (!search) return items;
 
         const lowerSearch = search.toLowerCase();
+
         return items.filter(item =>
             item.name.toLowerCase().includes(lowerSearch)
         );
+
     }, [items, search]);
 
     const handleLinkEdit = (itemId: string) => {

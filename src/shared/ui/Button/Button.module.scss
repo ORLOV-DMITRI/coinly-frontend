@@ -12,6 +12,10 @@
   cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 
@@ -40,6 +44,11 @@
   }
 }
 
+.danger {
+  background: transparent;
+  color: var(--destructive);
+  border: none;
+}
 
 .large  {
   width: 100%;

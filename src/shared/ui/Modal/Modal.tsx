@@ -2,6 +2,7 @@ import styles from './Modal.module.scss';
 import cn from 'classnames';
 import { ReactNode, useEffect } from 'react';
 import BackIcon from '/public/assets/svg/backArrow.svg';
+import CloseIcon from '/public/assets/svg/close.svg';
 
 type Props = {
     isOpen: boolean;
@@ -35,7 +36,7 @@ export default function Modal({ isOpen, onClose, title, children, className }: P
                     </button>
                     <h3 className={styles.title}>{title}</h3>
                     <button type="button" className={styles.closeBtn} onClick={onClose}>
-                        ×
+                        <CloseIcon/>
                     </button>
                 </div>
                 <div className={styles.content}>

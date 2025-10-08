@@ -9,7 +9,6 @@ export default function CustomToaster() {
         background: backgroundVar,
         color: foregroundVar,
         border: '1px solid var(--border)',
-        minWidth: '350px',
         padding: '16px',
     };
 
@@ -17,7 +16,6 @@ export default function CustomToaster() {
         ...baseStyle,
         background: backgroundVar,
         color: destructiveVar,
-        minWidth: '450px',
         border: `1px solid ${destructiveVar}`,
     };
 
@@ -29,6 +27,7 @@ export default function CustomToaster() {
             }}
             toastOptions={{
                 style: baseStyle,
+                className: 'responsiveToast',
 
                 error: {
                     style: errorStyle,

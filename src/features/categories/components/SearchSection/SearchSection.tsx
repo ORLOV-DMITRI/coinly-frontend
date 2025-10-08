@@ -3,13 +3,14 @@ import Input from '@/shared/ui/Input/Input';
 import Button from '@/shared/ui/Button/Button';
 import cn from 'classnames';
 import FavoriteIcon from '/public/assets/svg/favorite.svg';
+import {pluralize} from "@/shared/utils/pluralize";
 
 type Props = {
     search: string;
     onSearchChange: (value: string) => void;
     itemsCount: number;
-    filter: 'all' | 'abc' | 'count';
-    onFilterChange: (value: 'all' | 'abc' | 'count') => void;
+    filter: 'all' | 'count';
+    onFilterChange: (value: 'all' | 'count') => void;
 };
 
 export default function SearchSection({ search, onSearchChange, itemsCount, filter, onFilterChange }: Props) {
@@ -18,7 +19,7 @@ export default function SearchSection({ search, onSearchChange, itemsCount, filt
             <Input
                 type="search"
                 className={styles.searchInput}
-                placeholder="Поиск товаров..."
+                placeholder="Поиск категории..."
                 value={search}
                 onChange={(e) => onSearchChange(e.target.value)}
             />
@@ -35,14 +36,6 @@ export default function SearchSection({ search, onSearchChange, itemsCount, filt
                 <Button
                     variant={'secondary'}
                     className={styles.favoriteFilter}
-                    isActive={filter === 'abc'}
-                    onClick={() => onFilterChange('abc')}
-                >
-                    По алфавиту
-                </Button>
-                <Button
-                    variant={'secondary'}
-                    className={styles.favoriteFilter}
                     isActive={filter === 'count'}
                     onClick={() => onFilterChange('count')}
                 >
@@ -52,7 +45,7 @@ export default function SearchSection({ search, onSearchChange, itemsCount, filt
 
             <div className={styles.info}>
                 <div className={cn(styles.itemsCount, 'mutedText')}>
-                    Показано: {itemsCount} товаров
+                    Найдено:   {pluralize(itemsCount, ['категория', 'категории', 'категорий'])}
                 </div>
                 <div className={styles.tips}>
                    Нажмите на элемент для редактирования

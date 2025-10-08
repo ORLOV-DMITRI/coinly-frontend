@@ -56,6 +56,8 @@ export default function CreateCategoryPage() {
 
         createCategory({
             name: formData.name.trim(),
+            emoji: formData.emoji || undefined,
+            itemIds: formData.selectedItemIds.length > 0 ? formData.selectedItemIds : undefined,
         }, {
             onSuccess: () => {
                 router.push('/categories');

@@ -17,12 +17,12 @@ export default function BottomNavigation() {
   return (
     <nav className={styles.bottomNav}>
       <div className={styles.navItems}>
-        <Link href={'/dashboard'} className={cn(styles.navItem, pathname === '/dashboard' && styles.active)}>
+        <Link href={'/dashboard'} className={cn(styles.navItem, pathname.startsWith('/dashboard') && styles.active)}>
           <HomeIcon className={styles.icon} />
           <span className={styles.label}>Главная</span>
         </Link>
 
-        <Link href={'/expenses'} className={cn(styles.navItem, pathname === '/expenses' && styles.active)}>
+        <Link href={'/expenses'} className={cn(styles.navItem, pathname.startsWith('/expenses') && styles.active)}>
           <WalletIcon className={styles.icon} />
           <span className={styles.label}>Расходы</span>
         </Link>
@@ -33,13 +33,13 @@ export default function BottomNavigation() {
         </button>
 
 
-        <Link href={'/categories'} className={cn(styles.navItem, pathname === '/categories' && styles.active)}>
+        <Link href={'/categories'} className={cn(styles.navItem, pathname.startsWith('/categories') && styles.active)}>
           <FolderIcon className={styles.icon} />
           <span className={styles.label}>Категории</span>
         </Link>
 
 
-        <Link href={'/items'} className={cn(styles.navItem, pathname === '/items' && styles.active)}>
+        <Link href={'/items'} className={cn(styles.navItem, pathname.startsWith('/items') && styles.active)}>
           <ShoppingBagIcon className={styles.icon} />
           <span className={styles.label}>Товары</span>
         </Link>

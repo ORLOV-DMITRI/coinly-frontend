@@ -7,6 +7,7 @@ import { useState, useMemo } from 'react';
 import { useItems } from '@/features/items/hooks/useItems';
 import type { Item } from '@/lib/types/api.types';
 import cn from 'classnames';
+import {pluralize} from "@/shared/utils/pluralize";
 
 type Props = {
     isOpen: boolean;
@@ -114,7 +115,7 @@ export default function ItemsPickerModal({ isOpen, onClose, selectedItemIds, onS
 
                 <div className={styles.footer}>
                     <div className={styles.selectedCount}>
-                        Выбрано: {localSelectedIds.length} товаров
+                        Выбрано: {pluralize(localSelectedIds.length, ['товар', 'товара', 'товаров'])}
                     </div>
                     <Button
                         variant="primary"

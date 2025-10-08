@@ -40,10 +40,7 @@ export default function EmojiPickerModal({ isOpen, onClose, selectedEmoji, onSel
                                 <button
                                     key={emoji}
                                     type="button"
-                                    className={cn(
-                                        styles.emojiButton,
-                                        selectedEmoji === emoji && styles.selected
-                                    )}
+                                    className={cn(styles.emojiButton, selectedEmoji === emoji && styles.selected)}
                                     onClick={() => handleEmojiClick(emoji)}
                                 >
                                     {emoji}

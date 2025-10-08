@@ -27,7 +27,8 @@ type Props = {
 
 export default function EditItemPage({itemId}: Props) {
     const router = useRouter();
-    const {data: item, isLoading, error} = useItem(itemId)
+
+    const {data: item, isLoading} = useItem(itemId)
 
     const {updateItem, isUpdating, deleteItem, isDeleting} = useItems();
 
@@ -280,6 +281,21 @@ export default function EditItemPage({itemId}: Props) {
                             <span>Добавить цену</span>
                         </button>
                     </div>
+
+                    {!isLoading && (
+                        <div className={styles.deleteSection}>
+                            <Button
+                                type="button"
+                                variant={'danger'}
+                                size={'default'}
+                                onClick={handleDelete}
+                                loading={isDeleting}
+                                disabled={isUpdating}
+                            >
+                                Удалить товар
+                            </Button>
+                        </div>
+                    )}
 
                     <div className={styles.actions}>
                         <div className={styles.actionsContainer}>

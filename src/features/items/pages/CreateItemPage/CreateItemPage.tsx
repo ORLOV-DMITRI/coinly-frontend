@@ -256,7 +256,7 @@ export default function CreateItemPage() {
                                 size={'large'}
                                 loading={isCreating}
                             >
-                                Создать товар
+                                Создать
                             </Button>
                         </div>
                     </div>

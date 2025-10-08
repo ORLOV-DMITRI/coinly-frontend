@@ -3,11 +3,10 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-sm);
 }
 
 .categoryGroup {
-  margin-bottom: var(--space-md);
 }
 
 .categoryLabel {
@@ -22,14 +21,13 @@
 .emojiGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
-  gap: var(--space-xs);
+  gap: var(--space-sm);
 }
 
 .emojiButton {
   background: var(--muted);
   border: 2px solid transparent;
   border-radius: 12px;
-  padding: 12px;
   font-size: 32px;
   cursor: pointer;
   transition: all 0.2s;
@@ -37,6 +35,8 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
+  width: 60px;
+  height: 55px;
 
   @include hover {
     background: var(--background);
@@ -54,7 +54,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  margin: var(--space-md) 0;
+  margin: var(--space-sm) 0;
   color: var(--muted-foreground);
   font-size: 14px;
 

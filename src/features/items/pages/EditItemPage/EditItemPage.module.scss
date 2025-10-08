@@ -191,7 +191,13 @@
     color: var(--primary);
   }
 }
-
+.deleteSection {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+}
 
 .actions {
   position: sticky;

@@ -32,6 +32,7 @@ export type MeResponse = {
 export type Category = {
   id: string;
   name: string;
+  emoji?: string;
   userId: string;
   createdAt: string;
 };
@@ -55,10 +56,14 @@ export type ItemBasic = {
 
 export type CreateCategoryDto = {
   name: string;
+  emoji?: string;
+  itemIds?: string[];
 };
 
 export type UpdateCategoryDto = {
-  name: string;
+  name?: string;
+  emoji?: string;
+  itemIds?: string[];
 };
 
 export type GetCategoriesResponse = {
