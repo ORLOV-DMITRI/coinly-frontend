@@ -6,9 +6,15 @@ import Button from '@/shared/ui/Button/Button';
 import BackIcon from '/public/assets/svg/backArrow.svg';
 import EmojiPickerModal from '@/features/categories/components/EmojiPickerModal/EmojiPickerModal';
 import ItemsPickerModal from '@/features/categories/components/ItemsPickerModal/ItemsPickerModal';
-import {useState, FormEvent, useEffect} from 'react';
+import CategoryItemsList from '@/features/categories/components/CategoryItemsList/CategoryItemsList';
+import {useState, FormEvent, useEffect, useMemo} from 'react';
 import { useRouter } from 'next/navigation';
 import {useCategories, useCategory} from '@/features/categories/hooks/useCategories';
+import {useItems} from '@/features/items/hooks/useItems';
+import DeleteIcon from '/public/assets/svg/delete.svg'
+import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
+import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
+
 
 type FormData = {
     name: string;
@@ -24,6 +30,10 @@ export default function EditCategoryPage({categoryId}:Props) {
     const router = useRouter();
 
     const {data: category, isLoading} = useCategory(categoryId)
+    const {items: allItems} = useItems();
+
+    const { dialogState, showConfirm } = useConfirmDialog();
+
 
     const { updateCategory, isUpdating, deleteCategory, isDeleting } = useCategories();
 
@@ -35,6 +45,7 @@ export default function EditCategoryPage({categoryId}:Props) {
 
     useEffect(() => {
         if (category) {
+            console.log(category)
             setFormData({
                 name: category.name,
                 emoji: category.emoji || '📁',
@@ -47,12 +58,25 @@ export default function EditCategoryPage({categoryId}:Props) {
     const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
     const [isItemsModalOpen, setIsItemsModalOpen] = useState(false);
 
+    const selectedItems = useMemo(() => {
+        return allItems.filter(item => formData.selectedItemIds.includes(item.id));
+    }, [allItems, formData.selectedItemIds, categoryId]);
+
     const handleEmojiSelect = (emoji: string) => {
         setFormData(prev => ({ ...prev, emoji }));
     };
 
     const handleItemsSelect = (itemIds: string[]) => {
         setFormData(prev => ({ ...prev, selectedItemIds: itemIds }));
+    };
+
+    const handleToggleItem = (itemId: string) => {
+        setFormData(prev => ({
+            ...prev,
+            selectedItemIds: prev.selectedItemIds.includes(itemId)
+                ? prev.selectedItemIds.filter(id => id !== itemId)
+                : [...prev.selectedItemIds, itemId]
+        }));
     };
 
     const validateForm = (): boolean => {
@@ -85,13 +109,25 @@ export default function EditCategoryPage({categoryId}:Props) {
         });
     };
 
-    const handleDelete = () => {
-        if (confirm('Удалить категорию? Это действие нельзя отменить.')) {
+    const handleDelete = async () => {
+        if(!category) return
+
+        const confirmed = await showConfirm({
+            title: 'Удалить категорию',
+            message: `Вы действительно хотите удалить категорию <span>"${category.name}"</span>? <br/> Это действие нельзя отменить.`
+        });
+
+        if (!confirmed) return;
+
+
+        try {
             deleteCategory(categoryId, {
                 onSuccess: () => {
                     router.push('/categories');
                 },
             });
+        } catch (error) {
+            console.error('Ошибка удаления категории:', error);
         }
     };
 
@@ -107,10 +143,17 @@ export default function EditCategoryPage({categoryId}:Props) {
                         <BackIcon/>
                     </button>
                     <h2>Изменение категории</h2>
-                    <div></div>
+                    <button
+                        type="button"
+                        className={styles.deleteBtn}
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                    >
+                        <DeleteIcon/>
+                    </button>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className={'scrollPage'}>
                     <div className={styles.formSection}>
                         <div className={styles.formGroup}>
                             <label className={styles.label} htmlFor="categoryName">
@@ -150,22 +193,32 @@ export default function EditCategoryPage({categoryId}:Props) {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label className={styles.label}>Товары</label>
+                            <div className={styles.labels}>
+                                <label className={styles.label}>Товары</label>
+
+                                {selectedItems.length > 0 && <label className={styles.labelMuted}>Нажмите что бы удалить</label>}
+
+                            </div>
+
                             {isLoading ? (
                                 <div className={`${styles.skeleton} ${styles.skeletonButton}`}></div>
                             ) : (
-                                <button
-                                    type="button"
-                                    className={styles.selectButton}
-                                    onClick={() => setIsItemsModalOpen(true)}
-                                >
-                                    <span className={styles.selectText}>
-                                        {formData.selectedItemIds.length > 0
-                                            ? `${formData.selectedItemIds.length} выбрано`
-                                            : 'Выбрать товары'}
-                                    </span>
-                                    <span className={styles.arrow}>›</span>
-                                </button>
+                                <>
+                                    {selectedItems.length > 0 && (
+                                        <CategoryItemsList
+                                            items={selectedItems}
+                                            selectedIds={formData.selectedItemIds}
+                                            onToggle={handleToggleItem}
+                                        />
+                                    )}
+                                    <button
+                                        type="button"
+                                        className={styles.addButton}
+                                        onClick={() => setIsItemsModalOpen(true)}
+                                    >
+                                        + Добавить товары
+                                    </button>
+                                </>
                             )}
                         </div>
                     </div>
@@ -218,13 +271,28 @@ export default function EditCategoryPage({categoryId}:Props) {
                     onSelect={handleEmojiSelect}
                 />
 
-                <ItemsPickerModal
-                    isOpen={isItemsModalOpen}
-                    onClose={() => setIsItemsModalOpen(false)}
-                    selectedItemIds={formData.selectedItemIds}
-                    onSelect={handleItemsSelect}
-                />
+                {!isLoading && (
+                    <ItemsPickerModal
+                        isOpen={isItemsModalOpen}
+                        onClose={() => setIsItemsModalOpen(false)}
+                        selectedItemIds={formData.selectedItemIds}
+                        onSelect={handleItemsSelect}
+                        showConfirm={showConfirm}
+                    />
+                )}
+
+
             </div>
+
+            <ConfirmDialog
+                isOpen={dialogState.isOpen}
+                title={dialogState.title}
+                message={dialogState.message}
+                confirmText={dialogState.confirmText}
+                cancelText={dialogState.cancelText}
+                onConfirm={dialogState.onConfirm}
+                onCancel={dialogState.onCancel}
+            />
         </section>
     );
 }

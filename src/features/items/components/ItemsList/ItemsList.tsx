@@ -8,6 +8,8 @@ import type { Item } from '@/lib/types/api.types';
 import { useMemo } from 'react';
 import {useRouter} from "next/navigation";
 import { useItems } from '@/features/items/hooks/useItems';
+import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
+import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 
 type Props = {
     items: Item[];
@@ -18,6 +20,9 @@ type Props = {
 export default function ItemsList({ items, isLoading, search }: Props) {
     const router = useRouter();
     const { updateItem, deleteItem } = useItems();
+
+    const { dialogState, showConfirm } = useConfirmDialog();
+
 
     const filteredItems = useMemo(() => {
         if (!search) return items;
@@ -47,10 +52,19 @@ export default function ItemsList({ items, isLoading, search }: Props) {
         });
     };
 
-    const handleDelete = (e: React.MouseEvent, itemId: string) => {
-        e.stopPropagation();
-        if (confirm('Удалить товар? Это действие нельзя отменить.')) {
+    const handleDelete = async (e: React.MouseEvent, itemId: string, name: string) => {
+        e.stopPropagation()
+        const confirmed = await showConfirm({
+            title: 'Удалить товар',
+            message: `Вы действительно хотите удалить товар <span>"${name}"</span>? <br/> Это действие нельзя отменить.`
+        });
+
+        if (!confirmed) return;
+
+        try {
             deleteItem(itemId);
+        } catch (error) {
+            console.error('Ошибка удаления товара:', error);
         }
     };
 
@@ -97,7 +111,7 @@ export default function ItemsList({ items, isLoading, search }: Props) {
                         <button
                             type="button"
                             className={styles.deleteBtn}
-                            onClick={(e) => handleDelete(e, item.id)}
+                            onClick={(e) => handleDelete(e, item.id, item.name)}
                         >
                             <DeleteIcon/>
                         </button>
@@ -105,6 +119,17 @@ export default function ItemsList({ items, isLoading, search }: Props) {
 
                 </div>
             ))}
+
+
+            <ConfirmDialog
+                isOpen={dialogState.isOpen}
+                title={dialogState.title}
+                message={dialogState.message}
+                confirmText={dialogState.confirmText}
+                cancelText={dialogState.cancelText}
+                onConfirm={dialogState.onConfirm}
+                onCancel={dialogState.onCancel}
+            />
         </div>
     );
 }

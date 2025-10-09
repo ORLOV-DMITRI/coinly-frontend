@@ -22,11 +22,26 @@
   margin-bottom: var(--space-md);
 }
 
+.labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-xs);
+}
+.labelMuted {
+  display: block;
+  font-size: 14px;
+  color: var(--muted-foreground);
+
+  @include xs {
+    font-size: 12px;
+  }
+}
+
 .label {
   display: block;
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: var(--space-xs);
   color: var(--foreground);
 }
 
@@ -67,6 +82,26 @@
 .arrow {
   font-size: 24px;
   color: var(--muted-foreground);
+}
+
+.addButton {
+  width: 100%;
+  background: var(--card);
+  border: 1px dashed var(--input);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: var(--primary);
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  font-family: inherit;
+  font-weight: 500;
+  margin-top: 8px;
+
+  @include hover {
+    border-color: var(--primary);
+    background: var(--muted);
+  }
 }
 
 .actions {
@@ -133,5 +168,22 @@
   }
   100% {
     background-position: 200% 0;
+  }
+}
+
+.deleteBtn {
+  width: 40px;
+  height: 40px;
+
+  & svg {
+    transition: 0.2s;
+  }
+  @include hover {
+    color: var(--destructive);
+  }
+
+  @include xs {
+    width: 25px;
+    height: 25px;
   }
 }

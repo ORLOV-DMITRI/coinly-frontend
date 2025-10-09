@@ -4,6 +4,7 @@ import type { CategoryWithCount } from '@/lib/types/api.types';
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { pluralize } from '@/shared/utils/pluralize';
+import cn from "classnames";
 
 type Props = {
     categories: CategoryWithCount[];
@@ -55,7 +56,7 @@ export default function CategoriesList({ categories, isLoading, search, filter }
     }
 
     return (
-        <div className={styles.categoriesList}>
+        <div className={cn(styles.categoriesList, 'scrollPage')}>
             {filteredAndSortedCategories.map((category) => (
                 <div
                     className={styles.row}

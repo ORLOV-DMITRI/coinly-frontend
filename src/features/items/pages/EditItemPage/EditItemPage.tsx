@@ -11,6 +11,8 @@ import {useState, FormEvent, ChangeEvent, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import {useItem, useItems} from '@/features/items/hooks/useItems';
 import {useCategories} from '@/features/categories/hooks/useCategories';
+import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
+import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 
 
 type FormData = {
@@ -32,7 +34,8 @@ export default function EditItemPage({itemId}: Props) {
 
     const {updateItem, isUpdating, deleteItem, isDeleting} = useItems();
 
-    const {categories, isLoading: categoriesLoading} = useCategories();
+    const { dialogState, showConfirm } = useConfirmDialog();
+
 
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -155,13 +158,25 @@ export default function EditItemPage({itemId}: Props) {
         router.push('/items');
     };
 
-    const handleDelete = () => {
-        if (confirm('Удалить товар? Это действие нельзя отменить.')) {
+    const handleDelete = async () => {
+        if(!item) return
+
+        const confirmed = await showConfirm({
+            title: 'Удалить товар',
+            message: `Вы действительно хотите удалить товар <span>"${item.name}"</span>? <br/> Это действие нельзя отменить.`
+        });
+
+        if (!confirmed) return;
+
+
+        try {
             deleteItem(itemId, {
                 onSuccess: () => {
                     router.push('/items');
                 },
             });
+        } catch (error) {
+            console.error('Ошибка удаления товара:', error);
         }
     };
 
@@ -320,6 +335,16 @@ export default function EditItemPage({itemId}: Props) {
                     </div>
                 </form>
             </div>
+
+            <ConfirmDialog
+                isOpen={dialogState.isOpen}
+                title={dialogState.title}
+                message={dialogState.message}
+                confirmText={dialogState.confirmText}
+                cancelText={dialogState.cancelText}
+                onConfirm={dialogState.onConfirm}
+                onCancel={dialogState.onCancel}
+            />
         </section>
     );
 }

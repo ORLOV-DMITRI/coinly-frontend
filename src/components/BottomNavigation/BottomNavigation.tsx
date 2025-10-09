@@ -9,11 +9,23 @@ import WalletIcon from '/public/assets/svg/wallet.svg';
 import FolderIcon from '/public/assets/svg/folder.svg';
 import ShoppingBagIcon from '/public/assets/svg/shopping-bag.svg';
 import AddIcon from '/public/assets/svg/action.svg';
+import Logo from '/public/assets/svg/logo.svg'
 
 
 export default function BottomNavigation() {
   const pathname = usePathname();
 
+    const isHideCenterBtn = () => {
+        const pathsToHide = [
+            '/items/create',
+            '/items/edit',
+            '/categories/create',
+            '/categories/edit',
+        ];
+        return pathsToHide.some(path => pathname.startsWith(path));
+    };
+
+    console.log(isHideCenterBtn())
   return (
     <nav className={styles.bottomNav}>
       <div className={styles.navItems}>
@@ -28,9 +40,9 @@ export default function BottomNavigation() {
         </Link>
 
 
-        <button className={styles.centralButton}>
-          <AddIcon />
-        </button>
+          <button className={cn(styles.centralButton, isHideCenterBtn() && styles.hide)}>
+              <AddIcon />
+          </button>
 
 
         <Link href={'/categories'} className={cn(styles.navItem, pathname.startsWith('/categories') && styles.active)}>

@@ -9,6 +9,8 @@ import ItemsPickerModal from '@/features/categories/components/ItemsPickerModal/
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCategories } from '@/features/categories/hooks/useCategories';
+import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
+import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 
 type FormData = {
     name: string;
@@ -25,6 +27,9 @@ export default function CreateCategoryPage() {
         emoji: '🍞',
         selectedItemIds: [],
     });
+
+    const { dialogState, showConfirm } = useConfirmDialog();
+
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
     const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
@@ -163,8 +168,19 @@ export default function CreateCategoryPage() {
                     onClose={() => setIsItemsModalOpen(false)}
                     selectedItemIds={formData.selectedItemIds}
                     onSelect={handleItemsSelect}
+                    showConfirm={showConfirm}
                 />
             </div>
+
+            <ConfirmDialog
+                isOpen={dialogState.isOpen}
+                title={dialogState.title}
+                message={dialogState.message}
+                confirmText={dialogState.confirmText}
+                cancelText={dialogState.cancelText}
+                onConfirm={dialogState.onConfirm}
+                onCancel={dialogState.onCancel}
+            />
         </section>
     );
 }

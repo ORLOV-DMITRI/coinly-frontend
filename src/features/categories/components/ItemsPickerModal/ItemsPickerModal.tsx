@@ -3,23 +3,31 @@ import Modal from '@/shared/ui/Modal/Modal';
 import Input from '@/shared/ui/Input/Input';
 import Button from '@/shared/ui/Button/Button';
 import FavoriteIcon from '/public/assets/svg/favorite.svg';
-import { useState, useMemo } from 'react';
-import { useItems } from '@/features/items/hooks/useItems';
-import type { Item } from '@/lib/types/api.types';
-import cn from 'classnames';
+import {useEffect, useMemo, useState} from 'react';
+import {useItems} from '@/features/items/hooks/useItems';
+import type {Item} from '@/lib/types/api.types';
 import {pluralize} from "@/shared/utils/pluralize";
+import CategoryItemCheckbox from "@/features/categories/components/CategoryItemCheckbox/CategoryItemCheckbox";
+import {ShowConfirmOptions} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 
 type Props = {
     isOpen: boolean;
     onClose: () => void;
     selectedItemIds: string[];
     onSelect: (itemIds: string[]) => void;
+    showConfirm?: (options: ShowConfirmOptions) => Promise<boolean>
 };
 
-export default function ItemsPickerModal({ isOpen, onClose, selectedItemIds, onSelect }: Props) {
+export default function ItemsPickerModal({isOpen, onClose, selectedItemIds, onSelect, showConfirm}: Props) {
     const [search, setSearch] = useState('');
     const [localSelectedIds, setLocalSelectedIds] = useState<string[]>(selectedItemIds);
-    const { items, isLoading } = useItems();
+
+
+    useEffect(() => {
+        setLocalSelectedIds(selectedItemIds)
+    }, [selectedItemIds]);
+
+    const {items, isLoading} = useItems();
 
     const filteredItems = useMemo(() => {
         if (!search) return items;
@@ -38,12 +46,41 @@ export default function ItemsPickerModal({ isOpen, onClose, selectedItemIds, onS
         return filteredItems.filter(item => !item.isFavorite);
     }, [filteredItems]);
 
-    const handleToggleItem = (itemId: string) => {
-        setLocalSelectedIds(prev =>
-            prev.includes(itemId)
-                ? prev.filter(id => id !== itemId)
-                : [...prev, itemId]
-        );
+
+    const handleToggleItem = async (item: Item) => {
+        console.log(item)
+        if (item.category === null) {
+            setLocalSelectedIds(prev => {
+                if (prev.includes(item.id)) {
+                    return prev.filter(id => id !== item.id);
+                } else {
+                    return [...prev, item.id];
+                }
+            });
+        }else {
+            if(!showConfirm) return;
+
+
+
+            const confirmed = await showConfirm({
+                title: 'Перенос товара',
+                message: `Товар <span>"${item.name}"</span> уже находится в категории <br/> <span>"${item.category.name}"</span>. Перенести ?`,
+                confirmText: 'Да',
+                cancelText: 'Нет'
+            });
+
+            if (!confirmed) return;
+
+            setLocalSelectedIds(prev => {
+                if (prev.includes(item.id)) {
+                    return prev.filter(id => id !== item.id);
+                } else {
+                    return [...prev, item.id];
+                }
+            });
+
+        }
+
     };
 
     const handleSubmit = () => {
@@ -74,15 +111,15 @@ export default function ItemsPickerModal({ isOpen, onClose, selectedItemIds, onS
                         {favoriteItems.length > 0 && (
                             <div className={styles.section}>
                                 <div className={styles.sectionTitle}>
-                                    <FavoriteIcon className={styles.favoriteIcon} /> Избранное
+                                    <FavoriteIcon className={styles.favoriteIcon}/> Избранное
                                 </div>
                                 <div className={styles.itemsList}>
                                     {favoriteItems.map(item => (
-                                        <ItemCheckbox
+                                        <CategoryItemCheckbox
                                             key={item.id}
                                             item={item}
                                             isSelected={localSelectedIds.includes(item.id)}
-                                            onToggle={handleToggleItem}
+                                            onToggle={() => handleToggleItem(item)}
                                         />
                                     ))}
                                 </div>
@@ -93,14 +130,16 @@ export default function ItemsPickerModal({ isOpen, onClose, selectedItemIds, onS
                             <div className={styles.section}>
                                 <div className={styles.sectionTitle}>Все товары</div>
                                 <div className={styles.itemsList}>
-                                    {regularItems.map(item => (
-                                        <ItemCheckbox
-                                            key={item.id}
-                                            item={item}
-                                            isSelected={localSelectedIds.includes(item.id)}
-                                            onToggle={handleToggleItem}
-                                        />
-                                    ))}
+                                    {regularItems.map(item => {
+                                        return (
+                                            <CategoryItemCheckbox
+                                                key={item.id}
+                                                item={item}
+                                                isSelected={localSelectedIds.includes(item.id)}
+                                                onToggle={() => handleToggleItem(item)}
+                                            />
+                                        )
+                                    })}
                                 </div>
                             </div>
                         )}
@@ -131,25 +170,4 @@ export default function ItemsPickerModal({ isOpen, onClose, selectedItemIds, onS
     );
 }
 
-type ItemCheckboxProps = {
-    item: Item;
-    isSelected: boolean;
-    onToggle: (itemId: string) => void;
-};
 
-function ItemCheckbox({ item, isSelected, onToggle }: ItemCheckboxProps) {
-    return (
-        <label className={styles.itemCheckbox}>
-            <input
-                type="checkbox"
-                checked={isSelected}
-                onChange={() => onToggle(item.id)}
-                className={styles.checkbox}
-            />
-            <span className={styles.itemName}>{item.name}</span>
-            {item.category && (
-                <span className={styles.categoryBadge}>({item.category.name})</span>
-            )}
-        </label>
-    );
-}

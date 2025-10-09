@@ -39,59 +39,6 @@
   gap: var(--space-xs);
 }
 
-.itemCheckbox {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm);
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: border-color 0.2s;
-
-  @include hover {
-    border-color: var(--primary);
-  }
-}
-
-.checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--input);
-  border-radius: 6px;
-  cursor: pointer;
-  appearance: none;
-  transition: all 0.2s;
-  position: relative;
-  flex-shrink: 0;
-
-  &:checked {
-    background: var(--primary);
-    border-color: var(--primary);
-  }
-
-  &:checked::after {
-    content: '✓';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--background);
-    font-size: 14px;
-    font-weight: bold;
-  }
-}
-
-.itemName {
-  flex: 1;
-  font-size: 15px;
-}
-
-.categoryBadge {
-  font-size: 13px;
-  color: var(--muted-foreground);
-}
 
 .loading {
   text-align: center;

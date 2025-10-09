@@ -29,6 +29,7 @@ export function useCategories() {
       categoriesService.updateCategory(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: CATEGORIES_QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: ['items'] });
       toast.success('Категория обновлена');
     },
     onError: (error: any) => {
@@ -65,5 +66,6 @@ export function useCategory(id: string) {
     queryKey: ['category', id],
     queryFn: () => categoriesService.getCategoryById(id),
     enabled: !!id,
+    staleTime: 0,
   });
 }

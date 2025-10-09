@@ -1,12 +1,12 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { itemsService } from '../services/itemsService';
 import type { CreateItemDto, UpdateItemDto, ItemsQueryParams } from '@/lib/types/api.types';
 import toast from 'react-hot-toast';
+import {queryClient} from "@/lib/settings/react-query";
 
 const ITEMS_QUERY_KEY = ['items'];
 
 export function useItems(params?: ItemsQueryParams) {
-  const queryClient = useQueryClient();
 
   const { data: items = [], isLoading, error } = useQuery({
     queryKey: [...ITEMS_QUERY_KEY, params],
