@@ -1,0 +1,30 @@
+@use '../../../../../../styles/variables' as *;
+
+.summary {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.label {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+
+.amount {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: 'Geist Mono', monospace;
+
+  @include sm {
+    font-size: 28px;
+  }
+}

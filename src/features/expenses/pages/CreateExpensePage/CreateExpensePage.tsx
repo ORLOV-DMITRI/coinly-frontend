@@ -57,7 +57,6 @@ export default function CreateExpensePage() {
 
   const handleSubmit = () => {
     if (selectedItems.length === 0) return;
-
     createExpense({
       items: selectedItems.map(({ item, price }) => ({
         itemId: item.id,

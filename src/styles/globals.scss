@@ -67,6 +67,8 @@ svg {
   }
 }
 .page {
+
+  padding-bottom: var(--space-xl);
   @include sm {
     padding-bottom: var(--space-xl);
   }

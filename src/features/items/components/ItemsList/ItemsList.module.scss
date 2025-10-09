@@ -51,6 +51,7 @@
 }
 
 .category {
+  height: 30px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -58,8 +59,16 @@
   color: var(--muted-foreground);
   background: var(--muted);
   padding: 4px 10px;
+  width: max-content;
   border-radius: 6px;
   margin-bottom: var(--space-sm);
+
+  @include hover {
+    background: var(--primary-foreground);
+  }
+}
+.categoryEmpty {
+  height: 30px;
 }
 
 .prices {

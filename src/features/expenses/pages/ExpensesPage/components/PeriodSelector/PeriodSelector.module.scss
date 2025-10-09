@@ -1,0 +1,35 @@
+@use '../../../../../../styles/variables' as *;
+
+.selector {
+  display: flex;
+  gap: 4px;
+  background: var(--muted);
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.btn {
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  @include hover {
+    color: var(--foreground);
+  }
+
+  &.active {
+    background: var(--card);
+    color: var(--foreground);
+  }
+
+  @include sm {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+}

@@ -1,0 +1,23 @@
+@use '../../../../../../styles/variables' as *;
+
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.text {
+  color: var(--muted-foreground);
+  font-size: 15px;
+}

@@ -1,0 +1,39 @@
+@use '../../../../../../styles/variables' as *;
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.btn {
+  flex: 1;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  @include hover {
+    border-color: var(--primary);
+  }
+
+  @include active {
+    transform: scale(0.98);
+  }
+
+  &.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  @include sm {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}

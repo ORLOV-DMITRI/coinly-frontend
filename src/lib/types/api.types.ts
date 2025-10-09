@@ -105,6 +105,7 @@ export type Item = {
   category: {
     id: string;
     name: string;
+    emodji: string
   } | null;
 };
 

@@ -1,0 +1,54 @@
+@use '../../../../styles/variables' as *;
+
+.page {
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+.header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(20, 20, 30, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.headerContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+
+  @include sm {
+    font-size: 20px;
+  }
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted-foreground);
+  font-size: 16px;
+}
+
+.expensesList {
+  display: flex;
+  flex-direction: column;
+}

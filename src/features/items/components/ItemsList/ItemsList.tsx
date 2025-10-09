@@ -3,7 +3,7 @@ import cn from 'classnames';
 import FavoriteIcon from '/public/assets/svg/favorite.svg';
 import DeleteIcon from '/public/assets/svg/delete.svg'
 import type { Item } from '@/lib/types/api.types';
-import { useMemo } from 'react';
+import { useMemo, MouseEvent } from 'react';
 import {useRouter} from "next/navigation";
 import { useItems } from '@/features/items/hooks/useItems';
 import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
@@ -19,6 +19,8 @@ type Props = {
 export default function ItemsList({ items, isLoading, search }: Props) {
     const router = useRouter();
     const { updateItem, deleteItem } = useItems();
+
+    console.log(items)
 
     const { dialogState, showConfirm } = useConfirmDialog();
 
@@ -38,7 +40,12 @@ export default function ItemsList({ items, isLoading, search }: Props) {
         router.push(`/items/edit/${itemId}`);
     };
 
-    const handleToggleFavorite = (e: React.MouseEvent, item: Item) => {
+    const handleLinkCategory = (e: MouseEvent, categoryId: string | undefined) => {
+        e.stopPropagation();
+        router.push(`/categories/edit/${categoryId}`)
+    }
+
+    const handleToggleFavorite = (e: MouseEvent, item: Item) => {
         e.stopPropagation();
         updateItem({
             id: item.id,
@@ -51,7 +58,7 @@ export default function ItemsList({ items, isLoading, search }: Props) {
         });
     };
 
-    const handleDelete = async (e: React.MouseEvent, itemId: string, name: string) => {
+    const handleDelete = async (e: MouseEvent, itemId: string, name: string) => {
         e.stopPropagation()
         const confirmed = await showConfirm({
             title: 'Удалить товар',
@@ -88,9 +95,25 @@ export default function ItemsList({ items, isLoading, search }: Props) {
             {filteredItems.map((item) => (
                 <div className={cn(styles.card, 'card')} key={item.id} onClick={() => handleLinkEdit(item.id)} title={'Нажмите для редактирования'}>
                     <div className={styles.header}>
-                        <div className={styles.name}>
-                            {item.name}
+                        <div className={styles.info}>
+                            <div className={styles.name}>
+                                {item.name}
+                            </div>
+                            {item.category?.id ?
+                                (
+                                    <button className={styles.category} onClick={(e) => handleLinkCategory(e, item.category?.id)} title={'Нажмите для перехода в категорию'}>
+                                        {item.category?.name}
+                                    </button>
+                                )
+                                :
+                                (
+                                    <div className={styles.categoryEmpty}>
+
+                                    </div>
+                                )}
+
                         </div>
+
                         <button
                             type="button"
                             className={cn(styles.favorite, item.isFavorite && styles.active)}
