@@ -25,7 +25,6 @@ export default function BottomNavigation() {
         return pathsToHide.some(path => pathname.startsWith(path));
     };
 
-    console.log(isHideCenterBtn())
   return (
     <nav className={styles.bottomNav}>
       <div className={styles.navItems}>

@@ -155,12 +155,11 @@ export type DeleteItemResponse = {
   message: string;
 };
 
-export type Expense = {
+export type ExpenseItem = {
   id: string;
-  amount: number;
-  date: string;
+  expenseId: string;
   itemId: string;
-  userId: string;
+  amount: number;
   createdAt: string;
   item: {
     id: string;
@@ -174,9 +173,19 @@ export type Expense = {
   };
 };
 
+export type Expense = {
+  id: string;
+  date: string;
+  userId: string;
+  createdAt: string;
+  items: ExpenseItem[];
+};
+
 export type CreateExpenseDto = {
-  itemId: string;
-  amount: number;
+  items: Array<{
+    itemId: string;
+    amount: number;
+  }>;
   date?: string;
 };
 

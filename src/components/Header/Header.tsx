@@ -13,22 +13,18 @@ const navLinks = [
     {
         name: 'Главная',
         link: '/dashboard',
-        activePages: ['/dashboard']
     },
     {
         name: 'Расходы',
         link: '/expenses',
-        activePages: ['/expenses']
     },
     {
         name: 'Категории',
         link: '/categories',
-        activePages: ['/categories']
     },
     {
         name: 'Товары',
         link: '/items',
-        activePages: ['/item', '/item/create', '/item/edit']
     },
 ]
 
@@ -47,7 +43,7 @@ export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
 
     const isAuthenticated = mounted ? clientAuth : serverAuth;
     return (
-        <header className={styles.header}>
+        <header className={cn(styles.header, path === '/expense/create' && 'hidden')}>
             <div className="container">
                 <nav className={styles.nav}>
                     <Link href="/" className={styles.logo}>

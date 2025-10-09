@@ -1,0 +1,181 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.searchWrapper {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--input);
+  border-radius: 12px;
+  padding: 14px 16px;
+  padding-left: 44px;
+  font-size: 16px;
+  color: var(--foreground);
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  @include xs {
+    font-size: 15px;
+    padding: 12px 14px;
+    padding-left: 42px;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+
+  @include xs {
+    font-size: 12px;
+  }
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itemCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+
+  @include hover {
+    background: var(--muted);
+    border-color: var(--primary);
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  @include xs {
+    padding: 12px 14px;
+  }
+}
+
+.itemName {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground);
+
+  @include xs {
+    font-size: 15px;
+  }
+}
+
+.itemCategory {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  margin-top: 2px;
+
+  @include xs {
+    font-size: 12px;
+  }
+}
+
+.itemArrow {
+  color: var(--muted-foreground);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.createBtn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--muted-foreground);
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  @include hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  @include xs {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+.createIcon {
+  font-size: 18px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted-foreground);
+  font-size: 15px;
+
+  @include xs {
+    padding: 30px 16px;
+    font-size: 14px;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted-foreground);
+  font-size: 15px;
+
+  @include xs {
+    padding: 30px 16px;
+    font-size: 14px;
+  }
+}

@@ -56,7 +56,7 @@ export default function CategoriesList({ categories, isLoading, search, filter }
     }
 
     return (
-        <div className={cn(styles.categoriesList, 'scrollPage')}>
+        <div className={cn(styles.categoriesList)}>
             {filteredAndSortedCategories.map((category) => (
                 <div
                     className={styles.row}

@@ -153,7 +153,7 @@ export default function EditCategoryPage({categoryId}:Props) {
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className={'scrollPage'}>
+                <form onSubmit={handleSubmit}>
                     <div className={styles.formSection}>
                         <div className={styles.formGroup}>
                             <label className={styles.label} htmlFor="categoryName">

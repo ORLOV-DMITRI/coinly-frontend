@@ -1,0 +1,204 @@
+@use '../../../../styles/variables' as *;
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.itemInfo {
+  padding: 16px;
+  background: var(--muted);
+  border-radius: 12px;
+  text-align: center;
+
+  @include xs {
+    padding: 14px;
+  }
+}
+
+.itemName {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 6px;
+
+  @include xs {
+    font-size: 17px;
+  }
+}
+
+.itemCategory {
+  font-size: 14px;
+  color: var(--muted-foreground);
+
+  @include xs {
+    font-size: 13px;
+  }
+}
+
+.priceLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+  text-align: center;
+
+  @include xs {
+    font-size: 14px;
+  }
+}
+
+.priceButtons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+
+  @include xs {
+    gap: 8px;
+  }
+}
+
+.priceBtn {
+  background: var(--card);
+  border: 2px solid var(--border);
+  color: var(--foreground);
+  padding: 16px 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  @include hover {
+    border-color: var(--primary);
+    background: var(--muted);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &.lastUsed {
+    border-color: var(--primary);
+    background: oklch(from var(--primary) l c h / 0.1);
+  }
+
+  @include xs {
+    padding: 14px 10px;
+    font-size: 15px;
+  }
+}
+
+.customPriceBtn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--muted-foreground);
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  @include hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  @include xs {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+.customInputWrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  @include xs {
+    gap: 8px;
+  }
+}
+
+.customInput {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--input);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: var(--foreground);
+  font-family: inherit;
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  /* Remove number input arrows */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  @include xs {
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+}
+
+.submitBtn {
+  background: var(--primary);
+  border: none;
+  color: var(--primary-foreground);
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  @include hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @include xs {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  @include xs {
+    font-size: 12px;
+  }
+}
