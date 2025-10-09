@@ -9,6 +9,7 @@ import type {Item} from '@/lib/types/api.types';
 import {pluralize} from "@/shared/utils/pluralize";
 import CategoryItemCheckbox from "@/features/categories/components/CategoryItemCheckbox/CategoryItemCheckbox";
 import {ShowConfirmOptions} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
+import SearchInput from "@/shared/ui/SearchInput/SearchInput";
 
 type Props = {
     isOpen: boolean;
@@ -96,13 +97,8 @@ export default function ItemsPickerModal({isOpen, onClose, selectedItemIds, onSe
     return (
         <Modal isOpen={isOpen} onClose={handleClose} title="Выбрать товары">
             <div className={styles.content}>
-                <Input
-                    type="search"
-                    placeholder="Поиск товаров..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className={styles.searchInput}
-                />
+                <SearchInput search={search} handleSearch={(value) => setSearch(value)} placeholder={'Поиск товаров...'}/>
+                
 
                 {isLoading ? (
                     <div className={styles.loading}>Загрузка...</div>

@@ -83,6 +83,12 @@
     background: oklch(from var(--primary) l c h / 0.1);
   }
 
+  &.selected {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
   @include xs {
     padding: 14px 10px;
     font-size: 15px;
@@ -200,5 +206,158 @@
 
   @include xs {
     font-size: 12px;
+  }
+}
+
+.quantityWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quantityLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+
+  @include xs {
+    font-size: 14px;
+  }
+}
+
+.quantityControls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.quantityBtn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include hover {
+    border-color: var(--primary);
+    background: var(--muted);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  @include xs {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+.quantityInput {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--input);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: var(--foreground);
+  text-align: center;
+  font-family: var(--font-geist-mono), monospace;
+  font-weight: 600;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  /* Remove number input arrows */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  @include xs {
+    font-size: 15px;
+    padding: 10px 14px;
+  }
+}
+
+.totalWrapper {
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include xs {
+    padding: 14px;
+  }
+}
+
+.totalLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+
+  @include xs {
+    font-size: 15px;
+  }
+}
+
+.totalAmount {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: var(--font-geist-mono), monospace;
+  color: var(--primary);
+
+  @include xs {
+    font-size: 20px;
+  }
+}
+
+.confirmBtn {
+  width: 100%;
+  background: var(--primary);
+  border: none;
+  color: var(--primary-foreground);
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  @include hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @include xs {
+    padding: 14px;
+    font-size: 15px;
   }
 }

@@ -7,12 +7,16 @@ import { useRouter } from 'next/navigation';
 import DateSelector from '../../components/DateSelector/DateSelector';
 import ItemSelector from '../../components/ItemSelector/ItemSelector';
 import PriceSelectionModal from '../../components/PriceSelectionModal/PriceSelectionModal';
+import CreateItemModal from '../../components/CreateItemModal/CreateItemModal';
 import { useExpenses } from '../../hooks/useExpenses';
 import type { Item } from '@/lib/types/api.types';
+import BackIcon from '/public/assets/svg/backArrow.svg';
+import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 
 type SelectedItem = {
   item: Item;
   price: number;
+  quantity: number;
 };
 
 export default function CreateExpensePage() {
@@ -23,24 +27,33 @@ export default function CreateExpensePage() {
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<Item | null>(null);
+  const [isCreateItemModalOpen, setIsCreateItemModalOpen] = useState(false);
 
   const handleItemSelect = (item: Item) => {
     setCurrentItem(item);
     setIsPriceModalOpen(true);
   };
 
-  const handlePriceSelect = (price: number) => {
+  const handlePriceSelect = (price: number, quantity: number) => {
     if (currentItem) {
-      setSelectedItems(prev => [...prev, { item: currentItem, price }]);
+      setSelectedItems(prev => [...prev, { item: currentItem, price, quantity }]);
       setCurrentItem(null);
     }
   };
 
-  const handleRemoveItem = (index: number) => {
-    setSelectedItems(prev => prev.filter((_, i) => i !== index));
+  const handleRemoveItem = (currentIndex: number) => {
+    setSelectedItems(prev => prev.filter((item, index) => index !== currentIndex));
   };
 
-  const totalAmount = selectedItems.reduce((sum, { price }) => sum + price, 0);
+  const handleItemCreated = (newItem: Item) => {
+    setIsCreateItemModalOpen(false);
+    // Сразу открываем PriceSelectionModal для нового товара
+    setCurrentItem(newItem);
+    setIsPriceModalOpen(true);
+  };
+
+  const totalAmount = selectedItems.reduce((sum, { price, quantity }) => sum + (price * quantity), 0);
+  const selectedItemIds = selectedItems.map(({ item }) => item.id);
 
   const handleSubmit = () => {
     if (selectedItems.length === 0) return;
@@ -57,22 +70,8 @@ export default function CreateExpensePage() {
   };
 
   return (
-    <>
-      <header className={styles.header}>
-        <div className="container">
-          <div className={styles.headerContainer}>
-            <button
-                type="button"
-                className={styles.backBtn}
-                onClick={() => router.back()}
-            >
-              ←
-            </button>
-            <h1 className={styles.pageTitle}>Новый расход</h1>
-          </div>
-        </div>
-
-      </header>
+    <div className={'page'}>
+      <PageHeader title={'Новый расход'}/>
 
       <div className={cn(styles.container, 'container')}>
         <div className={styles.section}>
@@ -85,7 +84,11 @@ export default function CreateExpensePage() {
 
         <div className={styles.section}>
           <div className={styles.sectionTitle}>Товар</div>
-          <ItemSelector onItemSelect={handleItemSelect} />
+          <ItemSelector
+            onItemSelect={handleItemSelect}
+            onCreateItem={() => setIsCreateItemModalOpen(true)}
+            selectedItemIds={selectedItemIds}
+          />
         </div>
 
         {selectedItems.length > 0 && (
@@ -97,6 +100,9 @@ export default function CreateExpensePage() {
                   <div className={styles.selectedInfo}>
                     <div className={styles.selectedName}>
                       {selectedItem.item.name}
+                      {selectedItem.quantity > 1 && (
+                        <span className={styles.quantityBadge}> ×{selectedItem.quantity}</span>
+                      )}
                     </div>
                     {selectedItem.item.category && (
                       <div className={styles.selectedCategory}>
@@ -106,7 +112,7 @@ export default function CreateExpensePage() {
                   </div>
                   <div className={styles.selectedRight}>
                     <div className={styles.selectedPrice}>
-                      {selectedItem.price}₽
+                      {selectedItem.price * selectedItem.quantity}₽
                     </div>
                     <button
                       type="button"
@@ -152,6 +158,12 @@ export default function CreateExpensePage() {
           onPriceSelect={handlePriceSelect}
         />
       )}
-    </>
+
+      <CreateItemModal
+        isOpen={isCreateItemModalOpen}
+        onClose={() => setIsCreateItemModalOpen(false)}
+        onItemCreated={handleItemCreated}
+      />
+    </div>
   );
 }

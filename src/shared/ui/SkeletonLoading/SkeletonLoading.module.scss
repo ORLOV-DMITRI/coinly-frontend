@@ -4,7 +4,7 @@
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 16px 20px;
+  padding: 17px 20px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -45,10 +45,10 @@
 
 .shimmer {
   background: linear-gradient(
-    90deg,
-    var(--muted) 0%,
-    var(--muted-foreground) 50%,
-    var(--muted) 100%
+                  90deg,
+                  var(--muted) 0%,
+                  var(--muted-foreground) 50%,
+                  var(--muted) 100%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
@@ -62,4 +62,8 @@
   100% {
     background-position: 200% 0;
   }
+}
+.skeletonBlock {
+  height: 57px;
+  width: 100%;
 }

@@ -8,36 +8,9 @@
 
 .buttons {
   display: flex;
-  gap: 8px;
+  gap: var(--space-md);
 }
 
-.btn {
-  flex: 1;
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--foreground);
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  @include hover {
-    border-color: var(--primary);
-  }
-
-  &.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: var(--primary-foreground);
-  }
-
-  @include xs {
-    font-size: 14px;
-    padding: 10px;
-  }
-}
 
 .customInput {
   width: 100%;

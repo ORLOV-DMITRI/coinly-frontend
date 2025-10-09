@@ -4,6 +4,7 @@ import Button from '@/shared/ui/Button/Button';
 import cn from 'classnames';
 import FavoriteIcon from '/public/assets/svg/favorite.svg';
 import {pluralize} from "@/shared/utils/pluralize";
+import SearchInput from "@/shared/ui/SearchInput/SearchInput";
 
 type Props = {
     search: string;
@@ -16,13 +17,8 @@ type Props = {
 export default function SearchSection({ search, onSearchChange, itemsCount, filter, onFilterChange }: Props) {
     return (
         <div className={styles.searchSection}>
-            <Input
-                type="search"
-                className={styles.searchInput}
-                placeholder="Поиск категории..."
-                value={search}
-                onChange={(e) => onSearchChange(e.target.value)}
-            />
+            <SearchInput search={search} handleSearch={(value) => onSearchChange(value)} placeholder={'Поиск товаров...'}/>
+
 
             <div className={styles.filters}>
                 <Button

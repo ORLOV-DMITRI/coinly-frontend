@@ -1,16 +1,6 @@
 @use "@/styles/variables" as *;
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.createPage {
-  margin-top: var(--space-md);
-  @include sm {
-    padding-bottom: var(--space-xl);
-  }
-}
+
 .formSection {
   margin-top: var(--space-md);
   margin-bottom: var(--space-lg);

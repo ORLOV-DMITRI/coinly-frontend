@@ -67,14 +67,8 @@ svg {
   }
 }
 .page {
-  margin-top: var(--space-xl);
-
   @include sm {
     padding-bottom: var(--space-xl);
-  }
-
-  @include xs {
-    margin-top: var(--space-md);
   }
 }
 
@@ -96,9 +90,13 @@ h1 {
 h2 {
   font-size: 32px;
   font-weight: 600;
+  font-family: var(--font-unbounded), sans-serif;
 
   @include xs {
     font-size: 25px;
+  }
+  @include xs-mini {
+    font-size: 20px;
   }
 }
 h3 {
@@ -135,6 +133,7 @@ h3 {
   height: 40px;
   transform: rotate(180deg);
   cursor: pointer;
+  color: var(--primary);
   svg {
     transition: 0.2s;
   }

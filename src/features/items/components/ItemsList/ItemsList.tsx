@@ -2,14 +2,13 @@ import styles from './ItemsList.module.scss';
 import cn from 'classnames';
 import FavoriteIcon from '/public/assets/svg/favorite.svg';
 import DeleteIcon from '/public/assets/svg/delete.svg'
-
-import ItemCardSkeleton from '@/features/items/components/ItemCardSkeleton/ItemCardSkeleton';
 import type { Item } from '@/lib/types/api.types';
 import { useMemo } from 'react';
 import {useRouter} from "next/navigation";
 import { useItems } from '@/features/items/hooks/useItems';
 import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
 import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
+import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
 
 type Props = {
     items: Item[];
@@ -71,9 +70,7 @@ export default function ItemsList({ items, isLoading, search }: Props) {
     if (isLoading) {
         return (
             <div className={styles.itemsList}>
-                {Array.from({ length: 4 }).map((_, index) => (
-                    <ItemCardSkeleton key={index} />
-                ))}
+                <SkeletonLoading variant={'item'} count={4}/>
             </div>
         );
     }

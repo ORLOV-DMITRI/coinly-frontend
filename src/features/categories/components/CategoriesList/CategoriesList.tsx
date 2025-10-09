@@ -1,10 +1,10 @@
 import styles from './CategoriesList.module.scss'
-import CategoryCardSkeleton from '@/features/categories/components/CategoryCardSkeleton/CategoryCardSkeleton';
 import type { CategoryWithCount } from '@/lib/types/api.types';
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { pluralize } from '@/shared/utils/pluralize';
 import cn from "classnames";
+import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
 
 type Props = {
     categories: CategoryWithCount[];
@@ -40,9 +40,7 @@ export default function CategoriesList({ categories, isLoading, search, filter }
     if (isLoading) {
         return (
             <div className={styles.categoriesList}>
-                {Array.from({ length: 4 }).map((_, index) => (
-                    <CategoryCardSkeleton key={index} />
-                ))}
+                <SkeletonLoading variant={'category'} count={4}/>
             </div>
         );
     }

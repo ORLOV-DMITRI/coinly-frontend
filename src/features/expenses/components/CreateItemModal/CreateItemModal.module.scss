@@ -1,0 +1,96 @@
+@use '../../../../styles/variables' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+
+  @include xs {
+    font-size: 13px;
+  }
+}
+
+.input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--input);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: var(--foreground);
+  font-family: inherit;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Remove number input arrows */
+  &[type='number']::-webkit-outer-spin-button,
+  &[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  @include xs {
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  background: var(--primary);
+  border: none;
+  color: var(--primary-foreground);
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  @include hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @include xs {
+    padding: 14px;
+    font-size: 15px;
+  }
+}

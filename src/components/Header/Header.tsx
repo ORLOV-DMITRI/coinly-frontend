@@ -43,7 +43,7 @@ export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
 
     const isAuthenticated = mounted ? clientAuth : serverAuth;
     return (
-        <header className={cn(styles.header, path === '/expense/create' && 'hidden')}>
+        <header className={cn(styles.header)}>
             <div className="container">
                 <nav className={styles.nav}>
                     <Link href="/" className={styles.logo}>

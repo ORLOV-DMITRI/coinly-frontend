@@ -14,6 +14,8 @@ import {useItems} from '@/features/items/hooks/useItems';
 import DeleteIcon from '/public/assets/svg/delete.svg'
 import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
+import PageHeader from "@/shared/ui/PageHeader/PageHeader";
+import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
 
 
 type FormData = {
@@ -136,23 +138,9 @@ export default function EditCategoryPage({categoryId}:Props) {
     };
 
     return (
-        <section className={styles.createPage}>
+        <section className={'page'}>
+            <PageHeader title={'Обновление категории'}/>
             <div className="container">
-                <div className={styles.header}>
-                    <button type="button" className={'backBtn'} onClick={handleCancel}>
-                        <BackIcon/>
-                    </button>
-                    <h2>Изменение категории</h2>
-                    <button
-                        type="button"
-                        className={styles.deleteBtn}
-                        onClick={handleDelete}
-                        disabled={isDeleting}
-                    >
-                        <DeleteIcon/>
-                    </button>
-                </div>
-
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formSection}>
                         <div className={styles.formGroup}>
@@ -160,7 +148,7 @@ export default function EditCategoryPage({categoryId}:Props) {
                                 Название категории <span className={styles.required}>*</span>
                             </label>
                             {isLoading ? (
-                                <div className={`${styles.skeleton} ${styles.skeletonInput}`}></div>
+                                <SkeletonLoading variant={'block'}/>
                             ) : (
                                 <Input
                                     type="text"
@@ -178,7 +166,7 @@ export default function EditCategoryPage({categoryId}:Props) {
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Эмодзи</label>
                             {isLoading ? (
-                                <div className={`${styles.skeleton} ${styles.skeletonButton}`}></div>
+                                <SkeletonLoading variant={'block'}/>
                             ) : (
                                 <button
                                     type="button"
@@ -201,7 +189,7 @@ export default function EditCategoryPage({categoryId}:Props) {
                             </div>
 
                             {isLoading ? (
-                                <div className={`${styles.skeleton} ${styles.skeletonButton}`}></div>
+                                <SkeletonLoading variant={'block'}/>
                             ) : (
                                 <>
                                     {selectedItems.length > 0 && (

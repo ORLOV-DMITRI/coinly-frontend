@@ -3,14 +3,14 @@
 import styles from './CreateCategoryPage.module.scss';
 import Input from '@/shared/ui/Input/Input';
 import Button from '@/shared/ui/Button/Button';
-import BackIcon from '/public/assets/svg/backArrow.svg';
 import EmojiPickerModal from '@/features/categories/components/EmojiPickerModal/EmojiPickerModal';
 import ItemsPickerModal from '@/features/categories/components/ItemsPickerModal/ItemsPickerModal';
-import { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { useCategories } from '@/features/categories/hooks/useCategories';
+import {useState, FormEvent} from 'react';
+import {useRouter} from 'next/navigation';
+import {useCategories} from '@/features/categories/hooks/useCategories';
 import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
 import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
+import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 
 type FormData = {
     name: string;
@@ -20,7 +20,7 @@ type FormData = {
 
 export default function CreateCategoryPage() {
     const router = useRouter();
-    const { createCategory, isCreating } = useCategories();
+    const {createCategory, isCreating} = useCategories();
 
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -28,7 +28,7 @@ export default function CreateCategoryPage() {
         selectedItemIds: [],
     });
 
-    const { dialogState, showConfirm } = useConfirmDialog();
+    const {dialogState, showConfirm} = useConfirmDialog();
 
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
@@ -36,11 +36,11 @@ export default function CreateCategoryPage() {
     const [isItemsModalOpen, setIsItemsModalOpen] = useState(false);
 
     const handleEmojiSelect = (emoji: string) => {
-        setFormData(prev => ({ ...prev, emoji }));
+        setFormData(prev => ({...prev, emoji}));
     };
 
     const handleItemsSelect = (itemIds: string[]) => {
-        setFormData(prev => ({ ...prev, selectedItemIds: itemIds }));
+        setFormData(prev => ({...prev, selectedItemIds: itemIds}));
     };
 
     const validateForm = (): boolean => {
@@ -75,16 +75,11 @@ export default function CreateCategoryPage() {
     };
 
     return (
-        <section className={styles.createPage}>
-            <div className="container">
-                <div className={styles.header}>
-                    <button type="button" className={'backBtn'} onClick={handleCancel}>
-                        <BackIcon/>
-                    </button>
-                    <h2>Создание категории</h2>
-                    <div></div>
-                </div>
+        <section className={'page'}>
+            <PageHeader title={'Новая категория'}/>
 
+
+            <div className="container">
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formSection}>
                         <div className={styles.formGroup}>
@@ -96,7 +91,7 @@ export default function CreateCategoryPage() {
                                 id="categoryName"
                                 name="name"
                                 value={formData.name}
-                                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                                onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))}
                                 error={errors.name}
                                 placeholder="Например: Продукты"
                                 autoFocus

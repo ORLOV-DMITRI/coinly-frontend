@@ -13,6 +13,8 @@ import {useItem, useItems} from '@/features/items/hooks/useItems';
 import {useCategories} from '@/features/categories/hooks/useCategories';
 import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
 import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
+import PageHeader from "@/shared/ui/PageHeader/PageHeader";
+import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
 
 
 type FormData = {
@@ -181,24 +183,9 @@ export default function EditItemPage({itemId}: Props) {
     };
 
     return (
-        <section className={styles.createPage}>
+        <section className={'page'}>
+            <PageHeader title={'Обновление товара'}/>
             <div className="container">
-
-                <div className={styles.header}>
-                    <button type="button" className={'backBtn'} onClick={handleCancel}>
-                        <BackIcon/>
-                    </button>
-                    <h2>Обновление товара</h2>
-                    <button
-                        type="button"
-                        className={styles.deleteBtn}
-                        onClick={handleDelete}
-                        disabled={isDeleting}
-                    >
-                        <DeleteIcon/>
-                    </button>
-                </div>
-
 
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formSection}>
@@ -207,13 +194,18 @@ export default function EditItemPage({itemId}: Props) {
                                 Название товара <span className={styles.required}>*</span>
                             </label>
 
-                            <Input type="text" id="itemName" name="name" value={formData.name}
-                                   onChange={handleChange}
-                                   error={errors.name}
-                                   placeholder="Например: Молоко"
-                                   autoFocus
-                                   className={cn(isLoading && styles.skeletonInput)}
-                            />
+                            {isLoading ? (
+                                <SkeletonLoading variant={'block'}/>
+                            ) : (
+                                <Input type="text" id="itemName" name="name" value={formData.name}
+                                       onChange={handleChange}
+                                       error={errors.name}
+                                       placeholder="Например: Молоко"
+                                       autoFocus
+                                />
+                            )}
+
+
                         </div>
 
                         <div className={styles.formGroup}>
@@ -221,17 +213,23 @@ export default function EditItemPage({itemId}: Props) {
                                 Первая цена <span className={styles.required}>*</span>
                             </label>
                             <div className={styles.priceInputWrapper}>
-                                <Input
-                                    type="number"
-                                    id="itemPrice"
-                                    name="firstPrice"
-                                    value={formData.firstPrice}
-                                    onChange={handleChange}
-                                    error={errors.firstPrice}
-                                    placeholder="70"
-                                    step="10"
-                                    className={cn(styles.priceInput, isLoading && styles.skeletonInput)}
-                                />
+
+                                {isLoading ? (
+                                    <SkeletonLoading variant={'block'}/>
+                                ) : (
+                                    <Input
+                                        type="number"
+                                        id="itemPrice"
+                                        name="firstPrice"
+                                        value={formData.firstPrice}
+                                        onChange={handleChange}
+                                        error={errors.firstPrice}
+                                        placeholder="70"
+                                        step="10"
+                                        className={cn(styles.priceInput)}
+                                    />
+                                )}
+
                                 <span className={styles.currency}>₽</span>
                             </div>
                             <div className={styles.hint}>Основная цена товара</div>
@@ -239,23 +237,29 @@ export default function EditItemPage({itemId}: Props) {
 
 
                         <div className={styles.formGroup}>
-                            <label className={cn(styles.checkboxWrapper, isLoading && styles.skeletonCheckbox)}>
-                                <input
-                                    type="checkbox"
-                                    name="isFavorite"
-                                    checked={formData.isFavorite}
-                                    onChange={handleChange}
-                                    className={styles.checkbox}
-                                />
-                                <span className={styles.checkboxLabel}>
+                            {isLoading ? (
+                                <SkeletonLoading variant={'block'}/>
+                            ) : (
+                                <label className={cn(styles.checkboxWrapper)}>
+                                    <input
+                                        type="checkbox"
+                                        name="isFavorite"
+                                        checked={formData.isFavorite}
+                                        onChange={handleChange}
+                                        className={styles.checkbox}
+                                    />
+                                    <span className={styles.checkboxLabel}>
                                             <span><FavoriteIcon/></span>
                                             <span>Добавить в избранное</span>
                                         </span>
-                            </label>
+                                </label>
+                            )}
+
+
                         </div>
                     </div>
 
-                    <div className={cn(styles.pricesSection, isLoading && styles.skeletonPriceSection)}>
+                    <div className={cn(styles.pricesSection)}>
                         <h3 className={styles.pricesTitle}>Дополнительные цены</h3>
                         <p className={styles.pricesDescription}>
                             Добавьте типичные цены для быстрого выбора при создании расхода

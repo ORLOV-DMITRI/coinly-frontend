@@ -10,37 +10,49 @@ type Props = {
   item: Item;
   isOpen: boolean;
   onClose: () => void;
-  onPriceSelect: (price: number) => void;
+  onPriceSelect: (price: number, quantity: number) => void;
 };
 
 export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSelect }: Props) {
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customPrice, setCustomPrice] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
 
   const handlePriceClick = (price: number) => {
-    onPriceSelect(price);
-    onClose();
-    setShowCustomInput(false);
-    setCustomPrice('');
+    setSelectedPrice(price);
+  };
+
+  const handleConfirm = () => {
+    if (selectedPrice !== null && quantity > 0) {
+      onPriceSelect(selectedPrice, quantity);
+      onClose();
+      resetState();
+    }
   };
 
   const handleCustomPriceSubmit = () => {
     const price = parseFloat(customPrice);
     if (!isNaN(price) && price > 0) {
-      onPriceSelect(price);
-      onClose();
+      setSelectedPrice(price);
       setShowCustomInput(false);
-      setCustomPrice('');
     }
+  };
+
+  const resetState = () => {
+    setShowCustomInput(false);
+    setCustomPrice('');
+    setQuantity(1);
+    setSelectedPrice(null);
   };
 
   const handleClose = () => {
     onClose();
-    setShowCustomInput(false);
-    setCustomPrice('');
+    resetState();
   };
 
   const lastUsedPrice = item.prices.length > 0 ? item.prices[0] : null;
+  const totalAmount = selectedPrice !== null ? selectedPrice * quantity : 0;
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Выберите цену">
@@ -64,7 +76,8 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
                   type="button"
                   className={cn(
                     styles.priceBtn,
-                    price === lastUsedPrice && styles.lastUsed
+                    price === lastUsedPrice && styles.lastUsed,
+                    price === selectedPrice && styles.selected
                   )}
                   onClick={() => handlePriceClick(price)}
                 >
@@ -101,12 +114,60 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
               onClick={handleCustomPriceSubmit}
               disabled={!customPrice || parseFloat(customPrice) <= 0}
             >
-              Готово
+              Применить
             </button>
           </div>
         )}
 
-        {lastUsedPrice !== null && (
+        {selectedPrice !== null && (
+          <>
+            <div className={styles.quantityWrapper}>
+              <label className={styles.quantityLabel}>Количество</label>
+              <div className={styles.quantityControls}>
+                <button
+                  type="button"
+                  className={styles.quantityBtn}
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                >
+                  −
+                </button>
+                <input
+                  type="number"
+                  className={styles.quantityInput}
+                  value={quantity}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value);
+                    if (!isNaN(val) && val > 0) setQuantity(val);
+                  }}
+                  min="1"
+                />
+                <button
+                  type="button"
+                  className={styles.quantityBtn}
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.totalWrapper}>
+              <div className={styles.totalLabel}>Итого:</div>
+              <div className={styles.totalAmount}>{totalAmount}₽</div>
+            </div>
+
+            <button
+              type="button"
+              className={styles.confirmBtn}
+              onClick={handleConfirm}
+            >
+              Добавить
+            </button>
+          </>
+        )}
+
+        {lastUsedPrice !== null && !selectedPrice && (
           <div className={styles.hint}>● Последняя использованная цена</div>
         )}
       </div>

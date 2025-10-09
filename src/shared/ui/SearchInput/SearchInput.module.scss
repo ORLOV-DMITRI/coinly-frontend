@@ -1,0 +1,48 @@
+@use "@/styles/variables" as *;
+
+
+.searchWrapper {
+  position: relative;
+
+  & :focus-within {
+    & .searchInput {
+      outline: none;
+      border-color: var(--primary);
+    }
+    & .searchIcon {
+      color: var(--primary);
+    }
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  color: var(--muted-foreground);
+}
+
+.searchInput {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--input);
+  border-radius: 12px;
+  padding: 14px 16px 14px 44px;
+  font-size: 16px;
+  color: var(--foreground);
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+
+  @include xs {
+    font-size: 15px;
+    padding: 12px 14px 12px 42px;
+  }
+}

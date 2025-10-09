@@ -1,0 +1,17 @@
+@use "@/styles/variables" as *;
+
+.header {
+  border-bottom: 1px solid var(--border);
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  gap: 16px;
+
+  @include xs {
+    height: 56px;
+  }
+}

@@ -10,6 +10,7 @@ import {useState, FormEvent, ChangeEvent} from 'react';
 import { useRouter } from 'next/navigation';
 import { useItems } from '@/features/items/hooks/useItems';
 import { useCategories } from '@/features/categories/hooks/useCategories';
+import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 
 type FormData = {
     name: string;
@@ -22,7 +23,6 @@ type FormData = {
 export default function CreateItemPage() {
     const router = useRouter();
     const { createItem, isCreating } = useItems();
-    const { categories, isLoading: categoriesLoading } = useCategories();
 
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -125,18 +125,10 @@ export default function CreateItemPage() {
     };
 
     return (
-        <section className={styles.createPage}>
+        <section className={'page'}>
+            <PageHeader title={'Новый товар'}/>
+
             <div className="container">
-
-                <div className={styles.header}>
-                    <button type="button" className={'backBtn'} onClick={handleCancel}>
-                        <BackIcon/>
-                    </button>
-                    <h2>Создание товара</h2>
-                    <div></div>
-                </div>
-
-
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formSection}>
                         <div className={styles.formGroup}>

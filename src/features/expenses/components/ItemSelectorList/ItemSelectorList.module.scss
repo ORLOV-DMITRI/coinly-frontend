@@ -1,0 +1,92 @@
+@use "@/styles/variables" as *;
+
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+
+  @include xs {
+    font-size: 12px;
+  }
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itemCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+
+  @include hover {
+    background: var(--muted);
+    border-color: var(--primary);
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @include xs {
+    padding: 12px 14px;
+  }
+}
+
+.addedBadge {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.itemName {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground);
+
+  @include xs {
+    font-size: 15px;
+  }
+}
+
+.itemCategory {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  margin-top: 2px;
+
+  @include xs {
+    font-size: 12px;
+  }
+}
+
+.itemArrow {
+  color: var(--muted-foreground);
+  font-size:25px;
+  flex-shrink: 0;
+}

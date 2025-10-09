@@ -1,8 +1,7 @@
-'use client';
-
 import styles from './DateSelector.module.scss';
 import cn from 'classnames';
-import { useState } from 'react';
+import {ChangeEvent, useState} from 'react';
+import Button from "@/shared/ui/Button/Button";
 
 type DateOption = 'today' | 'yesterday' | 'custom';
 
@@ -35,7 +34,7 @@ export default function DateSelector({ selectedDate, onDateChange, className }: 
     setShowCustomInput(true);
   };
 
-  const handleCustomDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCustomDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     const dateString = e.target.value;
     if (dateString) {
       const date = new Date(dateString);
@@ -46,27 +45,30 @@ export default function DateSelector({ selectedDate, onDateChange, className }: 
   return (
     <div className={cn(styles.wrapper, className)}>
       <div className={styles.buttons}>
-        <button
+        <Button
           type="button"
-          className={cn(styles.btn, activeOption === 'today' && styles.active)}
+          size={'large'}
+          variant={activeOption === 'today' ? 'primary' : 'secondary'}
           onClick={handleTodayClick}
         >
           Сегодня
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          className={cn(styles.btn, activeOption === 'yesterday' && styles.active)}
+          size={'large'}
+          variant={activeOption === 'yesterday' ? 'primary' : 'secondary'}
           onClick={handleYesterdayClick}
         >
           Вчера
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          className={cn(styles.btn, activeOption === 'custom' && styles.active)}
+          size={'large'}
+          variant={activeOption === 'custom' ? 'primary' : 'secondary'}
           onClick={handleCustomClick}
         >
           Другая...
-        </button>
+        </Button>
       </div>
 
       {showCustomInput && (
