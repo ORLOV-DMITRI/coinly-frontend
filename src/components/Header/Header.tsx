@@ -37,13 +37,15 @@ export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
     const { isAuthenticated: clientAuth } = useAuth();
     const [mounted, setMounted] = useState(false);
 
+    const [isOpenSwitcher, setIsOpenSwitcher] = useState(false);
+
     useEffect(() => {
         setMounted(true);
     }, []);
 
     const isAuthenticated = mounted ? clientAuth : serverAuth;
     return (
-        <header className={cn(styles.header)}>
+        <header className={cn(styles.header, isOpenSwitcher && styles.theme)}>
             <div className="container">
                 <nav className={styles.nav}>
                     <Link href="/" className={styles.logo}>
@@ -73,7 +75,7 @@ export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
                         </div>
                     )}
 
-                    <ThemeSwitcher />
+                    <ThemeSwitcher isOpen={isOpenSwitcher} setIsOpen={(value) => setIsOpenSwitcher(value)}/>
 
                 </nav>
             </div>

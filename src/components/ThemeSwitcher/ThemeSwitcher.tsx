@@ -1,5 +1,3 @@
-'use client';
-
 import { useTheme, Theme } from '@/lib/hooks/useTheme';
 import { useState, useRef, useEffect } from 'react';
 import styles from './ThemeSwitcher.module.scss';
@@ -14,9 +12,13 @@ const THEME_OPTIONS: { value: Theme; label: string; icon: any }[] = [
   { value: 'system', label: 'Системная', icon: MonitorIcon },
 ];
 
-export default function ThemeSwitcher() {
+type Props = {
+  isOpen: boolean
+  setIsOpen: (value: boolean) => void
+}
+
+export default function ThemeSwitcher({isOpen, setIsOpen}:Props) {
   const { theme, setTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +28,18 @@ export default function ThemeSwitcher() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

@@ -11,6 +11,9 @@ import DayGroup from './components/DayGroup/DayGroup';
 import EditPriceModal from './components/EditPriceModal/EditPriceModal';
 import EmptyState from './components/EmptyState/EmptyState';
 import type { Expense } from '@/lib/types/api.types';
+import Link from "next/link";
+import Button from "@/shared/ui/Button/Button";
+import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 
 type EditingItem = {
   expenseItemId: string;
@@ -154,20 +157,14 @@ export default function ExpensesPage() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headerContainer}>
-          <div className={styles.headerTop}>
-            <h1 className={styles.title}>Расходы</h1>
-            <PeriodSelector period={period} onPeriodChange={setPeriod} />
-          </div>
-        </div>
-      </header>
+      <PageHeader title={'Расходы'} actionType={'link'} link={'/expenses/create'}/>
 
       <div className={styles.container}>
         {hasExpenses ? (
           <>
             <MonthSummary label={periodLabel} total={totalAmount} />
 
+            <PeriodSelector period={period} onPeriodChange={setPeriod} />
             <AccordionControls mode={mode} onModeChange={changeMode} />
 
             <div className={styles.expensesList}>

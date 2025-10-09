@@ -6,6 +6,8 @@ import {useState} from "react";
 import {useItems} from "@/features/items/hooks/useItems";
 import {useCategories} from "@/features/categories/hooks/useCategories";
 import CategoriesList from "@/features/categories/components/CategoriesList/CategoriesList";
+import PeriodSelector from "@/features/expenses/pages/ExpensesPage/components/PeriodSelector/PeriodSelector";
+import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 
 export default function CategoriesPage() {
     const [search, setSearch] = useState('');
@@ -15,17 +17,12 @@ export default function CategoriesPage() {
 
     return (
         <section className={styles.categoriesPage}>
+            <PageHeader title={'Категории'} actionType={'link'} link={'/categories/create'}/>
+
+
+
           <div className="container">
             <div className={styles.content}>
-              <div className={styles.header}>
-                <h2>Категории</h2>
-                <Link href={'/categories/create'}>
-                  <Button variant={'primary'} size={'default'} className={styles.addBtn}>
-                    Создать
-                  </Button>
-                </Link>
-              </div>
-
                 <SearchSection
                     search={search}
                     onSearchChange={setSearch}

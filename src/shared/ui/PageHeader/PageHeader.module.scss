@@ -2,11 +2,12 @@
 
 .header {
   border-bottom: 1px solid var(--border);
-  background: rgba(20, 20, 30, 0.8);
+  background: var(--secondary);
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 100;
+
 }
 
 .headerContainer {
@@ -17,6 +18,6 @@
   gap: 16px;
 
   @include xs {
-    height: 56px;
+    height: 64px;
   }
 }

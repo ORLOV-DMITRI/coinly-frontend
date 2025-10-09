@@ -139,7 +139,7 @@ export default function EditCategoryPage({categoryId}:Props) {
 
     return (
         <section className={'page'}>
-            <PageHeader title={'Обновление категории'}/>
+            <PageHeader title={'Обновление категории'} actionType={'back'}/>
             <div className="container">
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formSection}>
