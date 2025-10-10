@@ -20,8 +20,6 @@ export default function ItemsList({ items, isLoading, search }: Props) {
     const router = useRouter();
     const { updateItem, deleteItem } = useItems();
 
-    console.log(items)
-
     const { dialogState, showConfirm } = useConfirmDialog();
 
 

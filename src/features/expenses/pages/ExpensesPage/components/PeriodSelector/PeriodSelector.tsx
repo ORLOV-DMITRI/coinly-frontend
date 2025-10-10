@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './PeriodSelector.module.scss';
 import cn from 'classnames';
 

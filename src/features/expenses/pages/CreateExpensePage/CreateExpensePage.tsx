@@ -65,12 +65,12 @@ export default function CreateExpensePage() {
       date: selectedDate.toISOString(),
     });
 
- /*   router.push('/expenses');*/
+    router.push('/expenses');
   };
 
   return (
     <div className={'page'}>
-      <PageHeader title={'Новый расход'}/>
+      <PageHeader title={'Новый расход'} actionType={'back'}/>
 
       <div className={cn(styles.container, 'container')}>
         <div className={styles.section}>

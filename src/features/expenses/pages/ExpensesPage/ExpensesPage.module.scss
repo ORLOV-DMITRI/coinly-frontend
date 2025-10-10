@@ -39,6 +39,10 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 24px 16px;
+
+  @include xs {
+    padding: 12px 10px;
+  }
 }
 
 .loading {
@@ -51,4 +55,46 @@
 .expensesList {
   display: flex;
   flex-direction: column;
+  margin-top: var(--space-md);
+  gap: var(--space-sm);
+}
+
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.fetchingIndicator {
+  font-size: 20px;
+  color: var(--primary);
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+.collapseBtn {
+  gap: 5px;
+  & .icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+
+  & .text {
+    @include xs {
+      display: none;
+    }
+  }
+
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

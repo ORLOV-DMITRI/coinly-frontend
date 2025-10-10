@@ -1,67 +1,41 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import type { AccordionMode } from '../types/expensesView.types';
-
-const STORAGE_KEY = 'expenses-accordion-mode';
-const DEFAULT_MODE: AccordionMode = 'first-expanded';
+import { useState } from 'react';
 
 export const useExpensesView = () => {
-  const [mode, setMode] = useState<AccordionMode>(DEFAULT_MODE);
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  // Храним ID открытых расходов как массив строк
+  const [expandedIds, setExpandedIds] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && (saved === 'all-collapsed' || saved === 'all-expanded' || saved === 'first-expanded')) {
-      setMode(saved as AccordionMode);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    localStorage.setItem(STORAGE_KEY, mode);
-  }, [mode]);
-
-  const changeMode = (newMode: AccordionMode) => {
-    setMode(newMode);
-    setExpandedIds(new Set());
-  };
-
+  // Переключить расход: если открыт → закрыть, если закрыт → открыть
   const toggleExpense = (expenseId: string) => {
     setExpandedIds(prev => {
-      const next = new Set(prev);
-      if (next.has(expenseId)) {
-        next.delete(expenseId);
+      // Ищем ID в массиве
+      const isCurrentlyExpanded = prev.includes(expenseId);
+
+      if (isCurrentlyExpanded) {
+        // Если уже открыт → убираем из массива (закрываем)
+        return prev.filter(id => id !== expenseId);
       } else {
-        next.add(expenseId);
+        // Если закрыт → добавляем в массив (открываем)
+        return [...prev, expenseId];
       }
-      return next;
     });
   };
 
+  // Проверка: открыт ли расход?
   const isExpanded = (expenseId: string, index: number): boolean => {
-    if (expandedIds.size > 0) {
-      return expandedIds.has(expenseId);
-    }
+    // Просто проверяем есть ли ID в массиве
+    return expandedIds.includes(expenseId);
+  };
 
-    switch (mode) {
-      case 'all-expanded':
-        return true;
-      case 'all-collapsed':
-        return false;
-      case 'first-expanded':
-        return index === 0;
-      default:
-        return false;
-    }
+  // Закрыть все расходы
+  const collapseAll = () => {
+    setExpandedIds([]);
   };
 
   return {
-    mode,
-    changeMode,
     toggleExpense,
     isExpanded,
+    collapseAll,
   };
 };

@@ -66,7 +66,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={'page'}>
+    <div className={'startPage'}>
       <div className={cn('container', styles.content)}>
         <div className={styles.form}>
           <h1 className={styles.title}>Вход</h1>

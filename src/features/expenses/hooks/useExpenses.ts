@@ -11,9 +11,12 @@ import { queryClient } from '@/lib/settings/react-query';
 const EXPENSES_QUERY_KEY = ['expenses'];
 
 export function useExpenses(params?: ExpensesQueryParams) {
-  const { data: expenses = [], isLoading, error } = useQuery({
+
+  const { data: expenses = [], isLoading, isFetching, error } = useQuery({
     queryKey: [...EXPENSES_QUERY_KEY, params],
     queryFn: () => expensesService.getExpenses(params),
+    placeholderData: (previousData) => previousData, // keepPreviousData в новой версии React Query
+    staleTime: 5 * 60 * 1000, // 5 минут - данные считаются свежими
   });
 
   const createMutation = useMutation({
@@ -58,6 +61,7 @@ export function useExpenses(params?: ExpensesQueryParams) {
   return {
     expenses,
     isLoading,
+    isFetching,
     error,
     createExpense: createMutation.mutate,
     updateExpense: updateMutation.mutate,

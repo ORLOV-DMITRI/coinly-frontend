@@ -6,14 +6,12 @@ import { useExpenses } from '../../hooks/useExpenses';
 import { useExpensesView } from '../../hooks/useExpensesView';
 import PeriodSelector, { type PeriodType } from './components/PeriodSelector/PeriodSelector';
 import MonthSummary from './components/MonthSummary/MonthSummary';
-import AccordionControls from './components/AccordionControls/AccordionControls';
 import DayGroup from './components/DayGroup/DayGroup';
 import EditPriceModal from './components/EditPriceModal/EditPriceModal';
 import EmptyState from './components/EmptyState/EmptyState';
-import type { Expense } from '@/lib/types/api.types';
-import Link from "next/link";
 import Button from "@/shared/ui/Button/Button";
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
+import CollapseIcon from '/public/assets/svg/collapse.svg'
 
 type EditingItem = {
   expenseItemId: string;
@@ -26,23 +24,54 @@ export default function ExpensesPage() {
   const [period, setPeriod] = useState<PeriodType>('month');
   const [editingItem, setEditingItem] = useState<EditingItem | null>(null);
 
-  const { mode, changeMode, toggleExpense, isExpanded } = useExpensesView();
+  const { toggleExpense, isExpanded, collapseAll } = useExpensesView();
 
   const dateRange = useMemo(() => {
     const now = new Date();
-    const startDate = new Date(now);
-    const endDate = new Date(now);
+
+    // Конец периода: конец текущего дня (23:59:59.999)
+    const endDate = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      23, 59, 59, 999
+    );
+
+    // Начало периода зависит от выбранного period
+    let startDate: Date;
 
     switch (period) {
       case 'week':
-        startDate.setDate(now.getDate() - 7);
+        startDate = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate() - 7,
+          0, 0, 0, 0
+        );
         break;
       case 'month':
-        startDate.setMonth(now.getMonth() - 1);
+        startDate = new Date(
+          now.getFullYear(),
+          now.getMonth() - 1,
+          now.getDate(),
+          0, 0, 0, 0
+        );
         break;
       case 'year':
-        startDate.setFullYear(now.getFullYear() - 1);
+        startDate = new Date(
+          now.getFullYear() - 1,
+          now.getMonth(),
+          now.getDate(),
+          0, 0, 0, 0
+        );
         break;
+      default:
+        startDate = new Date(
+          now.getFullYear(),
+          now.getMonth() - 1,
+          now.getDate(),
+          0, 0, 0, 0
+        );
     }
 
     return {
@@ -51,7 +80,8 @@ export default function ExpensesPage() {
     };
   }, [period]);
 
-  const { expenses, isLoading, updateExpense } = useExpenses(dateRange);
+  const { expenses, isLoading, isFetching, updateExpense } = useExpenses(dateRange);
+
 
   const totalAmount = useMemo(() => {
     if (!expenses) return 0;
@@ -61,22 +91,7 @@ export default function ExpensesPage() {
     }, 0);
   }, [expenses]);
 
-  const periodLabel = useMemo(() => {
-    const now = new Date();
-    const monthNames = [
-      'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-      'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-    ];
 
-    switch (period) {
-      case 'week':
-        return 'Последняя неделя';
-      case 'month':
-        return `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
-      case 'year':
-        return `${now.getFullYear()}`;
-    }
-  }, [period]);
 
   const formatDateLabel = (dateString: string): string => {
     const date = new Date(dateString);
@@ -135,37 +150,39 @@ export default function ExpensesPage() {
     });
   };
 
-  if (isLoading) {
-    return (
-      <div className={styles.page}>
-        <header className={styles.header}>
-          <div className={styles.headerContainer}>
-            <div className={styles.headerTop}>
-              <h1 className={styles.title}>Расходы</h1>
-              <PeriodSelector period={period} onPeriodChange={setPeriod} />
-            </div>
-          </div>
-        </header>
-        <div className={styles.container}>
-          <div className={styles.loading}>Загрузка...</div>
-        </div>
-      </div>
-    );
-  }
-
   const hasExpenses = expenses && expenses.length > 0;
+  const showEmptyState = !isLoading && !hasExpenses;
 
   return (
     <div className={styles.page}>
       <PageHeader title={'Расходы'} actionType={'link'} link={'/expenses/create'}/>
 
       <div className={styles.container}>
-        {hasExpenses ? (
+        {isLoading ? (
+          <div className={styles.loading}>Загрузка...</div>
+        ) : showEmptyState ? (
+          <EmptyState />
+        ) : (
           <>
-            <MonthSummary label={periodLabel} total={totalAmount} />
+            <MonthSummary period={period} total={totalAmount} />
 
-            <PeriodSelector period={period} onPeriodChange={setPeriod} />
-            <AccordionControls mode={mode} onModeChange={changeMode} />
+            <div className={styles.settings}>
+              <PeriodSelector period={period} onPeriodChange={setPeriod} />
+
+              {/*{isFetching && <span className={styles.fetchingIndicator}>⟳</span>}*/}
+
+
+              <Button
+                type="button"
+                variant={'secondary'}
+                size={'default'}
+                onClick={collapseAll}
+                className={styles.collapseBtn}
+              >
+                <span className={styles.icon}><CollapseIcon/></span>
+                <span className={styles.text}>Закрыть все</span>
+              </Button>
+            </div>
 
             <div className={styles.expensesList}>
               {expenses.map((expense, index) => (
@@ -180,8 +197,6 @@ export default function ExpensesPage() {
               ))}
             </div>
           </>
-        ) : (
-          <EmptyState />
         )}
       </div>
 

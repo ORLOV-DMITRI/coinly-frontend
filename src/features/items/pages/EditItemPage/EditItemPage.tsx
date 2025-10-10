@@ -184,7 +184,7 @@ export default function EditItemPage({itemId}: Props) {
 
     return (
         <section className={'page'}>
-            <PageHeader title={'Обновление товара'}/>
+            <PageHeader title={'Обновление товара'} actionType={'back'}/>
             <div className="container">
 
                 <form onSubmit={handleSubmit}>

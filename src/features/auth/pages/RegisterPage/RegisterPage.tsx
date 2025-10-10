@@ -71,7 +71,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className={cn(styles.container, 'page')}>
+    <div className={cn(styles.container, 'startPage')}>
         <div className={cn("container", styles.content)}>
           <div className={styles.form}>
             <h1 className={styles.title}>Регистрация</h1>

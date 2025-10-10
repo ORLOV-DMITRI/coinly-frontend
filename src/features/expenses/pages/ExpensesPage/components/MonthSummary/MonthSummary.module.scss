@@ -6,6 +6,12 @@
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 32px;
+
+  @include xs {
+    padding: 12px;
+    margin-bottom: var(--space-sm);
+    border-radius: 8px;
+  }
 }
 
 .row {
@@ -15,16 +21,23 @@
 }
 
 .label {
-  font-size: 14px;
-  color: var(--muted-foreground);
+  font-size: 32px;
+  color: var(--foreground);
+
+  @include xs {
+    font-size: 28px;
+  }
 }
 
 .amount {
   font-size: 32px;
   font-weight: 700;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-geist-mono), monospace;
 
   @include sm {
     font-size: 28px;
+  }
+  @include xs {
+    font-size: 25px;
   }
 }

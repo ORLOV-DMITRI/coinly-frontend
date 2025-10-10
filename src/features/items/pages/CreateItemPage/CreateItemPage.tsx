@@ -126,7 +126,7 @@ export default function CreateItemPage() {
 
     return (
         <section className={'page'}>
-            <PageHeader title={'Новый товар'}/>
+            <PageHeader title={'Новый товар'} actionType={'back'}/>
 
             <div className="container">
                 <form onSubmit={handleSubmit}>

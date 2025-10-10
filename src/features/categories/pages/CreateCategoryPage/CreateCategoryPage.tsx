@@ -76,7 +76,7 @@ export default function CreateCategoryPage() {
 
     return (
         <section className={'page'}>
-            <PageHeader title={'Новая категория'}/>
+            <PageHeader title={'Новая категория'} actionType={'back'}/>
 
 
             <div className="container">

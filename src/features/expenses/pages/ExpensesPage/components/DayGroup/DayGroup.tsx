@@ -1,8 +1,7 @@
-'use client';
-
 import styles from './DayGroup.module.scss';
 import cn from 'classnames';
 import { useRouter } from 'next/navigation';
+import { useRef, useEffect, useState } from 'react';
 import type { Expense } from '@/lib/types/api.types';
 
 type Props = {
@@ -15,8 +14,18 @@ type Props = {
 
 export default function DayGroup({ expense, dateLabel, isExpanded, onToggle, onItemClick }: Props) {
   const router = useRouter();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number>(0);
 
   const totalAmount = expense.items.reduce((sum, item) => sum + item.amount, 0);
+
+  // Измеряем реальную высоту контента
+  useEffect(() => {
+    if (contentRef.current) {
+      const contentHeight = contentRef.current.scrollHeight;
+      setHeight(contentHeight);
+    }
+  }, [expense.items]);
 
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -43,7 +52,11 @@ export default function DayGroup({ expense, dateLabel, isExpanded, onToggle, onI
         </div>
       </div>
 
-      <div className={cn(styles.content, isExpanded && styles.expanded)}>
+      <div
+        ref={contentRef}
+        className={styles.content}
+        style={{ height: isExpanded ? `${height}px` : '0px' }}
+      >
         <div className={styles.list}>
           {expense.items.map((expenseItem) => {
             const categoryName = expenseItem.item.category?.name || null;
