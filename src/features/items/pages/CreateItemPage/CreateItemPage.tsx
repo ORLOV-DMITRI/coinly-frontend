@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useItems } from '@/features/items/hooks/useItems';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
+import ActionButtons from "@/shared/ui/ActionButtons/ActionButtons";
 
 type FormData = {
     name: string;
@@ -120,9 +121,6 @@ export default function CreateItemPage() {
         });
     };
 
-    const handleCancel = () => {
-        router.push('/items');
-    };
 
     return (
         <section className={'page'}>
@@ -231,27 +229,7 @@ export default function CreateItemPage() {
                         </button>
                     </div>
 
-                    <div className={styles.actions}>
-                        <div className={styles.actionsContainer}>
-                            <Button
-                                type="button"
-                                variant={'secondary'}
-                                size={'large'}
-                                onClick={handleCancel}
-                                disabled={isCreating}
-                            >
-                                Отмена
-                            </Button>
-                            <Button
-                                type="submit"
-                                variant={'primary'}
-                                size={'large'}
-                                loading={isCreating}
-                            >
-                                Создать
-                            </Button>
-                        </div>
-                    </div>
+                   <ActionButtons isDisabled={isCreating} submitLabel={'Создать'}/>
                 </form>
             </div>
         </section>

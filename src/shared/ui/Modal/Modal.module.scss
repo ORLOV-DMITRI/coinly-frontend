@@ -57,6 +57,10 @@
   padding: var(--space-md) var(--space-md);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
+
+  @include xs {
+    padding: var(--space-sm) var(--space-sm);
+  }
 }
 .backBtn {
   transform: rotate(180deg);
@@ -96,4 +100,8 @@
   flex: 1;
   overflow-y: auto;
   padding: var(--space-md);
+
+  @include xs {
+    padding: var(--space-sm);
+  }
 }

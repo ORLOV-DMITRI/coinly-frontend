@@ -54,5 +54,9 @@
   width: 100%;
   padding: 16px 24px;
   font-size: 16px;
+
+  @include xs {
+    padding: 10px 24px;
+  }
 }
 

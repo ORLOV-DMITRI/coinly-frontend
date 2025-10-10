@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './EditPriceModal.module.scss';
 import { useState } from 'react';
 import Modal from '@/shared/ui/Modal/Modal';
@@ -9,7 +7,6 @@ type Props = {
   onClose: () => void;
   expenseItemId: string;
   itemName: string;
-  categoryName: string | null;
   currentAmount: number;
   onSave: (expenseItemId: string, newAmount: number) => void;
 };
@@ -19,7 +16,6 @@ export default function EditPriceModal({
   onClose,
   expenseItemId,
   itemName,
-  categoryName,
   currentAmount,
   onSave,
 }: Props) {
@@ -47,7 +43,6 @@ export default function EditPriceModal({
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.itemInfo}>
           <div className={styles.itemName}>{itemName}</div>
-          {categoryName && <div className={styles.itemCategory}>{categoryName}</div>}
         </div>
 
         <div className={styles.field}>

@@ -93,31 +93,6 @@
   }
 }
 
-.actions {
-  position: sticky;
-  bottom: 0;
-  background: var(--background);
-  border-top: 1px solid var(--border);
-  padding: var(--space-md) var(--space-sm);
-  margin: 0 calc(var(--space-sm) * -1);
-  margin-top: var(--space-lg);
-
-  @include sm {
-    bottom: 70px;
-  }
-  @include xs {
-    padding: var(--space-sm) var(--space-sm);
-    width: 100%;
-    left: 10px;
-  }
-}
-
-.actionsContainer {
-  max-width: 600px;
-  margin: 0 auto;
-  display: flex;
-  gap: var(--space-sm);
-}
 
 .deleteSection {
   margin-top: var(--space-lg);

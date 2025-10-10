@@ -16,7 +16,6 @@ import CollapseIcon from '/public/assets/svg/collapse.svg'
 type EditingItem = {
   expenseItemId: string;
   itemName: string;
-  categoryName: string | null;
   currentAmount: number;
 };
 
@@ -127,12 +126,10 @@ export default function ExpensesPage() {
     expenseItemId: string,
     currentAmount: number,
     itemName: string,
-    categoryName: string | null
   ) => {
     setEditingItem({
       expenseItemId,
       itemName,
-      categoryName,
       currentAmount,
     });
   };
@@ -206,7 +203,6 @@ export default function ExpensesPage() {
           onClose={() => setEditingItem(null)}
           expenseItemId={editingItem.expenseItemId}
           itemName={editingItem.itemName}
-          categoryName={editingItem.categoryName}
           currentAmount={editingItem.currentAmount}
           onSave={handleSavePrice}
         />

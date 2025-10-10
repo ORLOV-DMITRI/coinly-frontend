@@ -2,9 +2,10 @@
 
 import styles from './PriceSelectionModal.module.scss';
 import cn from 'classnames';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from '@/shared/ui/Modal/Modal';
 import type { Item } from '@/lib/types/api.types';
+import Button from "@/shared/ui/Button/Button";
 
 type Props = {
   item: Item;
@@ -18,6 +19,13 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
   const [customPrice, setCustomPrice] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
+
+  // Автоматически выбираем первую цену при открытии модалки
+  useEffect(() => {
+    if (isOpen && item.prices.length > 0) {
+      setSelectedPrice(item.prices[0]);
+    }
+  }, [isOpen, item.id, item.prices]);
 
   const handlePriceClick = (price: number) => {
     setSelectedPrice(price);
@@ -59,11 +67,6 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
       <div className={styles.content}>
         <div className={styles.itemInfo}>
           <div className={styles.itemName}>{item.name}</div>
-          {item.category && (
-            <div className={styles.itemCategory}>
-              {item.category.name}
-            </div>
-          )}
         </div>
 
         {item.prices.length > 0 && (
@@ -71,18 +74,15 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
             <div className={styles.priceLabel}>Выбери цену</div>
             <div className={styles.priceButtons}>
               {item.prices.map((price, index) => (
-                <button
+                <Button
                   key={`${price}-${index}`}
                   type="button"
-                  className={cn(
-                    styles.priceBtn,
-                    price === lastUsedPrice && styles.lastUsed,
-                    price === selectedPrice && styles.selected
-                  )}
+                  variant={selectedPrice ? 'primary' : 'secondary'}
+                  size={'default'}
                   onClick={() => handlePriceClick(price)}
                 >
                   {price}₽
-                </button>
+                </Button>
               ))}
             </div>
           </>
@@ -119,20 +119,19 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
           </div>
         )}
 
-        {selectedPrice !== null && (
-          <>
-            <div className={styles.quantityWrapper}>
-              <label className={styles.quantityLabel}>Количество</label>
-              <div className={styles.quantityControls}>
-                <button
+        <>
+          <div className={styles.quantityWrapper}>
+            <label className={styles.quantityLabel}>Количество</label>
+            <div className={styles.quantityControls}>
+              <button
                   type="button"
                   className={styles.quantityBtn}
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   disabled={quantity <= 1}
-                >
-                  −
-                </button>
-                <input
+              >
+                −
+              </button>
+              <input
                   type="number"
                   className={styles.quantityInput}
                   value={quantity}
@@ -141,31 +140,30 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
                     if (!isNaN(val) && val > 0) setQuantity(val);
                   }}
                   min="1"
-                />
-                <button
+              />
+              <button
                   type="button"
                   className={styles.quantityBtn}
                   onClick={() => setQuantity(quantity + 1)}
-                >
-                  +
-                </button>
-              </div>
+              >
+                +
+              </button>
             </div>
+          </div>
 
-            <div className={styles.totalWrapper}>
-              <div className={styles.totalLabel}>Итого:</div>
-              <div className={styles.totalAmount}>{totalAmount}₽</div>
-            </div>
+          <div className={styles.totalWrapper}>
+            <div className={styles.totalLabel}>Итого:</div>
+            <div className={styles.totalAmount}>{totalAmount}₽</div>
+          </div>
 
-            <button
+          <button
               type="button"
               className={styles.confirmBtn}
               onClick={handleConfirm}
-            >
-              Добавить
-            </button>
-          </>
-        )}
+          >
+            Добавить
+          </button>
+        </>
 
         {lastUsedPrice !== null && !selectedPrice && (
           <div className={styles.hint}>● Последняя использованная цена</div>

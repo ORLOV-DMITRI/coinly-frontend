@@ -15,6 +15,7 @@ import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
 import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
+import ActionButtons from "@/shared/ui/ActionButtons/ActionButtons";
 
 
 type FormData = {
@@ -154,10 +155,6 @@ export default function EditItemPage({itemId}: Props) {
                 router.push('/items');
             },
         })
-    };
-
-    const handleCancel = () => {
-        router.push('/items');
     };
 
     const handleDelete = async () => {
@@ -316,27 +313,7 @@ export default function EditItemPage({itemId}: Props) {
                         </div>
                     )}
 
-                    <div className={styles.actions}>
-                        <div className={styles.actionsContainer}>
-                            <Button
-                                type="button"
-                                variant={'secondary'}
-                                size={'large'}
-                                onClick={handleCancel}
-                                disabled={isUpdating}
-                            >
-                                Отмена
-                            </Button>
-                            <Button
-                                type="submit"
-                                variant={'primary'}
-                                size={'large'}
-                                loading={isUpdating}
-                            >
-                                Обновить
-                            </Button>
-                        </div>
-                    </div>
+                    <ActionButtons isDisabled={isUpdating} submitLabel={'Обновить'}/>
                 </form>
             </div>
 

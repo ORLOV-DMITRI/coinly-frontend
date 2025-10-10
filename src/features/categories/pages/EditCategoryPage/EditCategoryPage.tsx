@@ -16,6 +16,7 @@ import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
+import ActionButtons from "@/shared/ui/ActionButtons/ActionButtons";
 
 
 type FormData = {
@@ -133,9 +134,6 @@ export default function EditCategoryPage({categoryId}:Props) {
         }
     };
 
-    const handleCancel = () => {
-        router.push('/categories');
-    };
 
     return (
         <section className={'page'}>
@@ -226,28 +224,7 @@ export default function EditCategoryPage({categoryId}:Props) {
                         </div>
                     )}
 
-                    <div className={styles.actions}>
-                        <div className={styles.actionsContainer}>
-                            <Button
-                                type="button"
-                                variant={'secondary'}
-                                size={'large'}
-                                onClick={handleCancel}
-                                disabled={isUpdating || isDeleting}
-                            >
-                                Отмена
-                            </Button>
-                            <Button
-                                type="submit"
-                                variant={'primary'}
-                                size={'large'}
-                                loading={isUpdating}
-                                disabled={isDeleting}
-                            >
-                                Сохранить
-                            </Button>
-                        </div>
-                    </div>
+                    <ActionButtons isDisabled={isUpdating} submitLabel={'Обновить'}/>
 
 
                 </form>

@@ -39,9 +39,10 @@ export default function BottomNavigation() {
         </Link>
 
 
-          <button className={cn(styles.centralButton, isHideCenterBtn() && styles.hide)}>
+
+          <Link href={'/expenses/create'} className={cn(styles.centralButton)}>
               <AddIcon />
-          </button>
+          </Link>
 
 
         <Link href={'/categories'} className={cn(styles.navItem, pathname.startsWith('/categories') && styles.active)}>

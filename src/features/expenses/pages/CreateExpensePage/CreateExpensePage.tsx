@@ -2,7 +2,7 @@
 
 import styles from './CreateExpensePage.module.scss';
 import cn from 'classnames';
-import { useState } from 'react';
+import {FormEvent, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import DateSelector from '../../components/DateSelector/DateSelector';
 import ItemSelector from '../../components/ItemSelector/ItemSelector';
@@ -12,6 +12,8 @@ import { useExpenses } from '../../hooks/useExpenses';
 import type { Item } from '@/lib/types/api.types';
 import BackIcon from '/public/assets/svg/backArrow.svg';
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
+import Button from "@/shared/ui/Button/Button";
+import ActionButtons from "@/shared/ui/ActionButtons/ActionButtons";
 
 type SelectedItem = {
   item: Item;
@@ -55,7 +57,8 @@ export default function CreateExpensePage() {
   const totalAmount = selectedItems.reduce((sum, { price, quantity }) => sum + (price * quantity), 0);
   const selectedItemIds = selectedItems.map(({ item }) => item.id);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     if (selectedItems.length === 0) return;
     createExpense({
       items: selectedItems.map(({ item, price }) => ({
@@ -73,13 +76,13 @@ export default function CreateExpensePage() {
       <PageHeader title={'Новый расход'} actionType={'back'}/>
 
       <div className={cn(styles.container, 'container')}>
-        <div className={styles.section}>
+        <form onSubmit={handleSubmit} className={styles.section}>
           <div className={styles.sectionTitle}>Дата</div>
           <DateSelector
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
           />
-        </div>
+        </form>
 
         <div className={styles.section}>
           <div className={styles.sectionTitle}>Товар</div>
@@ -131,19 +134,8 @@ export default function CreateExpensePage() {
             </div>
           </div>
         )}
-      </div>
 
-      <div className={styles.footer}>
-        <div className={styles.footerContainer}>
-          <button
-            type="button"
-            className={styles.submitBtn}
-            onClick={handleSubmit}
-            disabled={selectedItems.length === 0 || isCreating}
-          >
-            {isCreating ? 'Добавление...' : 'Добавить расход'}
-          </button>
-        </div>
+        <ActionButtons isDisabled={isCreating} submitLabel={'Создать'}/>
       </div>
 
       {currentItem && (

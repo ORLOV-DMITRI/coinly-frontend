@@ -9,6 +9,9 @@
 .buttons {
   display: flex;
   gap: var(--space-md);
+  @include xs {
+    gap: var(--space-xs);
+  }
 }
 
 

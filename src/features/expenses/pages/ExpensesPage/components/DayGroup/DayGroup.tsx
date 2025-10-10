@@ -3,13 +3,14 @@ import cn from 'classnames';
 import { useRouter } from 'next/navigation';
 import { useRef, useEffect, useState } from 'react';
 import type { Expense } from '@/lib/types/api.types';
+import ArrowIcon from '/public/assets/svg/chevron.svg'
 
 type Props = {
   expense: Expense;
   dateLabel: string;
   isExpanded: boolean;
   onToggle: () => void;
-  onItemClick: (expenseItemId: string, currentAmount: number, itemName: string, categoryName: string | null) => void;
+  onItemClick: (expenseItemId: string, currentAmount: number, itemName: string) => void;
 };
 
 export default function DayGroup({ expense, dateLabel, isExpanded, onToggle, onItemClick }: Props) {
@@ -34,9 +35,9 @@ export default function DayGroup({ expense, dateLabel, isExpanded, onToggle, onI
 
   return (
     <div className={styles.group}>
-      <div className={styles.header} onClick={onToggle}>
+      <div className={cn(styles.header, isExpanded && styles.open)} onClick={onToggle}>
         <div className={styles.headerLeft}>
-          <span className={styles.icon}>{isExpanded ? '▼' : '▶'}</span>
+          <span className={cn(styles.icon)}><ArrowIcon/></span>
           <span className={styles.date}>{dateLabel}</span>
         </div>
         <div className={styles.headerRight}>
@@ -59,8 +60,6 @@ export default function DayGroup({ expense, dateLabel, isExpanded, onToggle, onI
       >
         <div className={styles.list}>
           {expense.items.map((expenseItem) => {
-            const categoryName = expenseItem.item.category?.name || null;
-
             return (
               <div
                 key={expenseItem.id}
@@ -69,16 +68,10 @@ export default function DayGroup({ expense, dateLabel, isExpanded, onToggle, onI
                   expenseItem.id,
                   expenseItem.amount,
                   expenseItem.item.name,
-                  categoryName
                 )}
               >
                 <div className={styles.itemInfo}>
                   <div className={styles.itemName}>{expenseItem.item.name}</div>
-                  {categoryName && (
-                    <div className={styles.itemMeta}>
-                      <span className={styles.category}>{categoryName}</span>
-                    </div>
-                  )}
                 </div>
                 <div className={styles.itemAmount}>
                   {expenseItem.amount.toLocaleString('ru-RU')}₽

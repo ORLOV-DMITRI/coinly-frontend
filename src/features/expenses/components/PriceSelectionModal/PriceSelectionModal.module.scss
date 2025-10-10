@@ -4,6 +4,9 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  @include xs {
+    gap: 15px;
+  }
 }
 
 .itemInfo {
@@ -21,10 +24,8 @@
   font-size: 18px;
   font-weight: 600;
   color: var(--foreground);
-  margin-bottom: 6px;
-
   @include xs {
-    font-size: 17px;
+    font-size: 15px;
   }
 }
 
@@ -311,7 +312,7 @@
   align-items: center;
 
   @include xs {
-    padding: 14px;
+    padding: 12px;
   }
 }
 
