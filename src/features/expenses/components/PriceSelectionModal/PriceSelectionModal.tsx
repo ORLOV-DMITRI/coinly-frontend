@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Modal from '@/shared/ui/Modal/Modal';
 import type { Item } from '@/lib/types/api.types';
 import Button from "@/shared/ui/Button/Button";
+import {useExpenses} from "@/features/expenses/hooks/useExpenses";
 
 type Props = {
   item: Item;
@@ -19,6 +20,7 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
   const [customPrice, setCustomPrice] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
+  const [currentPrices, setCurrentPrices] = useState(item.prices);
 
   useEffect(() => {
     if (isOpen && item.prices.length > 0) {
@@ -40,8 +42,10 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
 
   const handleCustomPriceSubmit = () => {
     const price = parseFloat(customPrice);
+    if(currentPrices.includes(price)) return
     if (!isNaN(price) && price > 0) {
       setSelectedPrice(price);
+      setCurrentPrices(prev => [...prev, price])
       setShowCustomInput(false);
     }
   };
@@ -68,15 +72,15 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
           <div className={styles.itemName}>{item.name}</div>
         </div>
 
-        {item.prices.length > 0 && (
+        {currentPrices.length > 0 && (
           <>
             <div className={styles.priceLabel}>Выбери цену</div>
             <div className={styles.priceButtons}>
-              {item.prices.map((price, index) => (
+              {currentPrices.map((price, index) => (
                 <Button
                   key={`${price}-${index}`}
                   type="button"
-                  variant={selectedPrice ? 'primary' : 'secondary'}
+                  variant={price === selectedPrice ? 'primary' : 'secondary'}
                   size={'default'}
                   onClick={() => handlePriceClick(price)}
                 >

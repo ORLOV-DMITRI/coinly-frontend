@@ -1,7 +1,5 @@
-'use client';
-
 import styles from './CreateItemModal.module.scss';
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import Modal from '@/shared/ui/Modal/Modal';
 import { useItems } from '@/features/items/hooks/useItems';
 import type { Item } from '@/lib/types/api.types';
@@ -17,7 +15,7 @@ export default function CreateItemModal({ isOpen, onClose, onItemCreated }: Prop
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const priceNum = parseFloat(price);

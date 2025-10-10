@@ -161,6 +161,7 @@ export type ExpenseItem = {
   expenseId: string;
   itemId: string;
   amount: number;
+  quantity: number;
   createdAt: string;
   item: {
     id: string;
@@ -186,6 +187,7 @@ export type CreateExpenseDto = {
   items: Array<{
     itemId: string;
     amount: number;
+    quantity?: number;
   }>;
   date?: string;
 };
@@ -259,4 +261,32 @@ export type DeleteExpenseResponse = {
 export type GetStatsResponse = {
   success: true;
   stats: ExpenseStats;
+};
+
+export type UpdateExpenseItemDto = {
+  amount?: number;
+  quantity?: number;
+};
+
+export type CreateExpenseItemDto = {
+  itemId: string;
+  amount: number;
+  quantity?: number;
+};
+
+export type DeleteExpenseItemResponse = {
+  success: true;
+  message: string;
+};
+
+export type UpdateExpenseItemResponse = {
+  success: true;
+  message: string;
+  expenseItem: ExpenseItem;
+};
+
+export type CreateExpenseItemResponse = {
+  success: true;
+  message: string;
+  expenseItem: ExpenseItem;
 };

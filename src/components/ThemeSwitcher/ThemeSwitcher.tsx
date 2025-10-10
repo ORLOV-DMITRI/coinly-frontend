@@ -5,6 +5,8 @@ import cn from 'classnames';
 import SunIcon from '/public/assets/svg/sun.svg';
 import MoonIcon from '/public/assets/svg/moon.svg';
 import MonitorIcon from '/public/assets/svg/monitor.svg';
+import {getScrollbarWidth} from "@/shared/utils/getScrollbarWidth";
+import {useScrollLock} from "@/lib/hooks/useScrollLock";
 
 const THEME_OPTIONS: { value: Theme; label: string; icon: any }[] = [
   { value: 'light', label: 'Светлая', icon: SunIcon },
@@ -29,17 +31,7 @@ export default function ThemeSwitcher({isOpen, setIsOpen}:Props) {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

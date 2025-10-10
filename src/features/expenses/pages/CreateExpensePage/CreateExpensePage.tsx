@@ -59,7 +59,13 @@ export default function CreateExpensePage() {
   const handleItemCreated = (newItem: Item) => {
     setIsCreateItemModalOpen(false);
     setCurrentItem(newItem);
-    setIsPriceModalOpen(true);
+    if(newItem) {
+      setSelectedItems(prev => [...prev, { item: newItem, price: newItem.prices[0], quantity: 1 }]);
+      setCurrentItem(null);
+    }
+
+    console.log(newItem)
+
   };
 
   const totalAmount = selectedItems.reduce((sum, { price, quantity }) => sum + (price * quantity), 0);
@@ -84,14 +90,14 @@ export default function CreateExpensePage() {
     <div className={'page'}>
       <PageHeader title={'Новый расход'} actionType={'back'}/>
 
-      <div className={cn(styles.container, 'container')}>
-        <form onSubmit={handleSubmit} className={styles.section}>
+      <form onSubmit={handleSubmit} className={cn(styles.container, 'container')}>
+        <div  className={styles.section}>
           <div className={styles.sectionTitle}>Дата</div>
           <DateSelector
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
           />
-        </form>
+        </div>
 
         <div className={styles.section}>
           <div className={styles.sectionTitle}>Товар</div>
@@ -112,11 +118,6 @@ export default function CreateExpensePage() {
                     <div className={styles.selectedName}>
                       {selectedItem.item.name}
                     </div>
-                    {selectedItem.item.category && (
-                      <div className={styles.selectedCategory}>
-                        {selectedItem.item.category.name}
-                      </div>
-                    )}
                     <div className={styles.priceRow}>
                       <span className={styles.unitPrice}>{selectedItem.price}₽</span>
                       <div className={styles.quantityControls}>
@@ -132,10 +133,7 @@ export default function CreateExpensePage() {
                           type="number"
                           className={styles.quantityInput}
                           value={selectedItem.quantity}
-                          onChange={(e) => {
-                            const val = parseInt(e.target.value);
-                            if (!isNaN(val) && val > 0) handleQuantityChange(index, val);
-                          }}
+                          disabled={true}
                           min="1"
                         />
                         <button
@@ -168,7 +166,7 @@ export default function CreateExpensePage() {
         )}
 
         <ActionButtons isDisabled={isCreating} submitLabel={'Создать'}/>
-      </div>
+      </form>
 
       {currentItem && (
         <PriceSelectionModal

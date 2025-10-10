@@ -7,7 +7,7 @@ import cn from "classnames";
 
 export default function DashboardPage() {
     return (
-        <div className={'page'}>
+        <div className={'startPage'}>
             <div className="container">
                 <div className={styles.content}>
 

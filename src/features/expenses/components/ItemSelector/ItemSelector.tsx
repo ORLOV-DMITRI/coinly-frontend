@@ -64,11 +64,7 @@ export default function ItemSelector({ onItemSelect, onCreateItem, selectedItemI
             )}
 
             {onCreateItem && (
-                <button
-                    type="button"
-                    className={styles.createBtn}
-                    onClick={onCreateItem}
-                >
+                <button type="button" className={styles.createBtn} onClick={onCreateItem}>
                   <span className={styles.createIcon}>+</span>
                   <span>Создать новый товар</span>
                 </button>

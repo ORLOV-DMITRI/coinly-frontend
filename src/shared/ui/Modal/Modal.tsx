@@ -3,6 +3,8 @@ import cn from 'classnames';
 import { ReactNode, useEffect } from 'react';
 import BackIcon from '/public/assets/svg/backArrow.svg';
 import CloseIcon from '/public/assets/svg/close.svg';
+import {getScrollbarWidth} from "@/shared/utils/getScrollbarWidth";
+import {useScrollLock} from "@/lib/hooks/useScrollLock";
 
 type Props = {
     isOpen: boolean;
@@ -13,17 +15,7 @@ type Props = {
 };
 
 export default function Modal({ isOpen, onClose, title, children, className }: Props) {
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [isOpen]);
+   useScrollLock(isOpen)
 
     if (!isOpen) return null;
 

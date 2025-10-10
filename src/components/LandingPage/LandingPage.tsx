@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function LandingPage() {
     return (
-        <section className={cn(styles.page, 'page')}>
+        <section className={cn(styles.page, 'startPage')}>
             <div className="container">
 
                 <div className={styles.helloBlock}>
