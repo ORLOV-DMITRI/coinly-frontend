@@ -20,7 +20,6 @@ export default function PriceSelectionModal({ item, isOpen, onClose, onPriceSele
   const [quantity, setQuantity] = useState(1);
   const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
 
-  // Автоматически выбираем первую цену при открытии модалки
   useEffect(() => {
     if (isOpen && item.prices.length > 0) {
       setSelectedPrice(item.prices[0]);

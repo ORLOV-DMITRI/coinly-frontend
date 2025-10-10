@@ -15,8 +15,8 @@ export function useExpenses(params?: ExpensesQueryParams) {
   const { data: expenses = [], isLoading, isFetching, error } = useQuery({
     queryKey: [...EXPENSES_QUERY_KEY, params],
     queryFn: () => expensesService.getExpenses(params),
-    placeholderData: (previousData) => previousData, // keepPreviousData в новой версии React Query
-    staleTime: 5 * 60 * 1000, // 5 минут - данные считаются свежими
+    placeholderData: (previousData) => previousData,
+    staleTime: 5 * 60 * 1000,
   });
 
   const createMutation = useMutation({

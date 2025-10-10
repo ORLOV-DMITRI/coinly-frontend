@@ -20,7 +20,6 @@ export default function DayGroup({ expense, dateLabel, isExpanded, onToggle, onI
 
   const totalAmount = expense.items.reduce((sum, item) => sum + item.amount, 0);
 
-  // Измеряем реальную высоту контента
   useEffect(() => {
     if (contentRef.current) {
       const contentHeight = contentRef.current.scrollHeight;

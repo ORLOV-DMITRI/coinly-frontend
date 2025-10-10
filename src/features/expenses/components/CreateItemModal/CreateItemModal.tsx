@@ -24,7 +24,6 @@ export default function CreateItemModal({ isOpen, onClose, onItemCreated }: Prop
     if (!name.trim() || isNaN(priceNum) || priceNum <= 0) return;
 
     try {
-      // Создаём товар с первой ценой
       const newItem = await new Promise<Item>((resolve, reject) => {
         createItem(
           {
@@ -38,11 +37,9 @@ export default function CreateItemModal({ isOpen, onClose, onItemCreated }: Prop
         );
       });
 
-      // Очищаем форму
       setName('');
       setPrice('');
 
-      // Вызываем callback с созданным товаром
       onItemCreated(newItem);
     } catch (error) {
       console.error('Ошибка создания товара:', error);

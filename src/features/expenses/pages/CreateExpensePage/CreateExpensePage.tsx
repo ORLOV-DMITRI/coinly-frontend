@@ -47,9 +47,17 @@ export default function CreateExpensePage() {
     setSelectedItems(prev => prev.filter((item, index) => index !== currentIndex));
   };
 
+  const handleQuantityChange = (currentIndex: number, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    setSelectedItems(prev =>
+      prev.map((item, index) =>
+        index === currentIndex ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
   const handleItemCreated = (newItem: Item) => {
     setIsCreateItemModalOpen(false);
-    // Сразу открываем PriceSelectionModal для нового товара
     setCurrentItem(newItem);
     setIsPriceModalOpen(true);
   };
@@ -61,9 +69,10 @@ export default function CreateExpensePage() {
     e.preventDefault();
     if (selectedItems.length === 0) return;
     createExpense({
-      items: selectedItems.map(({ item, price }) => ({
+      items: selectedItems.map(({ item, price, quantity }) => ({
         itemId: item.id,
         amount: price,
+        quantity,
       })),
       date: selectedDate.toISOString(),
     });
@@ -102,28 +111,51 @@ export default function CreateExpensePage() {
                   <div className={styles.selectedInfo}>
                     <div className={styles.selectedName}>
                       {selectedItem.item.name}
-                      {selectedItem.quantity > 1 && (
-                        <span className={styles.quantityBadge}> ×{selectedItem.quantity}</span>
-                      )}
                     </div>
                     {selectedItem.item.category && (
                       <div className={styles.selectedCategory}>
                         {selectedItem.item.category.name}
                       </div>
                     )}
-                  </div>
-                  <div className={styles.selectedRight}>
-                    <div className={styles.selectedPrice}>
-                      {selectedItem.price * selectedItem.quantity}₽
+                    <div className={styles.priceRow}>
+                      <span className={styles.unitPrice}>{selectedItem.price}₽</span>
+                      <div className={styles.quantityControls}>
+                        <button
+                          type="button"
+                          className={styles.quantityBtn}
+                          onClick={() => handleQuantityChange(index, selectedItem.quantity - 1)}
+                          disabled={selectedItem.quantity <= 1}
+                        >
+                          −
+                        </button>
+                        <input
+                          type="number"
+                          className={styles.quantityInput}
+                          value={selectedItem.quantity}
+                          onChange={(e) => {
+                            const val = parseInt(e.target.value);
+                            if (!isNaN(val) && val > 0) handleQuantityChange(index, val);
+                          }}
+                          min="1"
+                        />
+                        <button
+                          type="button"
+                          className={styles.quantityBtn}
+                          onClick={() => handleQuantityChange(index, selectedItem.quantity + 1)}
+                        >
+                          +
+                        </button>
+                      </div>
+                      <span className={styles.totalPrice}>= {selectedItem.price * selectedItem.quantity}₽</span>
                     </div>
-                    <button
-                      type="button"
-                      className={styles.removeBtn}
-                      onClick={() => handleRemoveItem(index)}
-                    >
-                      ×
-                    </button>
                   </div>
+                  <button
+                    type="button"
+                    className={styles.removeBtn}
+                    onClick={() => handleRemoveItem(index)}
+                  >
+                    ×
+                  </button>
                 </div>
               ))}
 

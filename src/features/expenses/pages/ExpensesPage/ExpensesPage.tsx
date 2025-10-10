@@ -28,7 +28,6 @@ export default function ExpensesPage() {
   const dateRange = useMemo(() => {
     const now = new Date();
 
-    // Конец периода: конец текущего дня (23:59:59.999)
     const endDate = new Date(
       now.getFullYear(),
       now.getMonth(),
@@ -36,7 +35,6 @@ export default function ExpensesPage() {
       23, 59, 59, 999
     );
 
-    // Начало периода зависит от выбранного period
     let startDate: Date;
 
     switch (period) {
