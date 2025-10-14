@@ -67,7 +67,6 @@ export function useExpenses(params?: ExpensesQueryParams) {
       queryClient.invalidateQueries({ queryKey: EXPENSES_QUERY_KEY });
       queryClient.invalidateQueries({ queryKey: ['items'] });
       queryClient.invalidateQueries({ queryKey: ['stats'] });
-      toast.success('Товар удалён из расхода');
     },
     onError: (error: any) => {
       toast.error(error?.response?.data?.message || 'Ошибка удаления товара');
@@ -95,7 +94,6 @@ export function useExpenses(params?: ExpensesQueryParams) {
       queryClient.invalidateQueries({ queryKey: EXPENSES_QUERY_KEY });
       queryClient.invalidateQueries({ queryKey: ['items'] });
       queryClient.invalidateQueries({ queryKey: ['stats'] });
-      toast.success('Товар добавлен к расходу');
     },
     onError: (error: any) => {
       toast.error(error?.response?.data?.message || 'Ошибка добавления товара');

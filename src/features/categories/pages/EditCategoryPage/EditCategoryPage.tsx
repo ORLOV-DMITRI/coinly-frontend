@@ -155,7 +155,6 @@ export default function EditCategoryPage({categoryId}:Props) {
                                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                                     error={errors.name}
                                     placeholder="Например: Продукты"
-                                    autoFocus
                                 />
                             )}
                         </div>

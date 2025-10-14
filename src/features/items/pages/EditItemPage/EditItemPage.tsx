@@ -198,7 +198,6 @@ export default function EditItemPage({itemId}: Props) {
                                        onChange={handleChange}
                                        error={errors.name}
                                        placeholder="Например: Молоко"
-                                       autoFocus
                                 />
                             )}
 
