@@ -13,23 +13,16 @@ type Props = {
     currentSpent: number;
     month: string;
     onSetBudget: () => void;
-    isAuthenticated: boolean;
 };
 
-export default function ProgressBar({currentSpent, month, onSetBudget, isAuthenticated: serverAuth}: Props) {
-    const {user, isAuthenticated: clientAuth, isLoading} = useAuth();
-    const [mounted, setMounted] = useState(false);
+export default function ProgressBar({currentSpent, month, onSetBudget}: Props) {
+    const {user, isLoading} = useAuth();
 
     const {data: weeklyStats} = useWeeklyStats(month)
 
     const {data} = useStats()
     console.log(data)
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const isAuthenticated = mounted ? clientAuth : serverAuth;
 
 
     const formatAmount = (amount: number) => {
@@ -86,6 +79,6 @@ export default function ProgressBar({currentSpent, month, onSetBudget, isAuthent
             <WeeklyBars weeklyBudget={weeklyBudget} weeklyStats={weeklyStats}/>
         </section>
     );
-    
+
 
 }

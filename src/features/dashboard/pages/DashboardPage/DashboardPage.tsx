@@ -6,14 +6,11 @@ import ProgressBar from "@/features/dashboard/components/ProgressBar/ProgressBar
 import FilterableStats from "@/features/dashboard/components/FilterableStats/FilterableStats";
 import SetBudgetModal from "@/features/dashboard/components/SetBudgetModal/SetBudgetModal";
 import cn from "classnames";
+import {useStats} from "@/features/dashboard/hooks/useStats";
 
-type Props = {
-    isAuthenticated: boolean;
-}
-export default function DashboardPage({isAuthenticated}:Props) {
+
+export default function DashboardPage() {
     const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
-
-    const currentSpent = 15420;
 
     const getCurrentMonth = () => {
         const now = new Date();
@@ -21,6 +18,9 @@ export default function DashboardPage({isAuthenticated}:Props) {
     };
 
     const currentMonth = getCurrentMonth();
+
+    const { data: stats } = useStats({ month: currentMonth });
+    const currentSpent = stats?.total || 0;
 
     const openBudgetModal = () => setIsBudgetModalOpen(true);
     const closeBudgetModal = () => setIsBudgetModalOpen(false);
@@ -41,7 +41,6 @@ export default function DashboardPage({isAuthenticated}:Props) {
                           currentSpent={currentSpent}
                           month={currentMonth}
                           onSetBudget={openBudgetModal}
-                          isAuthenticated={isAuthenticated}
                         />
                         <FilterableStats />
                     </div>
