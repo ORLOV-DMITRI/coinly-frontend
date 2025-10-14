@@ -1,8 +1,11 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { authService } from './authService';
-import {User} from "@/lib/types/api.types";
+import { userService } from '@/shared/services/userService';
+import { User, UpdateBudgetDto } from "@/lib/types/api.types";
+import toast from 'react-hot-toast';
 
 type AuthContextType = {
   user: User | null;
@@ -11,6 +14,8 @@ type AuthContextType = {
   isAuthenticated: boolean;
   login: (token: string, user: User) => void;
   logout: () => void;
+  updateBudget: (monthlyBudget: number) => void;
+  isUpdatingBudget: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -24,7 +29,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const queryClient = useQueryClient();
+
   const isAuthenticated = !!token && !!user;
+
+  const updateBudgetMutation = useMutation({
+    mutationFn: (data: UpdateBudgetDto) => userService.updateBudget(data),
+    onSuccess: (updatedUser) => {
+      setUser(updatedUser);
+      toast.success('Бюджет обновлён');
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message || 'Ошибка обновления бюджета');
+    },
+  });
 
   const login = (newToken: string, newUser: User) => {
     authService.setToken(newToken);
@@ -81,6 +99,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isAuthenticated,
       login,
       logout,
+      updateBudget: (monthlyBudget: number) => updateBudgetMutation.mutate({ monthlyBudget }),
+      isUpdatingBudget: updateBudgetMutation.isPending,
     }}>
       {children}
     </AuthContext.Provider>

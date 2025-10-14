@@ -8,6 +8,7 @@ import type {
   UpdateExpenseResponse,
   DeleteExpenseResponse,
   GetStatsResponse,
+  GetWeeklyStatsResponse,
   ExpensesQueryParams,
   StatsQueryParams,
 } from '@/lib/types/api.types';
@@ -41,5 +42,11 @@ export const expensesService = {
   async getStats(params?: StatsQueryParams) {
     const response = await api.get<GetStatsResponse>('/api/expenses/stats', { params });
     return response.data.stats;
+  },
+
+  async getWeeklyStats(month?: string) {
+    const params = month ? { month } : {};
+    const response = await api.get<GetWeeklyStatsResponse>('/api/expenses/weekly-stats', { params });
+    return response.data.weeklyStats;
   },
 };

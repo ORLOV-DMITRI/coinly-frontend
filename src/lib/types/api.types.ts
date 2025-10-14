@@ -2,6 +2,7 @@ export type User = {
   id: string;
   email: string;
   name: string | null;
+  monthlyBudget: number | null;
   createdAt: string;
 };
 
@@ -289,4 +290,37 @@ export type CreateExpenseItemResponse = {
   success: true;
   message: string;
   expenseItem: ExpenseItem;
+};
+
+// Budget API Types
+export type UpdateBudgetDto = {
+  monthlyBudget: number;
+};
+
+export type UpdateBudgetResponse = {
+  success: true;
+  message: string;
+  user: User;
+};
+
+// Weekly Stats API Types
+export type WeekStat = {
+  week: number;
+  range: string;
+  total: number;
+};
+
+export type WeeklyStatsData = {
+  period: {
+    month: string;
+    startDate: string;
+    endDate: string;
+  };
+  monthlyTotal: number;
+  weeks: WeekStat[];
+};
+
+export type GetWeeklyStatsResponse = {
+  success: true;
+  weeklyStats: WeeklyStatsData;
 };

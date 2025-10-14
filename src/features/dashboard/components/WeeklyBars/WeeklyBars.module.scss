@@ -1,0 +1,170 @@
+@use '@/styles/variables' as *;
+
+.weeklybars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+
+  @include xs {
+    gap: var(--space-xs);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.weekCard {
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.2s ease;
+
+  &.current {
+    border-color: var(--primary);
+    background: var(--accent);
+  }
+
+  &.future {
+    opacity: 0.6;
+  }
+
+  @include xs {
+    padding: var(--space-xs);
+  }
+}
+
+.weekLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: 2px;
+
+  @include xs {
+    font-size: 11px;
+  }
+}
+
+.weekRange {
+  font-size: 10px;
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-xs);
+
+  @include xs {
+    font-size: 9px;
+  }
+}
+
+.weekAmount {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: 6px;
+  font-family: var(--font-geist-mono), monospace;
+
+  @include xs {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+}
+
+.weekAmountPlaceholder {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin-bottom: 6px;
+  font-family: var(--font-geist-mono), monospace;
+
+  @include xs {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+}
+
+.weekBar {
+  height: 4px;
+  background: var(--muted);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.weekBarFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+
+  &.success {
+    background: var(--success);
+  }
+
+  &.warning {
+    background: var(--warning);
+  }
+
+  &.danger {
+    background: var(--destructive);
+  }
+}
+
+.weekBarEmpty {
+  height: 100%;
+  width: 0%;
+  background: var(--muted);
+}
+
+.weekPercentage {
+  font-size: 10px;
+  font-weight: 600;
+
+  &.success {
+    color: var(--success);
+  }
+
+  &.warning {
+    color: var(--warning);
+  }
+
+  &.danger {
+    color: var(--destructive);
+  }
+
+  @include xs {
+    font-size: 9px;
+  }
+}
+
+.weekPercentagePlaceholder {
+  font-size: 10px;
+  color: var(--muted-foreground);
+
+  @include xs {
+    font-size: 9px;
+  }
+}
+
+// Skeleton loading states
+.skeleton {
+  background: linear-gradient(90deg, var(--muted) 25%, var(--accent) 50%, var(--muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeletonText {
+  height: 12px;
+  margin-bottom: 6px;
+}
+
+.skeletonBar {
+  height: 4px;
+  margin-bottom: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

@@ -1,11 +1,28 @@
+'use client'
+import { useState } from 'react';
 import styles from './DashboardPage.module.scss'
 import Button from "@/shared/ui/Button/Button";
 import StatsPanel from "@/features/dashboard/components/StatsPanel/StatsPanel";
 import ProgressBar from "@/features/dashboard/components/ProgressBar/ProgressBar";
 import TopCategories from "@/features/dashboard/components/TopCategories/TopCategories";
+import SetBudgetModal from "@/features/dashboard/components/SetBudgetModal/SetBudgetModal";
 import cn from "classnames";
 
 export default function DashboardPage() {
+    const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
+
+    const currentSpent = 15420;
+
+    const getCurrentMonth = () => {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    };
+
+    const currentMonth = getCurrentMonth();
+
+    const openBudgetModal = () => setIsBudgetModalOpen(true);
+    const closeBudgetModal = () => setIsBudgetModalOpen(false);
+
     return (
         <div className={'startPage'}>
             <div className="container">
@@ -19,14 +36,21 @@ export default function DashboardPage() {
 
                     <div className={styles.infoBlock}>
                         <StatsPanel/>
-                        <ProgressBar/>
+                        <ProgressBar
+                          currentSpent={currentSpent}
+                          month={currentMonth}
+                          onSetBudget={openBudgetModal}
+                        />
                         <TopCategories/>
                     </div>
 
-
-
                 </div>
             </div>
+
+            <SetBudgetModal
+              isOpen={isBudgetModalOpen}
+              onClose={closeBudgetModal}
+            />
         </div>
     );
 }
