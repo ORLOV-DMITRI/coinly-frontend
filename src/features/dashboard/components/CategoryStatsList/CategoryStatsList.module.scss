@@ -61,10 +61,6 @@
 }
 
 @include sm {
-  .categoryItem {
-    padding: var(--space-xs);
-  }
-
   .emoji {
     font-size: 18px;
   }

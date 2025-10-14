@@ -69,7 +69,7 @@
 
 @include sm {
   .itemRow {
-    padding: var(--space-xs);
+    padding:  var(--space-xs) var(--space-sm);
   }
 
   .name,

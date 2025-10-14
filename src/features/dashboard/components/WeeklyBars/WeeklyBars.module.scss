@@ -22,7 +22,12 @@
 
   &.current {
     border-color: var(--primary);
-    //background: var(--accent);
+    background: var(--primary);
+
+    & .weekLabel, .weekRange, .weekAmount {
+      color: var(--primary-foreground);
+    }
+
   }
 
   &.future {
