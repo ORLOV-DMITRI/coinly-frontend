@@ -7,6 +7,8 @@ import FilterableStats from "@/features/dashboard/components/FilterableStats/Fil
 import SetBudgetModal from "@/features/dashboard/components/SetBudgetModal/SetBudgetModal";
 import cn from "classnames";
 import {useStats} from "@/features/dashboard/hooks/useStats";
+import Link from "next/link";
+import PlusIcon from '/public/assets/svg/plus.svg'
 
 
 export default function DashboardPage() {
@@ -33,7 +35,13 @@ export default function DashboardPage() {
                     <div className={styles.intro}>
                         <h1 className={styles.currentDate}>Октябрь 2025</h1>
                         <div className={cn(styles.text, 'mutedText')}>Отслеживай расходы легко и быстро</div>
-                        <Button variant={'primary'} size={'large'} className={styles.actionBtn}>+ Добавить расход</Button>
+                        <Link href={'/expenses/create'}>
+                            <Button variant={'primary'} size={'large'} className={styles.actionBtn}>
+                                <span className={styles.btnIcon}><PlusIcon/></span>
+                                <span>Добавить расход</span>
+                            </Button>
+                        </Link>
+
                     </div>
 
                     <div className={styles.infoBlock}>

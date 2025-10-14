@@ -69,7 +69,7 @@ export default function ProgressBar({currentSpent, month, onSetBudget}: Props) {
                 <div className={styles.amount}>
                     {formatAmount(currentSpent)} / {formatAmount(user.monthlyBudget)}
                 </div>
-                <Bar value={percentageString}/>
+                <Bar value={percentageString} size={'large'}/>
             </div>
 
             <WeeklyBars weeklyBudget={weeklyBudget} weeklyStats={weeklyStats}/>

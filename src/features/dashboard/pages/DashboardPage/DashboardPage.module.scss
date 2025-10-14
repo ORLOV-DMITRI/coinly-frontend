@@ -10,12 +10,19 @@
   }
 }
 .actionBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   margin-top: var(--space-lg);
 
   @include sm {
     margin-top: var(--space-md);
   }
 
+}
+.btnIcon {
+  width: 25px;
+  height: 25px;
 }
 
 

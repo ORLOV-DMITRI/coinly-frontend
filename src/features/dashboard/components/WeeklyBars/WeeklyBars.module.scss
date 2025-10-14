@@ -35,35 +35,35 @@
 }
 
 .weekLabel {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--foreground);
   margin-bottom: 2px;
 
   @include xs {
-    font-size: 11px;
+    font-size: 14px;
   }
 }
 
 .weekRange {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted-foreground);
   margin-bottom: var(--space-xs);
 
   @include xs {
-    font-size: 9px;
+    font-size: 12px;
   }
 }
 
 .weekAmount {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--foreground);
   margin-bottom: 6px;
   font-family: var(--font-geist-mono), monospace;
 
   @include xs {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 4px;
   }
 }
@@ -81,7 +81,7 @@
 }
 
 .weekBar {
-  height: 4px;
+  height: 6px;
   background: var(--muted);
   border-radius: 2px;
   overflow: hidden;

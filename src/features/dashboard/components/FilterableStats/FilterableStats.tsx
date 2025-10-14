@@ -8,6 +8,7 @@ import GroupBySelector from '../GroupBySelector/GroupBySelector';
 import CategoryStatsList from '../CategoryStatsList/CategoryStatsList';
 import ItemStatsList from '../ItemStatsList/ItemStatsList';
 import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
+import SettingsIcon from "*.svg";
 
 export default function FilterableStats() {
   const [period, setPeriod] = useState<FilterablePeriod>('week');
@@ -33,6 +34,9 @@ export default function FilterableStats() {
 
   return (
     <div className={styles.filterableStats}>
+        <div className={styles.header}>
+            <h3>Статистика</h3>
+        </div>
       <div className={styles.filters}>
         <PeriodSelector
           period={period}
