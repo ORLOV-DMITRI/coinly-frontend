@@ -18,11 +18,13 @@ export default function CategoriesPage() {
     return (
         <section className={styles.categoriesPage}>
             <PageHeader title={'Категории'} actionType={'link'} link={'/categories/create'}/>
-
-
-
           <div className="container">
             <div className={styles.content}>
+                <Link href={'/categories/create'} className={styles.mobile}>
+                    <Button variant={'primary'} size={'default'} className={styles.addBtn}>
+                        Создать
+                    </Button>
+                </Link>
                 <SearchSection
                     search={search}
                     onSearchChange={setSearch}

@@ -12,6 +12,7 @@ import EmptyState from './components/EmptyState/EmptyState';
 import Button from "@/shared/ui/Button/Button";
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 import CollapseIcon from '/public/assets/svg/collapse.svg'
+import Link from "next/link";
 
 type EditingItem = {
   expenseItemId: string;
@@ -153,6 +154,13 @@ export default function ExpensesPage() {
       <PageHeader title={'Расходы'} actionType={'link'} link={'/expenses/create'}/>
 
       <div className={styles.container}>
+        <Link href={'/items/create'} className={styles.mobile}>
+          <Button variant={'primary'} size={'default'} className={styles.addBtn}>
+            Создать
+          </Button>
+        </Link>
+
+
         {isLoading ? (
           <div className={styles.loading}>Загрузка...</div>
         ) : showEmptyState ? (

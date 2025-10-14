@@ -16,7 +16,6 @@ export default function SearchInput({search, handleSearch, placeholder}:Props) {
               placeholder={placeholder}
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
-              autoFocus
           />
         </div>
     );

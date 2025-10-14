@@ -26,3 +26,9 @@
   opacity: 0.4;
   pointer-events: none;
 }
+.link {
+
+  @include sm {
+    display: none;
+  }
+}

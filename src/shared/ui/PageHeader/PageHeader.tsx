@@ -30,7 +30,7 @@ export default function PageHeader({title, actionType = 'back', link, isLoading}
 
 
                     {actionType === 'link' && link ? (
-                        <Link href={link}>
+                        <Link href={link} className={styles.link}>
                             <Button variant={'primary'} size={'default'} className={cn(styles.addBtn, isLoading && styles.creating)}>
                                 {isLoading ? "Создание" : 'Создать'}
                             </Button>
