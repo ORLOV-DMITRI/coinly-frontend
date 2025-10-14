@@ -161,8 +161,10 @@ h3 {
 }
 .startPage {
   margin-top: var(--space-xl);
+  padding-bottom: var(--space-sm);
 
   @include xs {
     margin-top: var(--space-sm);
+    padding-bottom: var(--space-xl);
   }
 }

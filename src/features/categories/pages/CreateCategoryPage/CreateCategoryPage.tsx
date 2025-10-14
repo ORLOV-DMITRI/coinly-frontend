@@ -126,7 +126,7 @@ export default function CreateCategoryPage() {
                         </div>
                     </div>
 
-                    <ActionButtons isDisabled={isCreating} submitLabel={'Создать'}/>
+                    <ActionButtons isDisabled={isCreating} submitLabel={'Создать'} isSubmitLabel={'Создание'}/>
                 </form>
 
                 <EmojiPickerModal

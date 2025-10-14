@@ -1,4 +1,3 @@
-
 import styles from './ProgressBar.module.scss'
 import Bar from "@/shared/ui/Bar/Bar";
 import Button from "@/shared/ui/Button/Button";
@@ -21,7 +20,7 @@ export default function ProgressBar({currentSpent, month, onSetBudget, isAuthent
     const {user, isAuthenticated: clientAuth, isLoading} = useAuth();
     const [mounted, setMounted] = useState(false);
 
-    const { data: weeklyStats } = useWeeklyStats(month)
+    const {data: weeklyStats} = useWeeklyStats(month)
 
     const {data} = useStats()
     console.log(data)
@@ -37,7 +36,7 @@ export default function ProgressBar({currentSpent, month, onSetBudget, isAuthent
         return new Intl.NumberFormat('ru-RU').format(amount) + '₽';
     };
 
-    if (!isAuthenticated) {
+    if (!user?.monthlyBudget) {
         return (
             <section className={styles.progress}>
                 <div className={styles.header}>
@@ -55,40 +54,38 @@ export default function ProgressBar({currentSpent, month, onSetBudget, isAuthent
         );
     }
 
-    if(isLoading) {
+    if (isLoading) {
         return (
             <SkeletonLoading variant={'blockFull'}/>
         );
     }
 
 
-    if(isAuthenticated && user?.monthlyBudget) {
-        const percentage = Math.round((currentSpent / user.monthlyBudget) * 100);
-        const percentageString = Math.min(percentage, 100) + '%';
-        const weeklyBudget = user.monthlyBudget / 4;
+    const percentage = Math.round((currentSpent / user.monthlyBudget) * 100);
+    const percentageString = Math.min(percentage, 100) + '%';
+    const weeklyBudget = user.monthlyBudget / 4;
 
-        return (
-            <section className={styles.progress}>
-                <div className={styles.header}>
-                    <h3>Бюджет на месяц</h3>
-                    <div className={styles.headerActions}>
-                        <div className={styles.panelSettings} onClick={onSetBudget}>
-                            <span>Настроить</span>
-                            <SettingsIcon/>
-                        </div>
+    return (
+        <section className={styles.progress}>
+            <div className={styles.header}>
+                <h3>Бюджет на месяц</h3>
+                <div className={styles.headerActions}>
+                    <div className={styles.panelSettings} onClick={onSetBudget}>
+                        <span>Настроить</span>
+                        <SettingsIcon/>
                     </div>
                 </div>
-                <div className={styles.barsInfo}>
-                    <div className={styles.amount}>
-                        {formatAmount(currentSpent)} / {formatAmount(user.monthlyBudget)}
-                    </div>
-                    <Bar value={percentageString}/>
+            </div>
+            <div className={styles.barsInfo}>
+                <div className={styles.amount}>
+                    {formatAmount(currentSpent)} / {formatAmount(user.monthlyBudget)}
                 </div>
+                <Bar value={percentageString}/>
+            </div>
 
-                <WeeklyBars weeklyBudget={weeklyBudget} weeklyStats={weeklyStats}/>
-            </section>
-        );
-    }
-
+            <WeeklyBars weeklyBudget={weeklyBudget} weeklyStats={weeklyStats}/>
+        </section>
+    );
+    
 
 }

@@ -1,0 +1,62 @@
+@use '../../../../styles/variables' as *;
+
+.filterableStats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  background: var(--card);
+  padding: var(--space-md);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.statsContainer {
+  min-height: 200px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  border-top: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.totalLabel {
+  color: var(--foreground);
+}
+
+.totalAmount {
+  color: var(--primary);
+}
+
+.noData {
+  text-align: center;
+  color: var(--muted-foreground);
+  padding: var(--space-lg);
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+
+@include sm {
+  .filterableStats {
+    padding: var(--space-sm);
+  }
+
+  .filters {
+    gap: var(--space-xs);
+  }
+}

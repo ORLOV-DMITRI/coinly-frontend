@@ -1,0 +1,76 @@
+@use '../../../../styles/variables' as *;
+
+.categoryStatsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.categoryItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  background: var(--muted);
+  border-radius: 10px;
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.emoji {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+.dots {
+  flex: 1;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--border) 0px,
+    var(--border) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  min-width: 20px;
+}
+
+.total {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--muted-foreground);
+}
+
+@include sm {
+  .categoryItem {
+    padding: var(--space-xs);
+  }
+
+  .emoji {
+    font-size: 18px;
+  }
+
+  .name,
+  .total {
+    font-size: 12px;
+  }
+}

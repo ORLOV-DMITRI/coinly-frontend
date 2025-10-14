@@ -229,7 +229,7 @@ export default function CreateItemPage() {
                         </button>
                     </div>
 
-                   <ActionButtons isDisabled={isCreating} submitLabel={'Создать'}/>
+                   <ActionButtons isDisabled={isCreating} submitLabel={'Создать'} isSubmitLabel={'Создание'}/>
                 </form>
             </div>
         </section>

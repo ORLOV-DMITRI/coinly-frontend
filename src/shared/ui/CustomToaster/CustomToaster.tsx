@@ -26,6 +26,8 @@ export default function CustomToaster() {
                 zIndex: 9999,
             }}
             toastOptions={{
+                duration: 2000,
+                removeDelay: 1000,
                 style: baseStyle,
                 className: 'responsiveToast',
 

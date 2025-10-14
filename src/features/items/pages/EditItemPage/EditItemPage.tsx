@@ -313,7 +313,7 @@ export default function EditItemPage({itemId}: Props) {
                         </div>
                     )}
 
-                    <ActionButtons isDisabled={isUpdating} submitLabel={'Обновить'}/>
+                    <ActionButtons isDisabled={isUpdating} submitLabel={'Обновить'} isSubmitLabel={'Обновление'}/>
                 </form>
             </div>
 

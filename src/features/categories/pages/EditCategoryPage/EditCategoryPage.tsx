@@ -224,7 +224,7 @@ export default function EditCategoryPage({categoryId}:Props) {
                         </div>
                     )}
 
-                    <ActionButtons isDisabled={isUpdating} submitLabel={'Обновить'}/>
+                    <ActionButtons isDisabled={isUpdating} submitLabel={'Обновить'} isSubmitLabel={'Обновление'}/>
 
 
                 </form>

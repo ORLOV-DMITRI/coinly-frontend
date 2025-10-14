@@ -343,7 +343,7 @@ export default function EditExpensePage({expenseId}: Props) {
                     </Button>
                 </div>
 
-                <ActionButtons isDisabled={isSaving} submitLabel={'Сохранить'}/>
+                <ActionButtons isDisabled={isSaving} submitLabel={'Обновить'} isSubmitLabel={'Обновление'}/>
             </form>
 
             {currentItem && (

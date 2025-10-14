@@ -6,9 +6,10 @@ import {useRouter} from "next/navigation";
 type Props = {
     isDisabled: boolean;
     submitLabel: string
+    isSubmitLabel: string
 }
 
-export default function ActionButtons({isDisabled, submitLabel}:Props) {
+export default function ActionButtons({isDisabled, submitLabel, isSubmitLabel}:Props) {
     const router = useRouter()
     return (
         <div className={styles.actions}>
@@ -28,7 +29,7 @@ export default function ActionButtons({isDisabled, submitLabel}:Props) {
                     size={'large'}
                     loading={isDisabled}
                 >
-                    {submitLabel}
+                    {isDisabled ? isSubmitLabel : submitLabel}
                 </Button>
             </div>
         </div>

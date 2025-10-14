@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import styles from './DashboardPage.module.scss'
 import Button from "@/shared/ui/Button/Button";
-import StatsPanel from "@/features/dashboard/components/StatsPanel/StatsPanel";
 import ProgressBar from "@/features/dashboard/components/ProgressBar/ProgressBar";
-import TopCategories from "@/features/dashboard/components/TopCategories/TopCategories";
+import FilterableStats from "@/features/dashboard/components/FilterableStats/FilterableStats";
 import SetBudgetModal from "@/features/dashboard/components/SetBudgetModal/SetBudgetModal";
 import cn from "classnames";
 
@@ -44,8 +43,7 @@ export default function DashboardPage({isAuthenticated}:Props) {
                           onSetBudget={openBudgetModal}
                           isAuthenticated={isAuthenticated}
                         />
-                        <StatsPanel/>
-                        <TopCategories/>
+                        <FilterableStats />
                     </div>
 
                 </div>

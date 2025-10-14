@@ -1,0 +1,35 @@
+@use '../../../../styles/variables' as *;
+
+.groupBySelector {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.groupByButton {
+  flex: 1;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--muted);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  @include hover {
+    background: var(--accent);
+  }
+
+  &.active {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+  }
+}
+
+@include sm {
+  .groupByButton {
+    font-size: 12px;
+    padding: var(--space-xs);
+  }
+}

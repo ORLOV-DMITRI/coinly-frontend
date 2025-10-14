@@ -3,14 +3,16 @@ import {useRouter} from "next/navigation";
 import BackIcon from '/public/assets/svg/backArrow.svg';
 import Link from "next/link";
 import Button from "@/shared/ui/Button/Button";
+import cn from "classnames";
 
 type Props = {
     title: string
     actionType: 'back' | 'link';
+    isLoading?: boolean
     link?: string
 }
 
-export default function PageHeader({title, actionType = 'back', link}:Props) {
+export default function PageHeader({title, actionType = 'back', link, isLoading}:Props) {
     const router = useRouter()
     return (
         <header className={styles.header}>
@@ -29,8 +31,8 @@ export default function PageHeader({title, actionType = 'back', link}:Props) {
 
                     {actionType === 'link' && link ? (
                         <Link href={link}>
-                            <Button variant={'primary'} size={'default'} className={styles.addBtn}>
-                                Создать
+                            <Button variant={'primary'} size={'default'} className={cn(styles.addBtn, isLoading && styles.creating)}>
+                                {isLoading ? "Создание" : 'Создать'}
                             </Button>
                         </Link>
                     ) : <div></div>}

@@ -16,6 +16,11 @@
   &:active {
     transform: scale(0.98);
   }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+  }
 }
 
 

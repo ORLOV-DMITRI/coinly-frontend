@@ -88,7 +88,7 @@ export default function CreateExpensePage() {
 
   return (
     <div className={'page'}>
-      <PageHeader title={'Новый расход'} actionType={'back'}/>
+      <PageHeader title={'Новый расход'} actionType={'back'} isLoading={isCreating}/>
 
       <form onSubmit={handleSubmit} className={cn(styles.container, 'container')}>
         <div  className={styles.section}>
@@ -165,7 +165,7 @@ export default function CreateExpensePage() {
           </div>
         )}
 
-        <ActionButtons isDisabled={isCreating} submitLabel={'Создать'}/>
+        <ActionButtons isDisabled={isCreating} submitLabel={'Создать'} isSubmitLabel={'Создание'}/>
       </form>
 
       {currentItem && (
