@@ -3,7 +3,7 @@ import cn from "classnames";
 import ItemSkeleton from "@/shared/ui/SkeletonLoading/ItemSkeleton/ItemSkeleton";
 
 type Props = {
-    variant: 'category' | 'block' | 'item' | 'blockName';
+    variant: 'category' | 'block' | 'item' | 'blockName' | 'blockFull';
     count?: number
 }
 
@@ -25,6 +25,10 @@ export default function SkeletonLoading({variant, count = 1}:Props) {
             case 'block':
                 return (
                     <div className={cn(styles.skeleton, styles.skeletonBlock ,styles.shimmer)}></div>
+                )
+            case 'blockFull':
+                return (
+                    <div className={cn(styles.skeleton, styles.skeletonBlockFull ,styles.shimmer)}></div>
                 )
             case 'item':
                 return (

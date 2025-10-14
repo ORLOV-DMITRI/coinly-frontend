@@ -324,3 +324,50 @@ export type GetWeeklyStatsResponse = {
   success: true;
   weeklyStats: WeeklyStatsData;
 };
+
+// Filterable Stats API Types
+export type FilterablePeriod = 'week' | 'month' | 'year';
+export type GroupByType = 'category' | 'item';
+
+export type CategoryStat = {
+  id: string | null;
+  name: string;
+  emoji?: string | null;
+  total: number;
+  count: number;
+  percentage?: number;
+};
+
+export type ItemStat = {
+  id: string;
+  name: string;
+  total: number;
+  count: number;
+  averagePrice: number;
+};
+
+export type FilterableStatsData = {
+  period: {
+    type: FilterablePeriod;
+    value: string;
+    startDate: string;
+    endDate: string;
+  };
+  total: number;
+  count: number;
+  topCategory?: CategoryStat | null;
+  byCategory?: CategoryStat[];
+  byItem?: ItemStat[];
+};
+
+export type FilterableStatsParams = {
+  period?: FilterablePeriod;
+  value?: string;
+  groupBy?: GroupByType;
+  month?: string; // Для обратной совместимости
+};
+
+export type GetFilterableStatsResponse = {
+  success: true;
+  stats: FilterableStatsData;
+};

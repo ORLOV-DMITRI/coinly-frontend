@@ -161,4 +161,8 @@ h3 {
 }
 .startPage {
   margin-top: var(--space-xl);
+
+  @include xs {
+    margin-top: var(--space-sm);
+  }
 }

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { expensesService } from '../services/expensesService';
+import { expensesService } from '../../expenses/services/expensesService';
 import type { StatsQueryParams } from '@/lib/types/api.types';
 
 export function useStats(params?: StatsQueryParams) {

@@ -8,7 +8,10 @@ import TopCategories from "@/features/dashboard/components/TopCategories/TopCate
 import SetBudgetModal from "@/features/dashboard/components/SetBudgetModal/SetBudgetModal";
 import cn from "classnames";
 
-export default function DashboardPage() {
+type Props = {
+    isAuthenticated: boolean;
+}
+export default function DashboardPage({isAuthenticated}:Props) {
     const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
 
     const currentSpent = 15420;
@@ -35,12 +38,13 @@ export default function DashboardPage() {
                     </div>
 
                     <div className={styles.infoBlock}>
-                        <StatsPanel/>
                         <ProgressBar
                           currentSpent={currentSpent}
                           month={currentMonth}
                           onSetBudget={openBudgetModal}
+                          isAuthenticated={isAuthenticated}
                         />
+                        <StatsPanel/>
                         <TopCategories/>
                     </div>
 

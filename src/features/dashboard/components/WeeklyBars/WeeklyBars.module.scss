@@ -2,13 +2,13 @@
 
 .weeklybars {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-sm);
   margin-top: var(--space-sm);
 
   @include xs {
     gap: var(--space-xs);
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
@@ -22,7 +22,7 @@
 
   &.current {
     border-color: var(--primary);
-    background: var(--accent);
+    //background: var(--accent);
   }
 
   &.future {

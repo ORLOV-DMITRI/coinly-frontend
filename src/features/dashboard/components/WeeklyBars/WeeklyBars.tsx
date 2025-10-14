@@ -2,33 +2,15 @@
 import { useQuery } from '@tanstack/react-query';
 import styles from './WeeklyBars.module.scss';
 import { expensesService } from '@/features/expenses/services/expensesService';
-import type { WeekStat } from '@/lib/types/api.types';
+import type {WeeklyStatsData, WeekStat} from '@/lib/types/api.types';
 import cn from 'classnames';
 
 type Props = {
-  month: string;
   weeklyBudget: number;
+  weeklyStats:  WeeklyStatsData | undefined
 };
 
-export default function WeeklyBars({ month, weeklyBudget }: Props) {
-  const { data: weeklyStats, isLoading } = useQuery({
-    queryKey: ['weekly-stats', month],
-    queryFn: () => expensesService.getWeeklyStats(month),
-    staleTime: 5 * 60 * 1000,
-  });
-
-  if (isLoading) {
-    return (
-      <div className={styles.weeklybars}>
-        {Array.from({ length: 4 }, (_, i) => (
-          <div key={i} className={styles.weekCard}>
-            <div className={cn(styles.skeleton, styles.skeletonText)} />
-            <div className={cn(styles.skeleton, styles.skeletonBar)} />
-          </div>
-        ))}
-      </div>
-    );
-  }
+export default function WeeklyBars({ weeklyBudget, weeklyStats }: Props) {
 
   if (!weeklyStats?.weeks) {
     return null;

@@ -9,8 +9,10 @@ import type {
   DeleteExpenseResponse,
   GetStatsResponse,
   GetWeeklyStatsResponse,
+  GetFilterableStatsResponse,
   ExpensesQueryParams,
   StatsQueryParams,
+  FilterableStatsParams,
 } from '@/lib/types/api.types';
 
 export const expensesService = {
@@ -48,5 +50,10 @@ export const expensesService = {
     const params = month ? { month } : {};
     const response = await api.get<GetWeeklyStatsResponse>('/api/expenses/weekly-stats', { params });
     return response.data.weeklyStats;
+  },
+
+  async getFilterableStats(params: FilterableStatsParams) {
+    const response = await api.get<GetFilterableStatsResponse>('/api/expenses/stats', { params });
+    return response.data.stats;
   },
 };

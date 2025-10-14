@@ -7,7 +7,6 @@
   margin-bottom: var(--space-sm);
 
   @include xs {
-    flex-direction: column;
     align-items: flex-start;
     margin-bottom: var(--space-xs);
   }
@@ -58,3 +57,31 @@
   }
 }
 
+.barsInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  align-items: flex-end;
+}
+.panelSettings {
+  display: flex;
+  font-size: 16px;
+  color: var(--muted-foreground);
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+
+  @include hover {
+    color: var(--primary);
+  }
+
+  @include xs {
+    font-size: 14px;
+  }
+}
