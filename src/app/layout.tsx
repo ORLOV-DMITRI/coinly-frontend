@@ -84,7 +84,7 @@ export default async function RootLayout({
             <AuthProvider>
                 <Header isAuthenticated={isAuthenticated}/>
                 {children}
-                {isAuthenticated && <BottomNavigationWrapper/>}
+                <BottomNavigationWrapper isAuthenticated={isAuthenticated}/>
             </AuthProvider>
         </ReactQueryProvider>
         <CustomToaster/>

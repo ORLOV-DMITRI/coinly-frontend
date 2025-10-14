@@ -164,8 +164,6 @@ export default function ExpensesPage() {
             <div className={styles.settings}>
               <PeriodSelector period={period} onPeriodChange={setPeriod} />
 
-              {/*{isFetching && <span className={styles.fetchingIndicator}>⟳</span>}*/}
-
 
               <Button
                 type="button"

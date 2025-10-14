@@ -4,7 +4,7 @@ import { ReactNode, useState } from 'react';
 import {QueryClient, QueryClientProvider, HydrationBoundary, DehydratedState} from '@tanstack/react-query';
 import { queryClient as sharedClient } from '../lib/settings/react-query';
 
-interface Props {
+type Props = {
     children: ReactNode;
     dehydratedState?: DehydratedState | null | undefined;
 }

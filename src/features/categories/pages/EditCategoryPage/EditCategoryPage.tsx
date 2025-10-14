@@ -48,7 +48,6 @@ export default function EditCategoryPage({categoryId}:Props) {
 
     useEffect(() => {
         if (category) {
-            console.log(category)
             setFormData({
                 name: category.name,
                 emoji: category.emoji || '📁',

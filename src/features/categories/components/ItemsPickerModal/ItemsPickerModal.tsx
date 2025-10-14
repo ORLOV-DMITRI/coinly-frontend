@@ -49,7 +49,6 @@ export default function ItemsPickerModal({isOpen, onClose, selectedItemIds, onSe
 
 
     const handleToggleItem = async (item: Item) => {
-        console.log(item)
         if (item.category === null) {
             setLocalSelectedIds(prev => {
                 if (prev.includes(item.id)) {

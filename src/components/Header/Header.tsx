@@ -34,6 +34,7 @@ type HeaderProps = {
 
 export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
     const path = usePathname();
+
     const { isAuthenticated: clientAuth } = useAuth();
     const [mounted, setMounted] = useState(false);
 

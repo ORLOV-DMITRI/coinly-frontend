@@ -292,7 +292,6 @@ export type CreateExpenseItemResponse = {
   expenseItem: ExpenseItem;
 };
 
-// Budget API Types
 export type UpdateBudgetDto = {
   monthlyBudget: number;
 };
@@ -303,7 +302,6 @@ export type UpdateBudgetResponse = {
   user: User;
 };
 
-// Weekly Stats API Types
 export type WeekStat = {
   week: number;
   range: string;
@@ -325,7 +323,6 @@ export type GetWeeklyStatsResponse = {
   weeklyStats: WeeklyStatsData;
 };
 
-// Filterable Stats API Types
 export type FilterablePeriod = 'week' | 'month' | 'year';
 export type GroupByType = 'category' | 'item';
 
@@ -364,7 +361,7 @@ export type FilterableStatsParams = {
   period?: FilterablePeriod;
   value?: string;
   groupBy?: GroupByType;
-  month?: string; // Для обратной совместимости
+  month?: string;
 };
 
 export type GetFilterableStatsResponse = {

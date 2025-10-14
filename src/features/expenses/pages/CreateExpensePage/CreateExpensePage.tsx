@@ -64,8 +64,6 @@ export default function CreateExpensePage() {
       setCurrentItem(null);
     }
 
-    console.log(newItem)
-
   };
 
   const totalAmount = selectedItems.reduce((sum, { price, quantity }) => sum + (price * quantity), 0);

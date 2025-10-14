@@ -20,10 +20,6 @@ export default function ProgressBar({currentSpent, month, onSetBudget}: Props) {
 
     const {data: weeklyStats} = useWeeklyStats(month)
 
-    const {data} = useStats()
-    console.log(data)
-
-
 
     const formatAmount = (amount: number) => {
         return new Intl.NumberFormat('ru-RU').format(amount) + '₽';
