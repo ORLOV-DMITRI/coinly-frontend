@@ -12,6 +12,7 @@ import { useItems } from '@/features/items/hooks/useItems';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 import ActionButtons from "@/shared/ui/ActionButtons/ActionButtons";
+import {normalizeItemName} from "@/shared/utils/textUtils";
 
 type FormData = {
     name: string;
@@ -110,7 +111,7 @@ export default function CreateItemPage() {
         ];
 
         createItem({
-            name: formData.name.trim(),
+            name: normalizeItemName(formData.name),
             prices: allPrices,
             categoryId: formData.categoryId || null,
             isFavorite: formData.isFavorite,

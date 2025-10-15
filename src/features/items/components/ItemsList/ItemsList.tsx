@@ -116,6 +116,7 @@ export default function ItemsList({ items, isLoading, search }: Props) {
                             type="button"
                             className={cn(styles.favorite, item.isFavorite && styles.active)}
                             onClick={(e) => handleToggleFavorite(e, item)}
+                            title={'Нажмите для добавления в избранное'}
                         >
                             <FavoriteIcon />
                         </button>

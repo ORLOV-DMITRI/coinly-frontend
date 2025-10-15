@@ -17,6 +17,7 @@ import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
 import ActionButtons from "@/shared/ui/ActionButtons/ActionButtons";
+import {normalizeItemName} from "@/shared/utils/textUtils";
 
 
 type FormData = {
@@ -100,7 +101,7 @@ export default function EditCategoryPage({categoryId}:Props) {
         updateCategory({
             id: categoryId,
             data: {
-                name: formData.name.trim(),
+                name: normalizeItemName(formData.name),
                 emoji: formData.emoji || undefined,
                 itemIds: formData.selectedItemIds.length > 0 ? formData.selectedItemIds : undefined,
             }

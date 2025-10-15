@@ -12,6 +12,7 @@ import ConfirmDialog from "@/shared/ui/ConfirmDialog/ConfirmDialog";
 import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 import ActionButtons from "@/shared/ui/ActionButtons/ActionButtons";
+import {normalizeItemName} from "@/shared/utils/textUtils";
 
 type FormData = {
     name: string;
@@ -61,7 +62,7 @@ export default function CreateCategoryPage() {
         if (!validateForm()) return;
 
         createCategory({
-            name: formData.name.trim(),
+            name: normalizeItemName(formData.name),
             emoji: formData.emoji || undefined,
             itemIds: formData.selectedItemIds.length > 0 ? formData.selectedItemIds : undefined,
         }, {

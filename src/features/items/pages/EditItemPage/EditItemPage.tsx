@@ -16,6 +16,7 @@ import {useConfirmDialog} from "@/shared/ui/ConfirmDialog/useConfirmDialog";
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 import SkeletonLoading from "@/shared/ui/SkeletonLoading/SkeletonLoading";
 import ActionButtons from "@/shared/ui/ActionButtons/ActionButtons";
+import {normalizeItemName} from "@/shared/utils/textUtils";
 
 
 type FormData = {
@@ -145,7 +146,7 @@ export default function EditItemPage({itemId}: Props) {
         updateItem({
             id: itemId,
             data: {
-                name: formData.name.trim(),
+                name: normalizeItemName(formData.name),
                 prices: allPrices,
                 categoryId: formData.categoryId || null,
                 isFavorite: formData.isFavorite,

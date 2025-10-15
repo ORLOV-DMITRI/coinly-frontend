@@ -37,6 +37,7 @@
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 4px;
+  text-transform: capitalize;
 }
 
 .favorite {
@@ -44,6 +45,11 @@
   height: 25px;
   color: var(--primary);
 
+  @include hover {
+    & svg {
+      fill: var(--primary);
+    }
+  }
 
   &.active {
     & svg {
@@ -64,6 +70,7 @@
   padding: 4px 10px;
   width: max-content;
   border-radius: 6px;
+  text-transform: capitalize;
 
   @include hover {
     background: var(--primary-foreground);
