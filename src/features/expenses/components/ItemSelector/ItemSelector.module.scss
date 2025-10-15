@@ -12,6 +12,24 @@
   gap: 8px;
 }
 
+.searchSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  // Визуально выделяем блок результатов поиска
+  background: var(--muted/5%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+
+  @include xs {
+    padding: 10px;
+    margin-bottom: 6px;
+  }
+}
+
 
 .createBtn {
   width: 100%;

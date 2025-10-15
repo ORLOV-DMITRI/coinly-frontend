@@ -12,29 +12,38 @@ type Props = {
   onCreateItem?: () => void;
   selectedItemIds?: string[];
   className?: string;
+  clearSearchAfterSelect?: boolean;
 };
 
-export default function ItemSelector({ onItemSelect, onCreateItem, selectedItemIds = [], className }: Props) {
+export default function ItemSelector({ onItemSelect, onCreateItem, selectedItemIds = [], className, clearSearchAfterSelect = true }: Props) {
   const [search, setSearch] = useState('');
   const { items, isLoading } = useItems();
 
   const isItemSelected = (itemId: string) => selectedItemIds.includes(itemId);
 
-  const filteredItems = useMemo(() => {
-    if (!search.trim()) return items;
+  const handleItemSelect = (item: Item) => {
+    onItemSelect(item);
+    if (clearSearchAfterSelect) {
+      setSearch('');
+    }
+  };
+
+  const searchResults = useMemo(() => {
+    if (!search.trim()) return [];
     const searchLower = search.toLowerCase().trim();
-    return items.filter(item =>
-      item.name.toLowerCase().includes(searchLower)
-    );
+    return items
+      .filter(item => item.name.toLowerCase().includes(searchLower))
+      .slice(0, 5);
   }, [items, search]);
 
   const favoriteItems = useMemo(() => {
-    return filteredItems.filter(item => item.isFavorite);
-  }, [filteredItems]);
+    return items.filter(item => item.isFavorite);
+  }, [items]);
 
-  const regularItems = useMemo(() => {
-    return filteredItems.filter(item => !item.isFavorite);
-  }, [filteredItems]);
+  // Все товары (временно скрыто)
+  // const regularItems = useMemo(() => {
+  //   return items.filter(item => !item.isFavorite);
+  // }, [items]);
 
   return (
     <div className={cn(styles.wrapper, className)}>
@@ -49,17 +58,40 @@ export default function ItemSelector({ onItemSelect, onCreateItem, selectedItemI
 
       {!isLoading && (
           <>
+            {search.trim() && (
+              <div className={styles.searchSection}>
+                {searchResults.length > 0 ? (
+                  <ItemSelectorList
+                    items={searchResults}
+                    isItemSelected={isItemSelected}
+                    onItemSelect={handleItemSelect}
+                    label={'Результаты поиска'}
+                  />
+                ) : (
+                  <div className={styles.empty}>
+                    Товары не найдены
+                  </div>
+                )}
+              </div>
+            )}
+
             {favoriteItems.length > 0 && (
-                <ItemSelectorList items={favoriteItems} isItemSelected={isItemSelected} onItemSelect={onItemSelect} label={'Избранное'}/>
+                <ItemSelectorList
+                  items={favoriteItems}
+                  isItemSelected={isItemSelected}
+                  onItemSelect={handleItemSelect}
+                  label={'Избранное'}
+                />
             )}
 
-            {regularItems.length > 0 && (
+            {/* Все товары - временно скрыто */}
+            {/* {regularItems.length > 0 && (
                 <ItemSelectorList items={regularItems} isItemSelected={isItemSelected} onItemSelect={onItemSelect} label={'Все товары'}/>
-            )}
+            )} */}
 
-            {filteredItems.length === 0 && !isLoading && (
+            {favoriteItems.length === 0 && !search.trim() && (
                 <div className={styles.empty}>
-                  {search ? 'Товары не найдены' : 'Нет товаров'}
+                  Нет товаров
                 </div>
             )}
 

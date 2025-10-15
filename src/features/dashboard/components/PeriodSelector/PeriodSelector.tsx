@@ -110,31 +110,6 @@ export default function PeriodSelector({ period, value, onPeriodChange, onValueC
 
       <Select isShow={showDropdown} setIsShow={(value) => setShowDropdown(value)} value={getValueLabel()} options={getCurrentOptions()} handleSelect={handleValueSelect}/>
 
-      <div className={styles.valueSelector}>
-        <button
-          type="button"
-          className={styles.valueButton}
-          onClick={() => setShowDropdown(!showDropdown)}
-        >
-          {getValueLabel()}
-          <span className={styles.arrow}>▼</span>
-        </button>
-
-        {showDropdown && (
-          <div className={styles.dropdown}>
-            {getCurrentOptions().map(option => (
-              <button
-                key={option.value}
-                type="button"
-                className={cn(styles.dropdownItem, { [styles.selected]: option.value === value })}
-                onClick={() => handleValueSelect(option.value)}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }
