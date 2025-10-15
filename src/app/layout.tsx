@@ -8,6 +8,7 @@ import Header from "@/components/Header/Header";
 import BottomNavigationWrapper from "@/components/BottomNavigation/BottomNavigationWrapper";
 import {cookies} from 'next/headers';
 import CustomToaster from "@/shared/ui/CustomToaster/CustomToaster";
+import WhatsNewProvider from "@/components/WhatsNewProvider/WhatsNewProvider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -85,6 +86,7 @@ export default async function RootLayout({
                 <Header isAuthenticated={isAuthenticated}/>
                 {children}
                 <BottomNavigationWrapper isAuthenticated={isAuthenticated}/>
+                {isAuthenticated && <WhatsNewProvider />}
             </AuthProvider>
         </ReactQueryProvider>
         <CustomToaster/>

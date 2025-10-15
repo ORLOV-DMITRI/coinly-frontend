@@ -4,7 +4,7 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import cn from "classnames";
 import Button from "@/shared/ui/Button/Button";
-import ThemeSwitcher from "@/components/ThemeSwitcher/ThemeSwitcher";
+import UserMenu from "@/components/UserMenu/UserMenu";
 import Logo from '/public/assets/svg/logo.svg'
 import {useAuth} from "@/lib/auth/authContext";
 import {useEffect, useState} from "react";
@@ -38,7 +38,7 @@ export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
     const { isAuthenticated: clientAuth } = useAuth();
     const [mounted, setMounted] = useState(false);
 
-    const [isOpenSwitcher, setIsOpenSwitcher] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -46,7 +46,7 @@ export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
 
     const isAuthenticated = mounted ? clientAuth : serverAuth;
     return (
-        <header className={cn(styles.header, isOpenSwitcher && styles.theme)}>
+        <header className={cn(styles.header, isUserMenuOpen && styles.userMenu)}>
             <div className="container">
                 <nav className={styles.nav}>
                     <Link href="/" className={styles.logo}>
@@ -64,19 +64,17 @@ export default function Header({ isAuthenticated: serverAuth }: HeaderProps) {
                         </ul>
                     )}
 
-                    {!isAuthenticated && (
+                    {isAuthenticated ? (
+                        <UserMenu isOpen={isUserMenuOpen} setIsOpen={setIsUserMenuOpen} />
+                    ) : (
                         <div className={styles.userBlock}>
-
-                                <Link href={'/login'}>
-                                    <Button variant={'primary'} size={'default'} className={styles.headerBtn}>
-                                        Войти
-                                    </Button>
-                                    </Link>
-
+                            <Link href={'/login'}>
+                                <Button variant={'primary'} size={'default'} className={styles.headerBtn}>
+                                    Войти
+                                </Button>
+                            </Link>
                         </div>
                     )}
-
-                    <ThemeSwitcher isOpen={isOpenSwitcher} setIsOpen={(value) => setIsOpenSwitcher(value)}/>
 
                 </nav>
             </div>
