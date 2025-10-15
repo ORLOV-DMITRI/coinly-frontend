@@ -25,6 +25,7 @@ type FormData = {
 export default function CreateItemPage() {
     const router = useRouter();
     const { createItem, isCreating } = useItems();
+    const { categories } = useCategories();
 
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -144,6 +145,26 @@ export default function CreateItemPage() {
                                 placeholder="Например: Молоко"
                                 autoFocus
                             />
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label className={styles.label} htmlFor="categoryId">
+                                Категория
+                            </label>
+                            <select
+                                id="categoryId"
+                                name="categoryId"
+                                value={formData.categoryId}
+                                onChange={handleChange}
+                                className={styles.select}
+                            >
+                                <option value="">Без категории</option>
+                                {categories?.map(category => (
+                                    <option key={category.id} value={category.id}>
+                                        {category.emoji} {category.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className={styles.formGroup}>

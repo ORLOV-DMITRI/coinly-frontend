@@ -37,6 +37,7 @@ export default function EditItemPage({itemId}: Props) {
     const {data: item, isLoading} = useItem(itemId)
 
     const {updateItem, isUpdating, deleteItem, isDeleting} = useItems();
+    const { categories } = useCategories();
 
     const { dialogState, showConfirm } = useConfirmDialog();
 
@@ -203,6 +204,30 @@ export default function EditItemPage({itemId}: Props) {
                             )}
 
 
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label className={styles.label} htmlFor="categoryId">
+                                Категория
+                            </label>
+                            {isLoading ? (
+                                <SkeletonLoading variant={'block'}/>
+                            ) : (
+                                <select
+                                    id="categoryId"
+                                    name="categoryId"
+                                    value={formData.categoryId}
+                                    onChange={handleChange}
+                                    className={styles.select}
+                                >
+                                    <option value="">Без категории</option>
+                                    {categories?.map(category => (
+                                        <option key={category.id} value={category.id}>
+                                            {category.emoji} {category.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                         </div>
 
                         <div className={styles.formGroup}>

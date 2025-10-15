@@ -65,5 +65,6 @@ export function useItem(id: string) {
     queryKey: ['item', id],
     queryFn: () => itemsService.getItemById(id),
     enabled: !!id,
+    staleTime: 0,
   });
 }

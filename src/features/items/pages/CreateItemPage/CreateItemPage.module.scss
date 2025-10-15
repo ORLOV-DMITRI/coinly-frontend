@@ -22,6 +22,31 @@
   color: var(--primary);
 }
 
+.select {
+  width: 100%;
+  padding: var(--space-sm);
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  @include hover {
+    border-color: var(--primary);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  @include sm {
+    font-size: 12px;
+  }
+}
+
 
 .priceInputWrapper {
   position: relative;

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './PeriodSelector.module.scss';
 import type { FilterablePeriod } from '@/lib/types/api.types';
 import cn from 'classnames';
+import Select from "@/shared/ui/Select/Select";
 
 type Props = {
   period: FilterablePeriod;
@@ -106,6 +107,8 @@ export default function PeriodSelector({ period, value, onPeriodChange, onValueC
           Год
         </button>
       </div>
+
+      <Select isShow={showDropdown} setIsShow={(value) => setShowDropdown(value)} value={getValueLabel()} options={getCurrentOptions()} handleSelect={handleValueSelect}/>
 
       <div className={styles.valueSelector}>
         <button

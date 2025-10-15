@@ -1,0 +1,65 @@
+@use "@/styles/variables" as *;
+
+
+
+.select {
+  position: relative;
+}
+
+.selectBtn {
+  width: 100%;
+  padding: var(--space-sm);
+  background: var(--muted);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include hover {
+    background: var(--accent);
+  }
+}
+
+.arrow {
+  font-size: 10px;
+  color: var(--muted-foreground);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownItem {
+  width: 100%;
+  padding: var(--space-sm);
+  background: transparent;
+  color: var(--foreground);
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+
+  @include hover {
+    background: var(--muted);
+  }
+
+  &.selected {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
