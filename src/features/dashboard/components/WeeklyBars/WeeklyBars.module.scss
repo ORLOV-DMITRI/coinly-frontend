@@ -19,19 +19,20 @@
   border-radius: 8px;
   text-align: center;
   transition: all 0.2s ease;
+  opacity: 0.6;
+  cursor: pointer;
 
+  @include hover {
+    opacity: 1;
+  }
   &.current {
     border-color: var(--primary);
-    background: var(--primary);
-
-    & .weekLabel, .weekRange, .weekAmount {
-      color: var(--primary-foreground);
-    }
-
+    opacity: 1;
   }
 
   &.future {
-    opacity: 0.6;
+    opacity: 0.4;
+    pointer-events: none;
   }
 
   @include xs {

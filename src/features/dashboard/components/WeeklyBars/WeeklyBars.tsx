@@ -4,6 +4,7 @@ import styles from './WeeklyBars.module.scss';
 import { expensesService } from '@/features/expenses/services/expensesService';
 import type {WeeklyStatsData, WeekStat} from '@/lib/types/api.types';
 import cn from 'classnames';
+import {useState} from "react";
 
 type Props = {
   weeklyBudget: number;
@@ -36,6 +37,8 @@ export default function WeeklyBars({ weeklyBudget, weeklyStats }: Props) {
     return new Intl.NumberFormat('ru-RU').format(amount) + '₽';
   };
 
+  const [activeCard, setActiveCard] = useState(currentWeek)
+
   return (
     <div className={styles.weeklybars}>
       {weeklyStats.weeks.map((week: WeekStat) => {
@@ -47,8 +50,9 @@ export default function WeeklyBars({ weeklyBudget, weeklyStats }: Props) {
         return (
           <div
             key={week.week}
+            onClick={() => setActiveCard(week.week)}
             className={cn(styles.weekCard, {
-              [styles.current]: isCurrent,
+              [styles.current]: activeCard === week.week,
               [styles.future]: isFuture,
             })}
           >
