@@ -1,5 +1,6 @@
 import styles from './CatModal.module.scss';
 import { useScrollLock } from '@/lib/hooks/useScrollLock';
+import Button from "@/shared/ui/Button/Button";
 
 type Props = {
     isOpen: boolean;
@@ -20,9 +21,9 @@ export default function CatModal({ isOpen, onClose }: Props) {
                     <p className={styles.message}>
                         А теперь идите и погладьте ваших котов 😸
                     </p>
-                    <button className={styles.closeButton} onClick={onClose}>
+                    <Button size={'default'} variant={'primary'} onClick={onClose}>
                         Хорошо!
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
