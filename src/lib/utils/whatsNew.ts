@@ -27,7 +27,7 @@ export const setLastSeenUpdate = (date: string): void => {
 export const hasNewUpdates = (latestUpdateDate: string): boolean => {
   const lastSeenDate = getLastSeenUpdate();
 
-  if (!lastSeenDate) return false;
+  if (!lastSeenDate) return true;
 
   return latestUpdateDate > lastSeenDate;
 };
