@@ -9,6 +9,7 @@ import BottomNavigationWrapper from "@/components/BottomNavigation/BottomNavigat
 import {cookies} from 'next/headers';
 import CustomToaster from "@/shared/ui/CustomToaster/CustomToaster";
 import WhatsNewProvider from "@/components/WhatsNewProvider/WhatsNewProvider";
+import CatEasterEggProvider from "@/shared/ui/CatEasterEgg/CatEasterEggProvider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -87,6 +88,7 @@ export default async function RootLayout({
                 {children}
                 <BottomNavigationWrapper isAuthenticated={isAuthenticated}/>
                 {isAuthenticated && <WhatsNewProvider />}
+                {isAuthenticated && <CatEasterEggProvider />}
             </AuthProvider>
         </ReactQueryProvider>
         <CustomToaster/>

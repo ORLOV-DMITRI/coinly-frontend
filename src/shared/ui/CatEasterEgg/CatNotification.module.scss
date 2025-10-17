@@ -1,0 +1,91 @@
+@use "../../../styles/variables" as *;
+
+.notification {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 999;
+  animation: slideInRight 0.4s ease-out, pulse 0.6s ease-in-out 0.4s;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  @include hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  @include sm {
+    top: 60px;
+    right: 16px;
+    padding: 12px 16px;
+    gap: 10px;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.emoji {
+  font-size: 32px;
+  animation: wiggle 1s ease-in-out infinite;
+
+  @include sm {
+    font-size: 28px;
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+.text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+
+  @include sm {
+    font-size: 14px;
+  }
+}
+
+.smile {
+  font-size: 24px;
+
+  @include sm {
+    font-size: 20px;
+  }
+}
