@@ -1,0 +1,162 @@
+@use "../../../../styles/variables" as *;
+
+.formSection {
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.formGroup {
+  margin-bottom: var(--space-md);
+}
+
+.label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: var(--space-xs);
+  color: var(--foreground);
+}
+
+.required {
+  color: var(--primary);
+}
+
+.itemsSection {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.itemsTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--foreground);
+}
+
+.itemsDescription {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-md);
+}
+
+.selectedItems {
+  margin-bottom: var(--space-md);
+  padding: var(--space-md);
+  background: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.selectedItemsTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--foreground);
+}
+
+.selectedItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.selectedItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.2s;
+
+  @include hover {
+    border-color: var(--primary);
+  }
+}
+
+.selectedItemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.selectedItemName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.selectedItemCategory {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+.removeButton {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+
+  @include hover {
+    border-color: var(--destructive);
+    color: var(--destructive);
+    background: var(--destructive);
+    color: var(--background);
+  }
+}
+
+.itemSelector {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-md);
+}
+
+.selectorTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--foreground);
+}
+
+// Адаптивность
+@include sm {
+  .itemsSection {
+    padding: var(--space-sm);
+  }
+
+  .selectedItems {
+    padding: var(--space-sm);
+  }
+
+  .selectedItem {
+    padding: var(--space-xs);
+  }
+
+  .selectedItemName {
+    font-size: 13px;
+  }
+
+  .selectedItemCategory {
+    font-size: 11px;
+  }
+
+  .removeButton {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+}

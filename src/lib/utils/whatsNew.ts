@@ -1,8 +1,6 @@
 const STORAGE_KEY = 'coinly_last_seen_update';
 
-/**
- * Получить дату последнего просмотренного обновления из localStorage
- */
+
 export const getLastSeenUpdate = (): string | null => {
   if (typeof window === 'undefined') return null;
 
@@ -14,9 +12,7 @@ export const getLastSeenUpdate = (): string | null => {
   }
 };
 
-/**
- * Сохранить дату последнего просмотренного обновления в localStorage
- */
+
 export const setLastSeenUpdate = (date: string): void => {
   if (typeof window === 'undefined') return;
 
@@ -27,22 +23,16 @@ export const setLastSeenUpdate = (date: string): void => {
   }
 };
 
-/**
- * Проверить, есть ли новые обновления
- */
+
 export const hasNewUpdates = (latestUpdateDate: string): boolean => {
   const lastSeenDate = getLastSeenUpdate();
 
-  // Если пользователь впервые, показываем обновления
-  if (!lastSeenDate) return true;
+  if (!lastSeenDate) return false;
 
-  // Сравниваем даты (формат: YYYY-MM-DD)
   return latestUpdateDate > lastSeenDate;
 };
 
-/**
- * Отметить все обновления как просмотренные
- */
+
 export const markAllUpdatesAsSeen = (latestUpdateDate: string): void => {
   setLastSeenUpdate(latestUpdateDate);
 };

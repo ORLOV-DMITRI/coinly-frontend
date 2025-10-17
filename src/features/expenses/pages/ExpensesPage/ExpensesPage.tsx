@@ -154,7 +154,7 @@ export default function ExpensesPage() {
       <PageHeader title={'Расходы'} actionType={'link'} link={'/expenses/create'}/>
 
       <div className={styles.container}>
-        <Link href={'/items/create'} className={styles.mobile}>
+        <Link href={'/expenses/create'} className={styles.mobile}>
           <Button variant={'primary'} size={'default'} className={styles.addBtn}>
             Создать
           </Button>

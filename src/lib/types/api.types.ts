@@ -368,3 +368,124 @@ export type GetFilterableStatsResponse = {
   success: true;
   stats: FilterableStatsData;
 };
+
+// Shopping Lists Types
+export type ShoppingListItem = {
+  id: string;
+  shoppingListId: string;
+  itemId: string;
+  plannedQuantity: number;
+  actualQuantity: number | null;
+  plannedPrice: number | null;
+  actualPrice: number | null;
+  isPurchased: boolean;
+  createdAt: string;
+  updatedAt: string;
+  item: {
+    id: string;
+    name: string;
+    prices: number[];
+    category?: {
+      id: string;
+      name: string;
+      emoji?: string;
+    } | null;
+  };
+};
+
+export type ShoppingList = {
+  id: string;
+  name: string;
+  status: 'active' | 'completed' | 'cancelled';
+  userId: string;
+  expenseId: string | null;
+  createdAt: string;
+  updatedAt: string;
+  items: ShoppingListItem[];
+};
+
+export type ShoppingListWithStats = {
+  id: string;
+  name: string;
+  status: 'active' | 'completed' | 'cancelled';
+  createdAt: string;
+  updatedAt: string;
+  stats: {
+    totalItems: number;
+    purchasedItems: number;
+    totalAmount: number;
+  };
+};
+
+export type CreateShoppingListDto = {
+  name: string;
+  itemIds?: string[];
+};
+
+export type UpdateShoppingListDto = {
+  name?: string;
+};
+
+export type AddItemToShoppingListDto = {
+  itemId: string;
+  plannedQuantity?: number;
+  plannedPrice?: number;
+};
+
+export type UpdateShoppingListItemDto = {
+  plannedQuantity?: number;
+  actualQuantity?: number;
+  plannedPrice?: number;
+  actualPrice?: number;
+  isPurchased?: boolean;
+};
+
+export type GetShoppingListsResponse = {
+  success: true;
+  shoppingLists: ShoppingListWithStats[];
+};
+
+export type GetShoppingListResponse = {
+  success: true;
+  shoppingList: ShoppingList;
+};
+
+export type CreateShoppingListResponse = {
+  success: true;
+  message: string;
+  shoppingList: ShoppingList;
+};
+
+export type UpdateShoppingListResponse = {
+  success: true;
+  message: string;
+  shoppingList: ShoppingList;
+};
+
+export type DeleteShoppingListResponse = {
+  success: true;
+  message: string;
+};
+
+export type AddItemToShoppingListResponse = {
+  success: true;
+  message: string;
+  shoppingListItem: ShoppingListItem;
+};
+
+export type UpdateShoppingListItemResponse = {
+  success: true;
+  message: string;
+  shoppingListItem: ShoppingListItem;
+};
+
+export type RemoveItemFromShoppingListResponse = {
+  success: true;
+  message: string;
+};
+
+export type CompleteShoppingListResponse = {
+  success: true;
+  message: string;
+  expenseId: string;
+};
