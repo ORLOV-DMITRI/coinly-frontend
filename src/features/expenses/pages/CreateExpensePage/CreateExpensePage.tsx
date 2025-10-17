@@ -2,13 +2,16 @@
 
 import styles from './CreateExpensePage.module.scss';
 import cn from 'classnames';
-import {FormEvent, useState} from 'react';
+import {FormEvent, useState, useEffect} from 'react';
 import { useRouter } from 'next/navigation';
 import DateSelector from '../../components/DateSelector/DateSelector';
 import ItemSelector from '../../components/ItemSelector/ItemSelector';
 import PriceSelectionModal from '../../components/PriceSelectionModal/PriceSelectionModal';
 import CreateItemModal from '../../components/CreateItemModal/CreateItemModal';
+import SelectedItemsList from '../../components/SelectedItemsList/SelectedItemsList';
+import SelectedItemsAside from '../../components/SelectedItemsAside/SelectedItemsAside';
 import { useExpenses } from '../../hooks/useExpenses';
+import { useAsideVisibility } from '../../hooks/useAsideVisibility';
 import type { Item } from '@/lib/types/api.types';
 import BackIcon from '/public/assets/svg/backArrow.svg';
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
@@ -24,6 +27,7 @@ type SelectedItem = {
 export default function CreateExpensePage() {
   const router = useRouter();
   const { createExpense, isCreating } = useExpenses();
+  const { shouldShowAside, selectedItemsRef, updateItemsPresence } = useAsideVisibility();
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
@@ -69,6 +73,10 @@ export default function CreateExpensePage() {
   const totalAmount = selectedItems.reduce((sum, { price, quantity }) => sum + (price * quantity), 0);
   const selectedItemIds = selectedItems.map(({ item }) => item.id);
 
+  useEffect(() => {
+    updateItemsPresence(selectedItems.length);
+  }, [selectedItems.length, updateItemsPresence]);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (selectedItems.length === 0) return;
@@ -107,59 +115,14 @@ export default function CreateExpensePage() {
         </div>
 
         {selectedItems.length > 0 && (
-          <div className={styles.section}>
+          <div className={styles.section} ref={selectedItemsRef}>
             <div className={styles.sectionTitle}>Выбранные товары</div>
-            <div className={styles.selectedList}>
-              {selectedItems.map((selectedItem, index) => (
-                <div key={index} className={styles.selectedCard}>
-                  <div className={styles.selectedInfo}>
-                    <div className={styles.selectedName}>
-                      {selectedItem.item.name}
-                    </div>
-                    <div className={styles.priceRow}>
-                      <span className={styles.unitPrice}>{selectedItem.price}₽</span>
-                      <div className={styles.quantityControls}>
-                        <button
-                          type="button"
-                          className={styles.quantityBtn}
-                          onClick={() => handleQuantityChange(index, selectedItem.quantity - 1)}
-                          disabled={selectedItem.quantity <= 1}
-                        >
-                          −
-                        </button>
-                        <input
-                          type="number"
-                          className={styles.quantityInput}
-                          value={selectedItem.quantity}
-                          disabled={true}
-                          min="1"
-                        />
-                        <button
-                          type="button"
-                          className={styles.quantityBtn}
-                          onClick={() => handleQuantityChange(index, selectedItem.quantity + 1)}
-                        >
-                          +
-                        </button>
-                      </div>
-                      <span className={styles.totalPrice}>= {selectedItem.price * selectedItem.quantity}₽</span>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className={styles.removeBtn}
-                    onClick={() => handleRemoveItem(index)}
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-
-              <div className={styles.totalCard}>
-                <div className={styles.totalLabel}>Итого:</div>
-                <div className={styles.totalAmount}>{totalAmount}₽</div>
-              </div>
-            </div>
+            <SelectedItemsList
+              selectedItems={selectedItems}
+              totalAmount={totalAmount}
+              onQuantityChange={handleQuantityChange}
+              onRemoveItem={handleRemoveItem}
+            />
           </div>
         )}
 
@@ -182,6 +145,14 @@ export default function CreateExpensePage() {
         isOpen={isCreateItemModalOpen}
         onClose={() => setIsCreateItemModalOpen(false)}
         onItemCreated={handleItemCreated}
+      />
+
+      <SelectedItemsAside
+        selectedItems={selectedItems}
+        totalAmount={totalAmount}
+        onQuantityChange={handleQuantityChange}
+        onRemoveItem={handleRemoveItem}
+        isVisible={shouldShowAside}
       />
     </div>
   );
