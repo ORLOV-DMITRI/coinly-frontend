@@ -7,7 +7,10 @@ import {useRouter} from 'next/navigation';
 import ItemSelector from '../../components/ItemSelector/ItemSelector';
 import PriceSelectionModal from '../../components/PriceSelectionModal/PriceSelectionModal';
 import CreateItemModal from '../../components/CreateItemModal/CreateItemModal';
+import SelectedItemsList from '../../components/SelectedItemsList/SelectedItemsList';
+import SelectedItemsAside from '../../components/SelectedItemsAside/SelectedItemsAside';
 import {useExpense, useExpenses} from '../../hooks/useExpenses';
+import {useAsideVisibility} from '../../hooks/useAsideVisibility';
 import type {Item} from '@/lib/types/api.types';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
 import Button from '@/shared/ui/Button/Button';
@@ -30,6 +33,12 @@ type FormData = {
     items: ExpenseItemData[];
 };
 
+type SelectedItem = {
+    item: Item;
+    price: number;
+    quantity: number;
+};
+
 type Props = {
     expenseId: string;
 };
@@ -48,6 +57,7 @@ export default function EditExpensePage({expenseId}: Props) {
         isAddingItem,
     } = useExpenses();
     const {dialogState, showConfirm} = useConfirmDialog();
+    const {shouldShowAside, selectedItemsRef, updateItemsPresence} = useAsideVisibility();
 
     const [formData, setFormData] = useState<FormData>({
         date: '',
@@ -78,23 +88,51 @@ export default function EditExpensePage({expenseId}: Props) {
         }
     }, [expense]);
 
-    const handleQuantityChange = (itemId: string, newQuantity: number) => {
+    useEffect(() => {
+        updateItemsPresence(formData.items.length);
+    }, [formData.items.length, updateItemsPresence]);
+
+    const convertToSelectedItems = (): SelectedItem[] => {
+        if (!expense) return [];
+        return formData.items.map((formItem) => {
+            const expenseItem = expense.items.find((ei) => ei.id === formItem.id);
+            const item: Item = (expenseItem?.item || {
+                id: formItem.itemId,
+                name: formItem.itemName,
+                prices: [],
+                categoryId: null,
+                isFavorite: false,
+                userId: '',
+                createdAt: new Date().toISOString(),
+            }) as Item;
+            return {
+                item,
+                price: formItem.amount,
+                quantity: formItem.quantity,
+            };
+        });
+    };
+
+    const selectedItemsForAside = convertToSelectedItems();
+
+    const handleQuantityChange = (index: number, newQuantity: number) => {
         if (newQuantity < 1) return;
         setFormData((prev) => ({
             ...prev,
-            items: prev.items.map((item) =>
-                item.id === itemId ? {...item, quantity: newQuantity} : item
+            items: prev.items.map((item, i) =>
+                i === index ? {...item, quantity: newQuantity} : item
             ),
         }));
     };
 
-    const handleRemoveItem = (itemId: string) => {
-        if (!itemId.startsWith('temp-')) {
-            setDeletedItems((prev) => [...prev, itemId]);
+    const handleRemoveItem = (index: number) => {
+        const itemToRemove = formData.items[index];
+        if (itemToRemove && !itemToRemove.id.startsWith('temp-')) {
+            setDeletedItems((prev) => [...prev, itemToRemove.id]);
         }
         setFormData((prev) => ({
             ...prev,
-            items: prev.items.filter((item) => item.id !== itemId),
+            items: prev.items.filter((_, i) => i !== index),
         }));
     };
 
@@ -274,59 +312,14 @@ export default function EditExpensePage({expenseId}: Props) {
                 </div>
 
                 {formData.items.length > 0 && (
-                    <div className={styles.section}>
+                    <div className={styles.section} ref={selectedItemsRef}>
                         <div className={styles.sectionTitle}>Текущие товары</div>
-                        <div className={styles.selectedList}>
-                            {formData.items.map((item) => (
-                                <div key={item.id} className={styles.selectedCard}>
-                                    <div className={styles.selectedInfo}>
-                                        <div className={styles.selectedName}>{item.itemName}</div>
-                                        <div className={styles.priceRow}>
-                                            <span className={styles.unitPrice}>{item.amount}₽</span>
-                                            <div className={styles.quantityControls}>
-                                                <button
-                                                    type="button"
-                                                    className={styles.quantityBtn}
-                                                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                                    disabled={item.quantity <= 1}
-                                                >
-                                                    −
-                                                </button>
-                                                <input
-                                                    type="number"
-                                                    className={styles.quantityInput}
-                                                    value={item.quantity}
-                                                    disabled={true}
-                                                    min="1"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    className={styles.quantityBtn}
-                                                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                                >
-                                                    +
-                                                </button>
-                                            </div>
-                                            <span className={styles.totalPrice}>
-                                                = {item.amount * item.quantity}₽
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <button
-                                        type="button"
-                                        className={styles.removeBtn}
-                                        onClick={() => handleRemoveItem(item.id)}
-                                    >
-                                        ×
-                                    </button>
-                                </div>
-                            ))}
-
-                            <div className={styles.totalCard}>
-                                <div className={styles.totalLabel}>Итого:</div>
-                                <div className={styles.totalAmount}>{totalAmount}₽</div>
-                            </div>
-                        </div>
+                        <SelectedItemsList
+                            selectedItems={selectedItemsForAside}
+                            totalAmount={totalAmount}
+                            onQuantityChange={handleQuantityChange}
+                            onRemoveItem={handleRemoveItem}
+                        />
                     </div>
                 )}
 
@@ -362,6 +355,14 @@ export default function EditExpensePage({expenseId}: Props) {
                 isOpen={isCreateItemModalOpen}
                 onClose={() => setIsCreateItemModalOpen(false)}
                 onItemCreated={handleItemCreated}
+            />
+
+            <SelectedItemsAside
+                selectedItems={selectedItemsForAside}
+                totalAmount={totalAmount}
+                onQuantityChange={handleQuantityChange}
+                onRemoveItem={handleRemoveItem}
+                isVisible={shouldShowAside}
             />
 
             <ConfirmDialog

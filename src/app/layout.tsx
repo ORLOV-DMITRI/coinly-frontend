@@ -88,7 +88,6 @@ export default async function RootLayout({
                 {children}
                 <BottomNavigationWrapper isAuthenticated={isAuthenticated}/>
                 {isAuthenticated && <WhatsNewProvider />}
-                {isAuthenticated && <CatEasterEggProvider />}
             </AuthProvider>
         </ReactQueryProvider>
         <CustomToaster/>
