@@ -1,5 +1,5 @@
 import api from '@/lib/settings/axios';
-import {AuthResponse, User} from "@/lib/types/api.types";
+import {AuthResponse, User, UpdateSettingsDto, UpdateSettingsResponse} from "@/lib/types/api.types";
 import Cookies from 'js-cookie';
 
 export type LoginCredentials = {
@@ -28,6 +28,11 @@ export const authService = {
   async getProfile(): Promise<User> {
     const response = await api.get('/api/auth/me');
     return response.data.user;
+  },
+
+  async updateSettings(data: UpdateSettingsDto): Promise<UpdateSettingsResponse> {
+    const response = await api.put('/api/auth/settings', data);
+    return response.data;
   },
 
   logout(): void {

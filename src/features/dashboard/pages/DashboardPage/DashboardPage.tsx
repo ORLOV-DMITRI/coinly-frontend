@@ -9,17 +9,17 @@ import cn from "classnames";
 import {useStats} from "@/features/dashboard/hooks/useStats";
 import Link from "next/link";
 import PlusIcon from '/public/assets/svg/plus.svg'
+import { useAuth } from '@/lib/auth/authContext';
+import { getCurrentFinancialMonth, getFinancialMonthLabel } from '@/shared/utils/financialMonth';
 
 
 export default function DashboardPage() {
     const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
+    const { user } = useAuth();
 
-    const getCurrentMonth = () => {
-        const now = new Date();
-        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    };
-
-    const currentMonth = getCurrentMonth();
+    const monthStartDay = user?.monthStartDay || 1;
+    const currentMonth = getCurrentFinancialMonth(monthStartDay);
+    const monthLabel = getFinancialMonthLabel(currentMonth, monthStartDay);
 
     const { data: stats } = useStats({ month: currentMonth });
     const currentSpent = stats?.total || 0;
@@ -33,7 +33,7 @@ export default function DashboardPage() {
                 <div className={styles.content}>
 
                     <div className={styles.intro}>
-                        <h1 className={styles.currentDate}>Октябрь 2025</h1>
+                        <div className={styles.currentDate}>{monthLabel}</div>
                         <div className={cn(styles.text, 'mutedText')}>Отслеживай расходы легко и быстро</div>
                         <Link href={'/expenses/create'}>
                             <Button variant={'primary'} size={'large'} className={styles.actionBtn}>

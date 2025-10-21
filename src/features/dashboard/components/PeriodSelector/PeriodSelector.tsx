@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './PeriodSelector.module.scss';
 import type { FilterablePeriod } from '@/lib/types/api.types';
 import cn from 'classnames';
 import Select from "@/shared/ui/Select/Select";
+import { useAuth } from '@/lib/auth/authContext';
+import { getFinancialMonthOptions, getCurrentFinancialMonth } from '@/shared/utils/financialMonth';
+import { useWeeklyStats } from '@/features/dashboard/hooks/useWeeklyStats';
 
 type Props = {
   period: FilterablePeriod;
@@ -13,19 +16,25 @@ type Props = {
 
 export default function PeriodSelector({ period, value, onPeriodChange, onValueChange }: Props) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const { user } = useAuth();
+
+  const monthStartDay = user?.monthStartDay || 1;
+
+  // Получаем текущий финансовый месяц
+  const currentFinancialMonth = getCurrentFinancialMonth(monthStartDay);
+
+  // Получаем недельную статистику для текущего месяца
+  const { data: weeklyStats } = useWeeklyStats(currentFinancialMonth);
 
   const handlePeriodClick = (newPeriod: FilterablePeriod) => {
     onPeriodChange(newPeriod);
     setShowDropdown(false);
 
     if (newPeriod === 'week') {
-      const today = new Date().getDate();
-      const currentWeek = Math.ceil(today / 7);
-      onValueChange(String(currentWeek));
+      // Устанавливаем текущую неделю (по умолчанию 1)
+      onValueChange('1');
     } else if (newPeriod === 'month') {
-      const now = new Date();
-      const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-      onValueChange(currentMonth);
+      onValueChange(currentFinancialMonth);
     } else if (newPeriod === 'year') {
       onValueChange(String(new Date().getFullYear()));
     }
@@ -36,26 +45,19 @@ export default function PeriodSelector({ period, value, onPeriodChange, onValueC
     setShowDropdown(false);
   };
 
-  const weekOptions = [
-    { value: '1', label: '1 неделя (1-7)' },
-    { value: '2', label: '2 неделя (8-14)' },
-    { value: '3', label: '3 неделя (15-21)' },
-    { value: '4', label: '4 неделя (22-31)' },
+  // Генерируем опции для недель на основе данных из weeklyStats
+  const weekOptions = weeklyStats?.weeks.map((week) => ({
+    value: String(week.week),
+    label: `${week.week} неделя (${week.range})`,
+  })) || [
+    { value: '1', label: '1 неделя' },
+    { value: '2', label: '2 неделя' },
+    { value: '3', label: '3 неделя' },
+    { value: '4', label: '4 неделя' },
   ];
 
-  const generateMonthOptions = () => {
-    const options = [];
-    const now = new Date();
-    for (let i = 0; i < 12; i++) {
-      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-      const label = date.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long' });
-      options.push({ value, label });
-    }
-    return options;
-  };
-
-  const monthOptions = generateMonthOptions();
+  // Генерируем опции для финансовых месяцев
+  const monthOptions = getFinancialMonthOptions(12, monthStartDay);
 
   const yearOptions = [
     { value: '2025', label: '2025' },

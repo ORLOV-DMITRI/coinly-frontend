@@ -3,6 +3,7 @@ export type User = {
   email: string;
   name: string | null;
   monthlyBudget: number | null;
+  monthStartDay: number;
   createdAt: string;
 };
 
@@ -297,6 +298,17 @@ export type UpdateBudgetDto = {
 };
 
 export type UpdateBudgetResponse = {
+  success: true;
+  message: string;
+  user: User;
+};
+
+export type UpdateSettingsDto = {
+  monthlyBudget?: number;
+  monthStartDay?: number;
+};
+
+export type UpdateSettingsResponse = {
   success: true;
   message: string;
   user: User;

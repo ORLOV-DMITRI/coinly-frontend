@@ -60,6 +60,11 @@ export default function UserMenu({ isOpen, setIsOpen }: Props) {
     router.push('/updates');
   };
 
+  const handleSettings = () => {
+    setIsOpen(false);
+    router.push('/settings');
+  };
+
   return (
     <div className={styles.userMenu} ref={dropdownRef}>
       <button
@@ -78,13 +83,16 @@ export default function UserMenu({ isOpen, setIsOpen }: Props) {
 
       {isOpen && (
         <div className={styles.dropdown}>
-          {/* Пункт "Что нового" */}
           <button className={styles.menuItem} onClick={handleWhatsNew}>
             <NewsIcon />
             <span>Что нового</span>
           </button>
 
-          {/* Смена темы */}
+          <button className={styles.menuItem} onClick={handleSettings}>
+            <NewsIcon />
+            <span>Настройки</span>
+          </button>
+
           <div className={styles.themeSection}>
             <ThemeSwitcher
               isOpen={isThemeSwitcherOpen}
@@ -92,10 +100,8 @@ export default function UserMenu({ isOpen, setIsOpen }: Props) {
             />
           </div>
 
-          {/* Разделитель */}
           <div className={styles.separator} />
 
-          {/* Выход */}
           <button className={styles.menuItem} onClick={handleLogout}>
             <LogoutIcon />
             <span>Выйти</span>

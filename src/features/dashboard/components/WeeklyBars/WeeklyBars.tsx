@@ -17,9 +17,47 @@ export default function WeeklyBars({ weeklyBudget, weeklyStats }: Props) {
     return null;
   }
 
+  // Определяем текущую неделю на основе сегодняшней даты и диапазонов недель
   const getCurrentWeek = () => {
-    const today = new Date().getDate();
-    return Math.ceil(today / 7);
+    const today = new Date();
+    const todayDate = today.getDate();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+
+    // Ищем неделю, в которую попадает сегодняшний день
+    for (const week of weeklyStats.weeks) {
+      const [startStr, endStr] = week.range.split('-');
+
+      // Парсим начало и конец диапазона
+      const startParts = startStr.trim().split(' ');
+      const endParts = endStr.trim().split(' ');
+
+      // Извлекаем числа
+      const startDay = parseInt(startParts[0]);
+      const endDay = parseInt(endParts[0]);
+
+      // Проверяем попадает ли сегодняшний день в этот диапазон
+      // Учитываем случай когда неделя переходит на следующий месяц (например 29 окт - 5 ноя)
+      if (startDay <= endDay) {
+        // Обычный случай: неделя внутри одного месяца
+        if (todayDate >= startDay && todayDate <= endDay) {
+          return week.week;
+        }
+      } else {
+        // Неделя переходит на следующий месяц
+        // Проверяем начало периода (конец текущего месяца)
+        if (todayDate >= startDay) {
+          return week.week;
+        }
+        // Проверяем конец периода (начало следующего месяца)
+        if (todayDate <= endDay) {
+          return week.week;
+        }
+      }
+    }
+
+    // Если не нашли, возвращаем первую неделю
+    return 1;
   };
 
   const currentWeek = getCurrentWeek();

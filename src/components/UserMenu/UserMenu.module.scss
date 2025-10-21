@@ -93,12 +93,12 @@
   }
 
   @include hover {
-    background: var(--muted/10%);
+    background: var(--muted);
   }
 
   &:focus {
     outline: none;
-    background: var(--muted/10%);
+    background: var(--muted);
   }
 
   @include xs {

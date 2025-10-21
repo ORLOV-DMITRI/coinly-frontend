@@ -1,0 +1,85 @@
+@use '../../../../styles/variables' as *;
+
+.settingsPage {
+  padding-bottom: var(--space-xl);
+
+  @include sm {
+    padding-bottom: var(--space-max);
+  }
+}
+
+.content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: var(--space-md);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.input {
+  width: 100%;
+}
+
+.hint {
+  margin-top: var(--space-xs);
+  padding: var(--space-sm);
+  background: var(--muted);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+
+  p {
+    margin: 0 0 var(--space-xs) 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  strong {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+}
+
+.example {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+
+  @include sm {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}
