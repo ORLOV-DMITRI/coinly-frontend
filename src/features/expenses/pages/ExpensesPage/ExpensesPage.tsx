@@ -13,6 +13,7 @@ import Button from "@/shared/ui/Button/Button";
 import PageHeader from "@/shared/ui/PageHeader/PageHeader";
 import CollapseIcon from '/public/assets/svg/collapse.svg'
 import Link from "next/link";
+import { useAuth } from '@/lib/auth/authContext';
 
 type EditingItem = {
   expenseItemId: string;
@@ -24,10 +25,12 @@ export default function ExpensesPage() {
   const [period, setPeriod] = useState<PeriodType>('month');
   const [editingItem, setEditingItem] = useState<EditingItem | null>(null);
 
+  const { user } = useAuth();
   const { toggleExpense, isExpanded, collapseAll } = useExpensesView();
 
   const dateRange = useMemo(() => {
     const now = new Date();
+    const monthStartDay = user?.monthStartDay || 1;
 
     const endDate = new Date(
       now.getFullYear(),
@@ -48,10 +51,19 @@ export default function ExpensesPage() {
         );
         break;
       case 'month':
+        // Учитываем monthStartDay для финансового месяца
+        const currentDay = now.getDate();
+        let monthOffset = 0;
+
+        // Если сегодня меньше monthStartDay, то финансовый месяц начался в прошлом календарном месяце
+        if (currentDay < monthStartDay) {
+          monthOffset = -1;
+        }
+
         startDate = new Date(
           now.getFullYear(),
-          now.getMonth() - 1,
-          now.getDate(),
+          now.getMonth() + monthOffset,
+          monthStartDay,
           0, 0, 0, 0
         );
         break;
@@ -76,7 +88,7 @@ export default function ExpensesPage() {
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
     };
-  }, [period]);
+  }, [period, user?.monthStartDay]);
 
   const { expenses, isLoading, isFetching, updateExpense } = useExpenses(dateRange);
 
