@@ -501,3 +501,60 @@ export type CompleteShoppingListResponse = {
   message: string;
   expenseId: string;
 };
+
+// One-Time Expenses Types
+export type OneTimeExpense = {
+  id: string;
+  name: string;
+  amount: number;
+  date: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateOneTimeExpenseDto = {
+  name: string;
+  amount: number;
+  date?: string;
+};
+
+export type UpdateOneTimeExpenseDto = {
+  name?: string;
+  amount?: number;
+  date?: string;
+};
+
+export type OneTimeExpenseQueryParams = {
+  month?: string; // YYYY-MM
+};
+
+export type GetOneTimeExpensesResponse = {
+  success: true;
+  data: OneTimeExpense[];
+};
+
+export type CreateOneTimeExpenseResponse = {
+  success: true;
+  message: string;
+  data: OneTimeExpense;
+};
+
+export type UpdateOneTimeExpenseResponse = {
+  success: true;
+  message: string;
+  data: OneTimeExpense;
+};
+
+export type DeleteOneTimeExpenseResponse = {
+  success: true;
+  message: string;
+};
+
+export type GetOneTimeExpensesTotalResponse = {
+  success: true;
+  data: {
+    total: number;
+    count: number;
+  };
+};

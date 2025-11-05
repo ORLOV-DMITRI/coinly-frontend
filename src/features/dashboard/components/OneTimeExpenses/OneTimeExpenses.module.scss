@@ -1,0 +1,209 @@
+@use "@/styles/variables" as *;
+
+.container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+
+  @include xs {
+    padding: var(--space-sm);
+    border-radius: 8px;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+
+  @include xs {
+    align-items: flex-start;
+  }
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.total {
+  font-family: var(--font-geist-mono), sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+
+  @include xs {
+    font-size: 16px;
+  }
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  transition: all 0.2s;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  @include hover {
+    opacity: 0.8;
+  }
+
+  @include xs {
+    width: 28px;
+    height: 28px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--muted-foreground);
+  transition: transform 0.2s;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @include xs {
+    width: 20px;
+    height: 20px;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+.chevronExpanded {
+  transform: rotate(180deg);
+}
+
+.list {
+  margin-top: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm);
+  background: var(--muted);
+  border-radius: 8px;
+  transition: background 0.2s;
+
+  @include hover {
+    background: var(--accent);
+  }
+
+  @include xs {
+    padding: var(--space-xs);
+  }
+}
+
+.itemName {
+  font-size: 16px;
+  font-weight: 500;
+
+  @include xs {
+    font-size: 14px;
+  }
+}
+
+.itemRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.itemAmount {
+  font-family: var(--font-geist-mono), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+
+  @include xs {
+    font-size: 14px;
+  }
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  color: var(--muted-foreground);
+  transition: all 0.2s;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  @include hover {
+    background: var(--destructive);
+    color: white;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @include xs {
+    width: 28px;
+    height: 28px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.empty {
+  margin-top: var(--space-sm);
+  text-align: center;
+  padding: var(--space-md);
+  background: var(--muted);
+  border-radius: 8px;
+}
+
+.emptyText {
+  color: var(--muted-foreground);
+  font-size: 14px;
+  margin: 0;
+}

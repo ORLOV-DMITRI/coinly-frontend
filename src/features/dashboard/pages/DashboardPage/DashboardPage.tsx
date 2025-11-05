@@ -5,6 +5,8 @@ import Button from "@/shared/ui/Button/Button";
 import ProgressBar from "@/features/dashboard/components/ProgressBar/ProgressBar";
 import FilterableStats from "@/features/dashboard/components/FilterableStats/FilterableStats";
 import SetBudgetModal from "@/features/dashboard/components/SetBudgetModal/SetBudgetModal";
+import OneTimeExpenses from "@/features/dashboard/components/OneTimeExpenses/OneTimeExpenses";
+import AddOneTimeExpenseModal from "@/features/dashboard/components/AddOneTimeExpenseModal/AddOneTimeExpenseModal";
 import cn from "classnames";
 import {useStats} from "@/features/dashboard/hooks/useStats";
 import Link from "next/link";
@@ -15,6 +17,7 @@ import { getCurrentFinancialMonth, getFinancialMonthLabel } from '@/shared/utils
 
 export default function DashboardPage() {
     const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
+    const [isOneTimeExpenseModalOpen, setIsOneTimeExpenseModalOpen] = useState(false);
     const { user } = useAuth();
 
     const monthStartDay = user?.monthStartDay || 1;
@@ -26,6 +29,9 @@ export default function DashboardPage() {
 
     const openBudgetModal = () => setIsBudgetModalOpen(true);
     const closeBudgetModal = () => setIsBudgetModalOpen(false);
+
+    const openOneTimeExpenseModal = () => setIsOneTimeExpenseModalOpen(true);
+    const closeOneTimeExpenseModal = () => setIsOneTimeExpenseModalOpen(false);
 
     return (
         <div className={'startPage'}>
@@ -45,6 +51,10 @@ export default function DashboardPage() {
                     </div>
 
                     <div className={styles.infoBlock}>
+                        <OneTimeExpenses
+                          month={currentMonth}
+                          onAdd={openOneTimeExpenseModal}
+                        />
                         <ProgressBar
                           currentSpent={currentSpent}
                           month={currentMonth}
@@ -59,6 +69,11 @@ export default function DashboardPage() {
             <SetBudgetModal
               isOpen={isBudgetModalOpen}
               onClose={closeBudgetModal}
+            />
+            <AddOneTimeExpenseModal
+              isOpen={isOneTimeExpenseModalOpen}
+              onClose={closeOneTimeExpenseModal}
+              month={currentMonth}
             />
         </div>
     );
